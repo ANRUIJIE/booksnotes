@@ -1,0 +1,2949 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="theme-color" content="#8B1538"/>
+<title>资本论 · 阅读指南</title>
+<style>
+:root{
+  --bg:#f7f5f3;--surface:#fff;--text:#1a1a1a;--text-muted:#6b6b6b;
+  --accent:#8B1538;--accent-light:#F5E6EB;--border:#e5e0dc;
+  --col-left:240px;--col-right:300px;--header-h:52px;--nav-h:56px;
+  --safe-b:env(safe-area-inset-bottom,0px);--safe-t:env(safe-area-inset-top,0px);
+  --max-read:1440px
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Noto Sans SC",serif;background:var(--bg);color:var(--text);line-height:1.75}
+.app-header{position:sticky;top:0;z-index:300;background:var(--accent);color:#fff;padding:calc(10px + var(--safe-t)) 16px 10px;display:flex;align-items:center;gap:12px;min-height:var(--header-h)}
+.app-header h1{font-size:17px;font-weight:700;flex:1;line-height:1.3}
+.app-header .subtitle{font-size:11px;opacity:.88;margin-top:2px}
+.header-btn{background:rgba(255,255,255,.18);border:none;color:#fff;padding:6px 12px;border-radius:14px;font-size:12px;cursor:pointer;white-space:nowrap}
+.app-shell{max-width:var(--max-read);margin:0 auto}
+
+/* 三栏布局：宽屏 ≥1600px */
+.three-col{display:none}
+@media(min-width:1600px){
+  body{padding-bottom:0}
+  .mobile-only,.bottom-nav{display:none!important}
+  .three-col{display:grid;grid-template-columns:var(--col-left) 1fr var(--col-right);gap:0;min-height:calc(100vh - var(--header-h));max-width:none}
+  .col-left,.col-right{background:var(--surface);border-color:var(--border);overflow-y:auto;max-height:calc(100vh - var(--header-h));position:sticky;top:var(--header-h)}
+  .col-left{border-right:1px solid var(--border);padding:12px 0}
+  .col-right{border-left:1px solid var(--border);padding:12px}
+  .col-center{padding:24px 32px;overflow-y:auto;max-height:calc(100vh - var(--header-h))}
+  .col-panel-title{font-size:11px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;padding:8px 14px 6px;font-weight:600}
+}
+
+/* 单栏：1440 及以下 / 平板手机 */
+.single-col{display:block;padding-bottom:calc(var(--nav-h) + var(--safe-b) + 12px)}
+@media(min-width:1600px){.single-col{display:none}}
+.tab-panel{display:none;padding:12px 16px}
+.tab-panel.active{display:block}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:400;display:flex;background:var(--surface);border-top:1px solid var(--border);padding-bottom:var(--safe-b);height:calc(var(--nav-h) + var(--safe-b))}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;border:none;background:none;cursor:pointer;color:var(--text-muted);font-size:9px;padding:4px 0}
+.nav-item svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8}
+.nav-item.active{color:var(--accent);font-weight:600}
+
+/* 结构树 */
+.tree-vol{margin:0 8px 8px}
+.tree-vol-title,.tree-part-title{cursor:pointer;font-size:13px;font-weight:600;padding:8px 10px;list-style:none;color:var(--accent)}
+.tree-vol-title span,.tree-part-title{font-weight:400;color:var(--text-muted);font-size:12px}
+.tree-part{margin-left:4px}
+.tree-chapters{list-style:none;padding:0 4px 8px}
+.tree-ch-btn{display:flex;flex-direction:column;align-items:flex-start;width:100%;text-align:left;padding:6px 10px;border:none;background:none;cursor:pointer;border-radius:6px;font-size:12px;color:var(--text);gap:1px}
+.tree-ch-btn:hover,.tree-ch-btn.active{background:var(--accent-light);color:var(--accent)}
+.tree-ch-num{font-weight:600;font-size:11px}
+.tree-ch-name{font-size:11px;color:var(--text-muted);line-height:1.35}
+.tree-ch-btn.active .tree-ch-name{color:var(--accent)}
+
+/* 思维导图 */
+.mind-branch{margin:8px 12px 16px}
+.mind-root{font-size:13px;font-weight:700;color:var(--accent);margin-bottom:8px;padding-left:8px;border-left:3px solid var(--accent)}
+.mind-children{display:flex;flex-direction:column;gap:6px}
+.mind-leaf{background:var(--accent-light);border-radius:8px;padding:8px 10px}
+.mind-label{font-size:12px;font-weight:600;display:block}
+.mind-desc{font-size:11px;color:var(--text-muted)}
+
+/* 原文 */
+.chapter-panel{display:none;margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.chapter-panel.active{display:block}
+.ch-breadcrumb{font-size:11px;color:var(--text-muted);margin-bottom:6px}
+.chapter-title{font-size:20px;color:var(--accent);margin-bottom:10px;line-height:1.4}
+.chapter-summary{font-size:14px;color:var(--text-muted);margin-bottom:16px;padding:12px;background:var(--accent-light);border-radius:8px;line-height:1.6}
+.chapter-body p{margin-bottom:12px;text-indent:2em;font-size:15px;line-height:1.85}
+.term-inline{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px;margin:12px 0}
+.term-inline strong{display:block;color:var(--accent);margin-bottom:4px;font-size:14px}
+.golden-quote{border-left:4px solid var(--accent);padding:12px 16px;margin:16px 0;background:var(--accent-light);font-size:14px;color:var(--accent);font-weight:500;text-indent:0;line-height:1.7}
+.ch-inline-terms,.ch-inline-guides{margin-top:20px;padding-top:16px;border-top:1px dashed var(--border)}
+.ch-inline-terms h4,.ch-inline-guides h4{font-size:12px;color:var(--text-muted);margin-bottom:8px}
+.term-chip{display:inline-block;font-size:11px;padding:3px 10px;margin:2px 4px 2px 0;background:var(--accent-light);color:var(--accent);border-radius:12px;cursor:pointer}
+.guide-mini{font-size:13px;margin-bottom:6px;color:var(--text-muted)}
+
+/* 术语 */
+.term-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px}
+.term-head{display:flex;align-items:baseline;gap:8px;margin-bottom:6px}
+.term-head h3{font-size:15px;color:var(--accent)}
+.term-en{font-size:11px;color:var(--text-muted)}
+.term-def{font-size:13px;line-height:1.6;margin-bottom:6px}
+.term-history{font-size:12px;color:var(--text-muted);line-height:1.5}
+.term-history em{color:var(--accent);font-style:normal;margin-right:4px}
+.term-refs span{font-size:10px;background:var(--bg);padding:2px 8px;border-radius:8px;margin-right:4px;color:var(--text-muted)}
+
+/* 导读 */
+.guide-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px}
+.guide-era{font-size:10px;color:var(--accent);background:var(--accent-light);padding:2px 8px;border-radius:8px}
+.guide-card h3{font-size:15px;margin:8px 0 4px;color:var(--text)}
+.guide-author{font-size:12px;color:var(--text-muted)}
+.guide-excerpt{font-size:13px;line-height:1.65;color:var(--text-muted);margin:8px 0}
+.guide-tags span{font-size:10px;padding:2px 8px;border:1px solid var(--border);border-radius:8px;margin-right:4px;color:var(--text-muted)}
+.phase-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;padding:12px 16px}
+.phase-card summary{cursor:pointer;font-weight:600;font-size:14px}
+.phase-card ol{padding-left:20px;margin-top:8px;font-size:13px}
+.tips-box{background:var(--accent-light);border-radius:12px;padding:16px;margin-top:16px}
+.tips-box h3{color:var(--accent);font-size:14px;margin-bottom:8px}
+.tips-box li{font-size:13px;margin-bottom:4px}
+
+/* 知识图谱 */
+.kg-legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;font-size:11px}
+.kg-legend span{padding:3px 10px;border-radius:10px;background:var(--surface);border:1px solid var(--border)}
+.kg-legend [data-type="concept"]{border-color:var(--accent);color:var(--accent)}
+.kg-canvas-wrap{width:100%;height:280px;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:12px}
+@media(min-width:1600px){.kg-canvas-wrap{height:320px}}
+#kgCanvas{width:100%;height:100%;touch-action:none}
+.kg-tooltip{position:fixed;display:none;background:var(--text);color:#fff;padding:6px 12px;border-radius:8px;font-size:12px;z-index:500;pointer-events:none}
+.kg-node-list{display:flex;flex-wrap:wrap;gap:6px}
+.kg-node-btn{font-size:11px;padding:4px 10px;border:1px solid var(--border);background:var(--surface);border-radius:14px;cursor:pointer;color:var(--text)}
+.kg-node-btn:hover,.kg-node-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* 桌面右栏 */
+.sb-tab{font-size:11px;padding:6px 12px;border:1px solid var(--border);background:var(--bg);border-radius:8px;cursor:pointer;margin-right:4px;margin-bottom:8px;color:var(--text-muted)}
+.sb-tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.sb-panel{display:none}
+.sb-panel.active{display:block}
+
+/* 抽屉（手机目录） */
+.drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:450;opacity:0;visibility:hidden;transition:.25s}
+.drawer-overlay.open{opacity:1;visibility:visible}
+.chapter-drawer{position:fixed;left:0;right:0;bottom:0;z-index:451;background:var(--surface);border-radius:16px 16px 0 0;max-height:80vh;transform:translateY(100%);transition:.3s;display:flex;flex-direction:column;padding-bottom:var(--safe-b)}
+.chapter-drawer.open{transform:translateY(0)}
+.drawer-header{display:flex;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border)}
+.drawer-header h2{font-size:15px;color:var(--accent)}
+.drawer-close{background:none;border:none;font-size:22px;color:var(--text-muted);cursor:pointer}
+.drawer-body{overflow-y:auto;padding:8px 0;flex:1}
+
+/* 平板：单栏但隐藏底部部分 tab 文字 */
+@media(min-width:768px) and (max-width:1599px){
+  .single-col .tab-panel{padding:20px 24px;max-width:900px;margin:0 auto}
+  .nav-item{font-size:11px;flex-direction:row;gap:4px}
+  .bottom-nav{position:sticky;top:var(--header-h);height:var(--nav-h);padding-bottom:0}
+  body{padding-bottom:0}
+}
+
+.home-link{position:absolute;left:12px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.2);color:#fff;text-decoration:none;font-size:12px;padding:4px 10px;border-radius:12px;white-space:nowrap}
+.app-header{position:relative}
+.app-header>div{margin-left:52px}
+@media(min-width:769px){.home-link{left:24px}}
+</style>
+</head>
+<body>
+<header class="app-header">
+  <a href="../index.html" class="home-link" title="返回书架">书架</a>
+  <div><h1>资本论</h1><div class="subtitle">马克思 著 · 中共中央编译局 译 · 纪念版 · 人民出版社 2018 · 马克思诞辰200周年纪念版</div></div>
+  <button type="button" class="header-btn mobile-only" id="openDrawer">目录</button>
+</header>
+
+<!-- 宽屏三栏 -->
+<div class="three-col app-shell">
+  <aside class="col-left">
+    <div class="col-panel-title">结构总览</div>
+    <div class="mindmap-wrap">
+    <div class="mind-branch">
+      <div class="mind-root">第一卷 · 生产</div>
+      <div class="mind-children">
+        
+          <div class="mind-leaf">
+            <span class="mind-label">商品→货币</span>
+            <span class="mind-desc">价值理论奠基</span>
+          </div>
+          <div class="mind-leaf">
+            <span class="mind-label">货币→资本</span>
+            <span class="mind-desc">劳动力商品</span>
+          </div>
+          <div class="mind-leaf">
+            <span class="mind-label">剩余价值</span>
+            <span class="mind-desc">绝对与相对</span>
+          </div>
+          <div class="mind-leaf">
+            <span class="mind-label">工资形式</span>
+            <span class="mind-desc">劳动力价格掩盖</span>
+          </div>
+          <div class="mind-leaf">
+            <span class="mind-label">资本积累</span>
+            <span class="mind-desc">原始积累</span>
+          </div>
+      </div>
+    </div>
+    <div class="mind-branch">
+      <div class="mind-root">第二卷 · 流通</div>
+      <div class="mind-children">
+        
+          <div class="mind-leaf">
+            <span class="mind-label">资本循环</span>
+            <span class="mind-desc">货币·生产·商品</span>
+          </div>
+          <div class="mind-leaf">
+            <span class="mind-label">资本周转</span>
+            <span class="mind-desc">固定与流动</span>
+          </div>
+          <div class="mind-leaf">
+            <span class="mind-label">社会再生产</span>
+            <span class="mind-desc">两大部类</span>
+          </div>
+      </div>
+    </div>
+    <div class="mind-branch">
+      <div class="mind-root">第三卷 · 总过程</div>
+      <div class="mind-children">
+        
+          <div class="mind-leaf">
+            <span class="mind-label">利润与平均利润</span>
+            <span class="mind-desc">价值转型</span>
+          </div>
+          <div class="mind-leaf">
+            <span class="mind-label">利润率下降</span>
+            <span class="mind-desc">内在矛盾</span>
+          </div>
+          <div class="mind-leaf">
+            <span class="mind-label">利息·地租</span>
+            <span class="mind-desc">分配形式</span>
+          </div>
+          <div class="mind-leaf">
+            <span class="mind-label">阶级</span>
+            <span class="mind-desc">资本主义生产关系</span>
+          </div>
+      </div>
+    </div></div>
+    <div class="col-panel-title">章节目录</div>
+    <nav class="structure-tree">
+    <details class="tree-vol" open>
+      <summary class="tree-vol-title">第一卷 <span>资本的生产过程</span></summary>
+      
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第一篇 商品和货币</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c01" title="第一章 商品">
+                <span class="tree-ch-num">第一章</span>
+                <span class="tree-ch-name">商品</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c02" title="第二章 交换过程">
+                <span class="tree-ch-num">第二章</span>
+                <span class="tree-ch-name">交换过程</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c03" title="第三章 货币或商品流通">
+                <span class="tree-ch-num">第三章</span>
+                <span class="tree-ch-name">货币或商品流通</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第二篇 货币转化为资本</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c04" title="第四章 货币转化为资本">
+                <span class="tree-ch-num">第四章</span>
+                <span class="tree-ch-name">货币转化为资本</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第三篇 绝对剩余价值的生产</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c05" title="第五章 劳动过程和价值增殖过程">
+                <span class="tree-ch-num">第五章</span>
+                <span class="tree-ch-name">劳动过程和价值增殖过程</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c06" title="第六章 不变资本和可变资本">
+                <span class="tree-ch-num">第六章</span>
+                <span class="tree-ch-name">不变资本和可变资本</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c07" title="第七章 剩余价值率">
+                <span class="tree-ch-num">第七章</span>
+                <span class="tree-ch-name">剩余价值率</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c08" title="第八章 工作日">
+                <span class="tree-ch-num">第八章</span>
+                <span class="tree-ch-name">工作日</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c09" title="第九章 剩余价值率和剩余价值量">
+                <span class="tree-ch-num">第九章</span>
+                <span class="tree-ch-name">剩余价值率和剩余价值量</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第四篇 相对剩余价值的生产</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c10" title="第十章 相对剩余价值的概念">
+                <span class="tree-ch-num">第十章</span>
+                <span class="tree-ch-name">相对剩余价值的概念</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c11" title="第十一章 协作">
+                <span class="tree-ch-num">第十一章</span>
+                <span class="tree-ch-name">协作</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c12" title="第十二章 分工和工场手工业">
+                <span class="tree-ch-num">第十二章</span>
+                <span class="tree-ch-name">分工和工场手工业</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c13" title="第十三章 机器和大工业">
+                <span class="tree-ch-num">第十三章</span>
+                <span class="tree-ch-name">机器和大工业</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第五篇 绝对剩余价值和相对剩余价值的生产</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c14" title="第十四章 绝对剩余价值和相对剩余价值">
+                <span class="tree-ch-num">第十四章</span>
+                <span class="tree-ch-name">绝对剩余价值和相对剩余价值</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c15" title="第十五章 劳动力价格和剩余价值的量的变化">
+                <span class="tree-ch-num">第十五章</span>
+                <span class="tree-ch-name">劳动力价格和剩余价值的量的变化</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c16" title="第十六章 剩余价值率的各种公式">
+                <span class="tree-ch-num">第十六章</span>
+                <span class="tree-ch-name">剩余价值率的各种公式</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第六篇 工资</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c17" title="第十七章 劳动力的价值或价格转化为工资">
+                <span class="tree-ch-num">第十七章</span>
+                <span class="tree-ch-name">劳动力的价值或价格转化为工资</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c18" title="第十八章 计时工资">
+                <span class="tree-ch-num">第十八章</span>
+                <span class="tree-ch-name">计时工资</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c19" title="第十九章 计件工资">
+                <span class="tree-ch-num">第十九章</span>
+                <span class="tree-ch-name">计件工资</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c20" title="第二十章 工资的国民差异">
+                <span class="tree-ch-num">第二十章</span>
+                <span class="tree-ch-name">工资的国民差异</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第七篇 资本的积累过程</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c21" title="第二十一章 简单再生产">
+                <span class="tree-ch-num">第二十一章</span>
+                <span class="tree-ch-name">简单再生产</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c22" title="第二十二章 剩余价值转化为资本">
+                <span class="tree-ch-num">第二十二章</span>
+                <span class="tree-ch-name">剩余价值转化为资本</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c23" title="第二十三章 资本主义积累的一般规律">
+                <span class="tree-ch-num">第二十三章</span>
+                <span class="tree-ch-name">资本主义积累的一般规律</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c24" title="第二十四章 所谓原始积累">
+                <span class="tree-ch-num">第二十四章</span>
+                <span class="tree-ch-name">所谓原始积累</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c25" title="第二十五章 现代殖民理论">
+                <span class="tree-ch-num">第二十五章</span>
+                <span class="tree-ch-name">现代殖民理论</span>
+              </button></li>
+          </ul>
+        </details>
+    </details>
+    <details class="tree-vol" open>
+      <summary class="tree-vol-title">第二卷 <span>资本的流通过程</span></summary>
+      
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第一篇 资本形态变化及其循环</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c01" title="第一章 货币资本的循环">
+                <span class="tree-ch-num">第一章</span>
+                <span class="tree-ch-name">货币资本的循环</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c02" title="第二章 生产资本的循环">
+                <span class="tree-ch-num">第二章</span>
+                <span class="tree-ch-name">生产资本的循环</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c03" title="第三章 商品资本的循环">
+                <span class="tree-ch-num">第三章</span>
+                <span class="tree-ch-name">商品资本的循环</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c04" title="第四章 循环过程的三个公式">
+                <span class="tree-ch-num">第四章</span>
+                <span class="tree-ch-name">循环过程的三个公式</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c05" title="第五章 流通时间">
+                <span class="tree-ch-num">第五章</span>
+                <span class="tree-ch-name">流通时间</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c06" title="第六章 流通费用">
+                <span class="tree-ch-num">第六章</span>
+                <span class="tree-ch-name">流通费用</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第二篇 资本周转</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c07" title="第七章 周转时间和周转次数">
+                <span class="tree-ch-num">第七章</span>
+                <span class="tree-ch-name">周转时间和周转次数</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c08" title="第八章 固定资本和流动资本">
+                <span class="tree-ch-num">第八章</span>
+                <span class="tree-ch-name">固定资本和流动资本</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c09" title="第九章 预付资本的总周转">
+                <span class="tree-ch-num">第九章</span>
+                <span class="tree-ch-name">预付资本的总周转</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c10" title="第十章 固定资本和流动资本的理论">
+                <span class="tree-ch-num">第十章</span>
+                <span class="tree-ch-name">固定资本和流动资本的理论</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c11" title="第十一章 李嘉图">
+                <span class="tree-ch-num">第十一章</span>
+                <span class="tree-ch-name">李嘉图</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c12" title="第十二章 劳动期间">
+                <span class="tree-ch-num">第十二章</span>
+                <span class="tree-ch-name">劳动期间</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c13" title="第十三章 生产时间">
+                <span class="tree-ch-num">第十三章</span>
+                <span class="tree-ch-name">生产时间</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c14" title="第十四章 流通时间">
+                <span class="tree-ch-num">第十四章</span>
+                <span class="tree-ch-name">流通时间</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c15" title="第十五章 周转时间对预付资本量的影响">
+                <span class="tree-ch-num">第十五章</span>
+                <span class="tree-ch-name">周转时间对预付资本量的影响</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c16" title="第十六章 可变资本的周转">
+                <span class="tree-ch-num">第十六章</span>
+                <span class="tree-ch-name">可变资本的周转</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c17" title="第十七章 剩余价值的流通">
+                <span class="tree-ch-num">第十七章</span>
+                <span class="tree-ch-name">剩余价值的流通</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第三篇 社会总资本的再生产和流通</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c18" title="第十八章 导言">
+                <span class="tree-ch-num">第十八章</span>
+                <span class="tree-ch-name">导言</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c19" title="第十九章 前人对这个问题的阐述">
+                <span class="tree-ch-num">第十九章</span>
+                <span class="tree-ch-name">前人对这个问题的阐述</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c20" title="第二十章 简单再生产">
+                <span class="tree-ch-num">第二十章</span>
+                <span class="tree-ch-name">简单再生产</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c21" title="第二十一章 积累和扩大再生产">
+                <span class="tree-ch-num">第二十一章</span>
+                <span class="tree-ch-name">积累和扩大再生产</span>
+              </button></li>
+          </ul>
+        </details>
+    </details>
+    <details class="tree-vol" open>
+      <summary class="tree-vol-title">第三卷 <span>资本主义生产的总过程</span></summary>
+      
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第一篇 剩余价值转化为利润和利润率</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c01" title="第一章 成本价格和利润">
+                <span class="tree-ch-num">第一章</span>
+                <span class="tree-ch-name">成本价格和利润</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c02" title="第二章 利润率">
+                <span class="tree-ch-num">第二章</span>
+                <span class="tree-ch-name">利润率</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c03" title="第三章 利润率和剩余价值率的关系">
+                <span class="tree-ch-num">第三章</span>
+                <span class="tree-ch-name">利润率和剩余价值率的关系</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第二篇 利润转化为平均利润</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c08" title="第八章 不同生产部门的资本构成">
+                <span class="tree-ch-num">第八章</span>
+                <span class="tree-ch-name">不同生产部门的资本构成</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c09" title="第九章 一般利润率的形成">
+                <span class="tree-ch-num">第九章</span>
+                <span class="tree-ch-name">一般利润率的形成</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c10" title="第十章 一般利润率通过竞争而平均化">
+                <span class="tree-ch-num">第十章</span>
+                <span class="tree-ch-name">一般利润率通过竞争而平均化</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第三篇 利润率趋向下降的规律</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c13" title="第十三章 规律本身">
+                <span class="tree-ch-num">第十三章</span>
+                <span class="tree-ch-name">规律本身</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c14" title="第十四章 起反作用的各种原因">
+                <span class="tree-ch-num">第十四章</span>
+                <span class="tree-ch-name">起反作用的各种原因</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c15" title="第十五章 规律的内部矛盾的展开">
+                <span class="tree-ch-num">第十五章</span>
+                <span class="tree-ch-name">规律的内部矛盾的展开</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第五篇 利润分为利息和企业主收入</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c21" title="第二十一章 生息资本">
+                <span class="tree-ch-num">第二十一章</span>
+                <span class="tree-ch-name">生息资本</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c25" title="第二十五章 信用和虚拟资本">
+                <span class="tree-ch-num">第二十五章</span>
+                <span class="tree-ch-name">信用和虚拟资本</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第六篇 超额利润转化为地租</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c37" title="第三十七章 导论">
+                <span class="tree-ch-num">第三十七章</span>
+                <span class="tree-ch-name">导论</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c45" title="第四十五章 绝对地租">
+                <span class="tree-ch-num">第四十五章</span>
+                <span class="tree-ch-name">绝对地租</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c52" title="第五十二章 阶级">
+                <span class="tree-ch-num">第五十二章</span>
+                <span class="tree-ch-name">阶级</span>
+              </button></li>
+          </ul>
+        </details>
+    </details></nav>
+  </aside>
+  <main class="col-center" id="desktopMain">
+    
+      <section id="v1c01" class="chapter-panel" data-ch="v1c01">
+        <div class="ch-breadcrumb">第一卷 · 第一篇 商品和货币</div>
+        <h2 class="chapter-title">第一章 商品</h2>
+        <p class="chapter-summary">全书起点。分析商品的使用价值与价值二重性，揭示劳动二重性，论述价值形式从简单到货币的发展，批判商品拜物教。</p>
+        <div class="chapter-body"><p>资本主义生产方式占统治地位的社会的财富，表现为「庞大的商品堆积」，单个的商品表现为这种财富的元素形式。因此，我们的研究就从分析商品开始。</p>
+<div class="term-inline"><strong>商品</strong><span>商品首先是一个外界的对象，一个靠自己的属性来满足人的某种需要的物。每一种有用物，如铁、纸等等，都可以从质和量两个角度来考察。</span></div>
+<div class="term-inline"><strong>使用价值</strong><span>物的有用性使物成为使用价值。但这种有用性不是悬在空中的。它决定于商品体的属性，离开了商品体就不存在。</span></div>
+<p>交换价值首先表现为一种使用价值同另一种使用价值相交换的量的关系或比例。如果把商品体的使用价值撇开，商品体就只剩下一个属性，即劳动产品这个属性。</p>
+<div class="term-inline"><strong>价值</strong><span>这些物，作为它们共有的这个社会实体的结晶，就是价值——商品价值。价值量由社会必要劳动时间决定。</span></div>
+<blockquote class="golden-quote">劳动二重性：具体劳动创造使用价值，抽象劳动形成价值。这是理解政治经济学的枢纽。</blockquote>
+<p>商品形式的奥秘仅仅在于：它把人们本身劳动的社会性质反映成劳动产品本身的物的性质，反映成这些物的天然的社会属性，从而把生产者同总劳动的社会关系反映成存在于生产者之外的物与物的关系。</p></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="shangpin">商品</span><span class="term-chip" data-term="shiyongjiazhi">使用价值</span><span class="term-chip" data-term="jiazh">价值</span><span class="term-chip" data-term="jiaohuanjiazhi">交换价值</span><span class="term-chip" data-term="laodongerchongxing">劳动二重性</span><span class="term-chip" data-term="shehuibiyaolaodong">社会必要劳动时间</span></div>
+        <div class="ch-inline-guides"><h4>相关导读</h4><div class="guide-mini"><strong>列宁</strong>：《资本论》是马克思理论的最大贡献</div><div class="guide-mini"><strong>恩格斯</strong>：《资本论》第一卷序言</div><div class="guide-mini"><strong>卢卡奇</strong>：物化与商品拜物教</div><div class="guide-mini"><strong>大卫·哈维</strong>：如何读《资本论》</div><div class="guide-mini"><strong>熊彼特</strong>：对马克思经济理论的评价</div></div>
+      </section>
+      <section id="v1c02" class="chapter-panel" data-ch="v1c02">
+        <div class="ch-breadcrumb">第一卷 · 第一篇 商品和货币</div>
+        <h2 class="chapter-title">第二章 交换过程</h2>
+        <p class="chapter-summary">商品不能自己到市场上去交换，商品所有者须以彼此承认对方商品所有权为前提。交换过程使商品转化为货币。</p>
+        <div class="chapter-body"><p>商品不能自己到市场上去，不能自己去交换。因此，我们必须找寻它们的监护人，商品所有者。商品爱货币，但是「真爱情的道路决不是平坦的」。</p>
+<p>交换过程使商品从商品中分离出货币，从而使商品变成货币。货币是商品世界分离出固定在金这种商品上的商品价值。</p></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="jiazh">价值</span></div>
+        
+      </section>
+      <section id="v1c03" class="chapter-panel" data-ch="v1c03">
+        <div class="ch-breadcrumb">第一卷 · 第一篇 商品和货币</div>
+        <h2 class="chapter-title">第三章 货币或商品流通</h2>
+        <p class="chapter-summary">论述货币的五种职能：价值尺度、流通手段、贮藏手段、支付手段、世界货币。</p>
+        <div class="chapter-body"><p>金的第一种职能是作为价值尺度，或作为表现价值的手段。货币作为价值尺度，是商品价值的表现形式。</p>
+<div class="term-inline"><strong>价格</strong><span>价格的秘密在于量的规定性。价格是商品价值在流通过程中所取得的转化形式。</span></div>
+<p>货币的第二种职能是流通手段。商品流通的公式是：商品—货币—商品（W—G—W）。</p></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="huobi">货币</span></div>
+        <div class="ch-inline-guides"><h4>相关导读</h4><div class="guide-mini"><strong>大卫·哈维</strong>：如何读《资本论》</div></div>
+      </section>
+      <section id="v1c04" class="chapter-panel" data-ch="v1c04">
+        <div class="ch-breadcrumb">第一卷 · 第二篇 货币转化为资本</div>
+        <h2 class="chapter-title">第四章 货币转化为资本</h2>
+        <p class="chapter-summary">资本总公式 G—W—G′ 与商品流通公式的根本区别；揭示劳动力成为商品是货币转化为资本的前提。</p>
+        <div class="chapter-body"><blockquote class="golden-quote">资本总公式：G—W—G′，其中 G′=G+ΔG。资本不是物，而是一定的、社会的、属于一定历史社会形态的生产关系，它体现在一个物上，并赋予这个物以特有的社会性质。</blockquote>
+<p>货币所有者要把货币转化为资本，就必须在商品市场上找到一种特殊商品，这种商品具有特殊的使用价值，是价值的源泉——这种商品就是劳动力。</p>
+<div class="term-inline"><strong>劳动力</strong><span>劳动力是存在于活的人体中的，每当他生产某种使用价值时就运用的体力和智力的总和。</span></div></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="ziben">资本</span><span class="term-chip" data-term="laodongli">劳动力</span></div>
+        <div class="ch-inline-guides"><h4>相关导读</h4><div class="guide-mini"><strong>恩格斯</strong>：《资本论》第一卷序言</div><div class="guide-mini"><strong>大卫·哈维</strong>：如何读《资本论》</div></div>
+      </section>
+      <section id="v1c05" class="chapter-panel" data-ch="v1c05">
+        <div class="ch-breadcrumb">第一卷 · 第三篇 绝对剩余价值的生产</div>
+        <h2 class="chapter-title">第五章 劳动过程和价值增殖过程</h2>
+        <p class="chapter-summary">劳动过程是人与自然之间的物质变换；资本主义劳动过程是价值增殖过程，劳动力的使用创造的价值大于自身价值。</p>
+        <div class="chapter-body"><p>劳动过程是劳动者通过有目的的活动，使自然物质发生适合人类需要的变化的过程。作为劳动过程和价值增殖过程的统一，资本主义生产过程是商品生产过程。</p>
+<blockquote class="golden-quote">劳动力的价值和劳动力的使用所创造的价值，是两个不同的量。这个差额就是剩余价值。</blockquote></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="laodongli">劳动力</span><span class="term-chip" data-term="shengyujiazhi">剩余价值</span></div>
+        <div class="ch-inline-guides"><h4>相关导读</h4><div class="guide-mini"><strong>大卫·哈维</strong>：如何读《资本论》</div></div>
+      </section>
+      <section id="v1c06" class="chapter-panel" data-ch="v1c06">
+        <div class="ch-breadcrumb">第一卷 · 第三篇 绝对剩余价值的生产</div>
+        <h2 class="chapter-title">第六章 不变资本和可变资本</h2>
+        <p class="chapter-summary">划分不变资本（c）与可变资本（v），为剩余价值率的科学表述奠定基础。</p>
+        <div class="chapter-body"><div class="term-inline"><strong>不变资本</strong><span>生产资料的价值仅通过工人的具体劳动转移到新产品中，其量不增殖。</span></div>
+<div class="term-inline"><strong>可变资本</strong><span>用于购买劳动力的资本，在生产中不仅再生产自身价值，而且创造剩余价值。</span></div></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="budongziben">不变资本</span><span class="term-chip" data-term="kebianziben">可变资本</span></div>
+        
+      </section>
+      <section id="v1c07" class="chapter-panel" data-ch="v1c07">
+        <div class="ch-breadcrumb">第一卷 · 第三篇 绝对剩余价值的生产</div>
+        <h2 class="chapter-title">第七章 剩余价值率</h2>
+        <p class="chapter-summary">剩余价值率 m′=m/v，反映剥削程度。区分利润率与剩余价值率。</p>
+        <div class="chapter-body"><blockquote class="golden-quote">剩余价值率 m′ = 剩余劳动/必要劳动 = m/v。这是资本主义剥削程度的准确表现。</blockquote></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="shengyujiazhi">剩余价值</span><span class="term-chip" data-term="shengyujiazhiilv">剩余价值率</span></div>
+        <div class="ch-inline-guides"><h4>相关导读</h4><div class="guide-mini"><strong>曼德尔</strong>：剩余价值理论的历史地位</div></div>
+      </section>
+      <section id="v1c08" class="chapter-panel" data-ch="v1c08">
+        <div class="ch-breadcrumb">第一卷 · 第三篇 绝对剩余价值的生产</div>
+        <h2 class="chapter-title">第八章 工作日</h2>
+        <p class="chapter-summary">工作日长度的斗争史。资本与劳动在延长工作日上的对抗。</p>
+        <div class="chapter-body"><p>工作日由必要劳动时间和剩余劳动时间构成。资本在它的本能推动下，拼命追逐剩余劳动，仿佛只准过一天节似的。</p></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="jueduishengyu">绝对剩余价值</span></div>
+        
+      </section>
+      <section id="v1c09" class="chapter-panel" data-ch="v1c09">
+        <div class="ch-breadcrumb">第一卷 · 第三篇 绝对剩余价值的生产</div>
+        <h2 class="chapter-title">第九章 剩余价值率和剩余价值量</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v1c10" class="chapter-panel" data-ch="v1c10">
+        <div class="ch-breadcrumb">第一卷 · 第四篇 相对剩余价值的生产</div>
+        <h2 class="chapter-title">第十章 相对剩余价值的概念</h2>
+        <p class="chapter-summary">相对剩余价值：通过提高劳动生产力缩短必要劳动时间。</p>
+        <div class="chapter-body"><p>劳动力的价值决定工人必要劳动时间。为缩短必要劳动时间，必须提高生产劳动力所需消费品的部门的劳动生产力。</p></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="shengyujiazhi">剩余价值</span><span class="term-chip" data-term="xiangduishengyu">相对剩余价值</span></div>
+        
+      </section>
+      <section id="v1c11" class="chapter-panel" data-ch="v1c11">
+        <div class="ch-breadcrumb">第一卷 · 第四篇 相对剩余价值的生产</div>
+        <h2 class="chapter-title">第十一章 协作</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v1c12" class="chapter-panel" data-ch="v1c12">
+        <div class="ch-breadcrumb">第一卷 · 第四篇 相对剩余价值的生产</div>
+        <h2 class="chapter-title">第十二章 分工和工场手工业</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v1c13" class="chapter-panel" data-ch="v1c13">
+        <div class="ch-breadcrumb">第一卷 · 第四篇 相对剩余价值的生产</div>
+        <h2 class="chapter-title">第十三章 机器和大工业</h2>
+        <p class="chapter-summary">机器大工业摧毁工场手工业，创造工人阶级，形成资本主义生产的物质基础。</p>
+        <div class="chapter-body"><p>机器大工业的本质是生产方式的革命，它把劳动过程转化为科学在生产中的应用。</p></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="xiangduishengyu">相对剩余价值</span></div>
+        
+      </section>
+      <section id="v1c14" class="chapter-panel" data-ch="v1c14">
+        <div class="ch-breadcrumb">第一卷 · 第五篇 绝对剩余价值和相对剩余价值的生产</div>
+        <h2 class="chapter-title">第十四章 绝对剩余价值和相对剩余价值</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="jueduishengyu">绝对剩余价值</span></div>
+        
+      </section>
+      <section id="v1c15" class="chapter-panel" data-ch="v1c15">
+        <div class="ch-breadcrumb">第一卷 · 第五篇 绝对剩余价值和相对剩余价值的生产</div>
+        <h2 class="chapter-title">第十五章 劳动力价格和剩余价值的量的变化</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v1c16" class="chapter-panel" data-ch="v1c16">
+        <div class="ch-breadcrumb">第一卷 · 第五篇 绝对剩余价值和相对剩余价值的生产</div>
+        <h2 class="chapter-title">第十六章 剩余价值率的各种公式</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v1c17" class="chapter-panel" data-ch="v1c17">
+        <div class="ch-breadcrumb">第一卷 · 第六篇 工资</div>
+        <h2 class="chapter-title">第十七章 劳动力的价值或价格转化为工资</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v1c18" class="chapter-panel" data-ch="v1c18">
+        <div class="ch-breadcrumb">第一卷 · 第六篇 工资</div>
+        <h2 class="chapter-title">第十八章 计时工资</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v1c19" class="chapter-panel" data-ch="v1c19">
+        <div class="ch-breadcrumb">第一卷 · 第六篇 工资</div>
+        <h2 class="chapter-title">第十九章 计件工资</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v1c20" class="chapter-panel" data-ch="v1c20">
+        <div class="ch-breadcrumb">第一卷 · 第六篇 工资</div>
+        <h2 class="chapter-title">第二十章 工资的国民差异</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v1c21" class="chapter-panel" data-ch="v1c21">
+        <div class="ch-breadcrumb">第一卷 · 第七篇 资本的积累过程</div>
+        <h2 class="chapter-title">第二十一章 简单再生产</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v1c22" class="chapter-panel" data-ch="v1c22">
+        <div class="ch-breadcrumb">第一卷 · 第七篇 资本的积累过程</div>
+        <h2 class="chapter-title">第二十二章 剩余价值转化为资本</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="zibenjilei">资本积累</span></div>
+        
+      </section>
+      <section id="v1c23" class="chapter-panel" data-ch="v1c23">
+        <div class="ch-breadcrumb">第一卷 · 第七篇 资本的积累过程</div>
+        <h2 class="chapter-title">第二十三章 资本主义积累的一般规律</h2>
+        <p class="chapter-summary">资本主义积累的一般规律：财富在一极积累，贫困在另一极积累。</p>
+        <div class="chapter-body"><blockquote class="golden-quote">这一规律的内在机制：资本有机构成提高→相对过剩人口→工资被压至劳动力价值以下→积累加速。</blockquote></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="zibenjilei">资本积累</span></div>
+        <div class="ch-inline-guides"><h4>相关导读</h4><div class="guide-mini"><strong>曼德尔</strong>：剩余价值理论的历史地位</div></div>
+      </section>
+      <section id="v1c24" class="chapter-panel" data-ch="v1c24">
+        <div class="ch-breadcrumb">第一卷 · 第七篇 资本的积累过程</div>
+        <h2 class="chapter-title">第二十四章 所谓原始积累</h2>
+        <p class="chapter-summary">原始积累：生产者与生产资料分离的历史过程。圈地运动、殖民制度、国债。</p>
+        <div class="chapter-body"><blockquote class="golden-quote">所谓原始积累只不过是生产者和生产资料分离的历史过程。这个过程所以表现为「原始的」，因为它形成资本及与之相适应的生产方式的前史。</blockquote></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="yuanshijilei">原始积累</span></div>
+        
+      </section>
+      <section id="v1c25" class="chapter-panel" data-ch="v1c25">
+        <div class="ch-breadcrumb">第一卷 · 第七篇 资本的积累过程</div>
+        <h2 class="chapter-title">第二十五章 现代殖民理论</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c01" class="chapter-panel" data-ch="v2c01">
+        <div class="ch-breadcrumb">第二卷 · 第一篇 资本形态变化及其循环</div>
+        <h2 class="chapter-title">第一章 货币资本的循环</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c02" class="chapter-panel" data-ch="v2c02">
+        <div class="ch-breadcrumb">第二卷 · 第一篇 资本形态变化及其循环</div>
+        <h2 class="chapter-title">第二章 生产资本的循环</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c03" class="chapter-panel" data-ch="v2c03">
+        <div class="ch-breadcrumb">第二卷 · 第一篇 资本形态变化及其循环</div>
+        <h2 class="chapter-title">第三章 商品资本的循环</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c04" class="chapter-panel" data-ch="v2c04">
+        <div class="ch-breadcrumb">第二卷 · 第一篇 资本形态变化及其循环</div>
+        <h2 class="chapter-title">第四章 循环过程的三个公式</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c05" class="chapter-panel" data-ch="v2c05">
+        <div class="ch-breadcrumb">第二卷 · 第一篇 资本形态变化及其循环</div>
+        <h2 class="chapter-title">第五章 流通时间</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c06" class="chapter-panel" data-ch="v2c06">
+        <div class="ch-breadcrumb">第二卷 · 第一篇 资本形态变化及其循环</div>
+        <h2 class="chapter-title">第六章 流通费用</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c07" class="chapter-panel" data-ch="v2c07">
+        <div class="ch-breadcrumb">第二卷 · 第二篇 资本周转</div>
+        <h2 class="chapter-title">第七章 周转时间和周转次数</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c08" class="chapter-panel" data-ch="v2c08">
+        <div class="ch-breadcrumb">第二卷 · 第二篇 资本周转</div>
+        <h2 class="chapter-title">第八章 固定资本和流动资本</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c09" class="chapter-panel" data-ch="v2c09">
+        <div class="ch-breadcrumb">第二卷 · 第二篇 资本周转</div>
+        <h2 class="chapter-title">第九章 预付资本的总周转</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c10" class="chapter-panel" data-ch="v2c10">
+        <div class="ch-breadcrumb">第二卷 · 第二篇 资本周转</div>
+        <h2 class="chapter-title">第十章 固定资本和流动资本的理论</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c11" class="chapter-panel" data-ch="v2c11">
+        <div class="ch-breadcrumb">第二卷 · 第二篇 资本周转</div>
+        <h2 class="chapter-title">第十一章 李嘉图</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c12" class="chapter-panel" data-ch="v2c12">
+        <div class="ch-breadcrumb">第二卷 · 第二篇 资本周转</div>
+        <h2 class="chapter-title">第十二章 劳动期间</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c13" class="chapter-panel" data-ch="v2c13">
+        <div class="ch-breadcrumb">第二卷 · 第二篇 资本周转</div>
+        <h2 class="chapter-title">第十三章 生产时间</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c14" class="chapter-panel" data-ch="v2c14">
+        <div class="ch-breadcrumb">第二卷 · 第二篇 资本周转</div>
+        <h2 class="chapter-title">第十四章 流通时间</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c15" class="chapter-panel" data-ch="v2c15">
+        <div class="ch-breadcrumb">第二卷 · 第二篇 资本周转</div>
+        <h2 class="chapter-title">第十五章 周转时间对预付资本量的影响</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c16" class="chapter-panel" data-ch="v2c16">
+        <div class="ch-breadcrumb">第二卷 · 第二篇 资本周转</div>
+        <h2 class="chapter-title">第十六章 可变资本的周转</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c17" class="chapter-panel" data-ch="v2c17">
+        <div class="ch-breadcrumb">第二卷 · 第二篇 资本周转</div>
+        <h2 class="chapter-title">第十七章 剩余价值的流通</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c18" class="chapter-panel" data-ch="v2c18">
+        <div class="ch-breadcrumb">第二卷 · 第三篇 社会总资本的再生产和流通</div>
+        <h2 class="chapter-title">第十八章 导言</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c19" class="chapter-panel" data-ch="v2c19">
+        <div class="ch-breadcrumb">第二卷 · 第三篇 社会总资本的再生产和流通</div>
+        <h2 class="chapter-title">第十九章 前人对这个问题的阐述</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c20" class="chapter-panel" data-ch="v2c20">
+        <div class="ch-breadcrumb">第二卷 · 第三篇 社会总资本的再生产和流通</div>
+        <h2 class="chapter-title">第二十章 简单再生产</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c21" class="chapter-panel" data-ch="v2c21">
+        <div class="ch-breadcrumb">第二卷 · 第三篇 社会总资本的再生产和流通</div>
+        <h2 class="chapter-title">第二十一章 积累和扩大再生产</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v3c01" class="chapter-panel" data-ch="v3c01">
+        <div class="ch-breadcrumb">第三卷 · 第一篇 剩余价值转化为利润和利润率</div>
+        <h2 class="chapter-title">第一章 成本价格和利润</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v3c02" class="chapter-panel" data-ch="v3c02">
+        <div class="ch-breadcrumb">第三卷 · 第一篇 剩余价值转化为利润和利润率</div>
+        <h2 class="chapter-title">第二章 利润率</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v3c03" class="chapter-panel" data-ch="v3c03">
+        <div class="ch-breadcrumb">第三卷 · 第一篇 剩余价值转化为利润和利润率</div>
+        <h2 class="chapter-title">第三章 利润率和剩余价值率的关系</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v3c08" class="chapter-panel" data-ch="v3c08">
+        <div class="ch-breadcrumb">第三卷 · 第二篇 利润转化为平均利润</div>
+        <h2 class="chapter-title">第八章 不同生产部门的资本构成</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v3c09" class="chapter-panel" data-ch="v3c09">
+        <div class="ch-breadcrumb">第三卷 · 第二篇 利润转化为平均利润</div>
+        <h2 class="chapter-title">第九章 一般利润率的形成</h2>
+        <p class="chapter-summary">一般利润率的形成与价值向生产价格的转化。</p>
+        <div class="chapter-body"><p>不同生产部门的资本，由于构成不同，会有不同的利润率。通过竞争，利润率趋于平均化，价值转化为生产价格。</p></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="pingjunlirun">平均利润率</span><span class="term-chip" data-term="shengchengjiage">生产价格</span></div>
+        <div class="ch-inline-guides"><h4>相关导读</h4><div class="guide-mini"><strong>斯威齐</strong>：资本主义竞争与平均利润</div></div>
+      </section>
+      <section id="v3c10" class="chapter-panel" data-ch="v3c10">
+        <div class="ch-breadcrumb">第三卷 · 第二篇 利润转化为平均利润</div>
+        <h2 class="chapter-title">第十章 一般利润率通过竞争而平均化</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="pingjunlirun">平均利润率</span></div>
+        <div class="ch-inline-guides"><h4>相关导读</h4><div class="guide-mini"><strong>斯威齐</strong>：资本主义竞争与平均利润</div></div>
+      </section>
+      <section id="v3c13" class="chapter-panel" data-ch="v3c13">
+        <div class="ch-breadcrumb">第三卷 · 第三篇 利润率趋向下降的规律</div>
+        <h2 class="chapter-title">第十三章 规律本身</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v3c14" class="chapter-panel" data-ch="v3c14">
+        <div class="ch-breadcrumb">第三卷 · 第三篇 利润率趋向下降的规律</div>
+        <h2 class="chapter-title">第十四章 起反作用的各种原因</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v3c15" class="chapter-panel" data-ch="v3c15">
+        <div class="ch-breadcrumb">第三卷 · 第三篇 利润率趋向下降的规律</div>
+        <h2 class="chapter-title">第十五章 规律的内部矛盾的展开</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v3c21" class="chapter-panel" data-ch="v3c21">
+        <div class="ch-breadcrumb">第三卷 · 第五篇 利润分为利息和企业主收入</div>
+        <h2 class="chapter-title">第二十一章 生息资本</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v3c25" class="chapter-panel" data-ch="v3c25">
+        <div class="ch-breadcrumb">第三卷 · 第五篇 利润分为利息和企业主收入</div>
+        <h2 class="chapter-title">第二十五章 信用和虚拟资本</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v3c37" class="chapter-panel" data-ch="v3c37">
+        <div class="ch-breadcrumb">第三卷 · 第六篇 超额利润转化为地租</div>
+        <h2 class="chapter-title">第三十七章 导论</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v3c45" class="chapter-panel" data-ch="v3c45">
+        <div class="ch-breadcrumb">第三卷 · 第六篇 超额利润转化为地租</div>
+        <h2 class="chapter-title">第四十五章 绝对地租</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v3c52" class="chapter-panel" data-ch="v3c52">
+        <div class="ch-breadcrumb">第三卷 · 第六篇 超额利润转化为地租</div>
+        <h2 class="chapter-title">第五十二章 阶级</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+  </main>
+  <aside class="col-right" id="desktopSidebar">
+    <div class="sidebar-tabs">
+      <button type="button" class="sb-tab active" data-sb="terms">术语</button>
+      <button type="button" class="sb-tab" data-sb="guides">导读</button>
+      <button type="button" class="sb-tab" data-sb="kg">图谱</button>
+    </div>
+    <div class="sb-panel active" id="sb-terms">
+    <article id="term-shangpin" class="term-card" data-chapters="v1c01">
+      <header class="term-head">
+        <h3>商品</h3>
+        <span class="term-en">Commodity</span>
+      </header>
+      <p class="term-def">具有使用价值和价值二重性的劳动产品，是资本主义财富的基本元素形式。</p>
+      <p class="term-history"><em>典据</em> 马克思从「庞大的商品堆积」切入，将商品分析为资本主义社会的「细胞」。</p>
+      <footer class="term-refs"><span>第一卷第一章</span></footer>
+    </article>
+    <article id="term-shiyongjiazhi" class="term-card" data-chapters="v1c01">
+      <header class="term-head">
+        <h3>使用价值</h3>
+        <span class="term-en">Use-value</span>
+      </header>
+      <p class="term-def">物的有用性，构成财富的物质内容，与价值分析无关。</p>
+      <p class="term-history"><em>典据</em> 亚里士多德已区分使用价值与交换价值；马克思强调使用价值是价值的物质承担者。</p>
+      <footer class="term-refs"><span>第一卷第一章 §1</span></footer>
+    </article>
+    <article id="term-jiazh" class="term-card" data-chapters="v1c01,v1c02">
+      <header class="term-head">
+        <h3>价值</h3>
+        <span class="term-en">Value</span>
+      </header>
+      <p class="term-def">凝结在商品中的无差别的人类抽象劳动，是交换价值的本质。</p>
+      <p class="term-history"><em>典据</em> 古典政治经济学未能揭示价值实体；马克思以劳动价值论完成这一工作。</p>
+      <footer class="term-refs"><span>第一卷第一章 §1</span></footer>
+    </article>
+    <article id="term-jiaohuanjiazhi" class="term-card" data-chapters="v1c01">
+      <header class="term-head">
+        <h3>交换价值</h3>
+        <span class="term-en">Exchange-value</span>
+      </header>
+      <p class="term-def">一种使用价值同另一种使用价值相交换的量的关系，是价值的表现形式。</p>
+      
+      <footer class="term-refs"><span>第一卷第一章</span></footer>
+    </article>
+    <article id="term-laodongerchongxing" class="term-card" data-chapters="v1c01">
+      <header class="term-head">
+        <h3>劳动二重性</h3>
+        <span class="term-en">Dual character of labour</span>
+      </header>
+      <p class="term-def">具体劳动创造使用价值，抽象劳动形成价值——理解政治经济学的枢纽。</p>
+      <p class="term-history"><em>典据</em> 马克思称劳动二重性学说是「理解政治经济学的枢纽」。</p>
+      <footer class="term-refs"><span>第一卷第一章 §2</span></footer>
+    </article>
+    <article id="term-shehuibiyaolaodong" class="term-card" data-chapters="v1c01">
+      <header class="term-head">
+        <h3>社会必要劳动时间</h3>
+        <span class="term-en">Socially necessary labour-time</span>
+      </header>
+      <p class="term-def">在现有社会正常生产条件下，以社会平均劳动熟练程度和强度生产使用价值所需的劳动时间。</p>
+      
+      <footer class="term-refs"><span>第一卷第一章 §1</span></footer>
+    </article>
+    <article id="term-huobi" class="term-card" data-chapters="v1c03">
+      <header class="term-head">
+        <h3>货币</h3>
+        <span class="term-en">Money</span>
+      </header>
+      <p class="term-def">固定充当一般等价物的商品，是价值尺度和流通手段的统一。</p>
+      
+      <footer class="term-refs"><span>第一卷第三章</span></footer>
+    </article>
+    <article id="term-ziben" class="term-card" data-chapters="v1c04">
+      <header class="term-head">
+        <h3>资本</h3>
+        <span class="term-en">Capital</span>
+      </header>
+      <p class="term-def">带来剩余价值的价值，公式 G—W—G′ 中 G′&gt;G 的增殖运动。</p>
+      
+      <footer class="term-refs"><span>第一卷第四章</span></footer>
+    </article>
+    <article id="term-laodongli" class="term-card" data-chapters="v1c04,v1c05">
+      <header class="term-head">
+        <h3>劳动力</h3>
+        <span class="term-en">Labour-power</span>
+      </header>
+      <p class="term-def">人的劳动能力，成为商品须具备自由、一无所有两重条件。</p>
+      <p class="term-history"><em>典据</em> 劳动力商品是资本主义生产关系的前提，也是剩余价值的源泉。</p>
+      <footer class="term-refs"><span>第一卷第四章 §3</span></footer>
+    </article>
+    <article id="term-shengyujiazhi" class="term-card" data-chapters="v1c05,v1c07,v1c10">
+      <header class="term-head">
+        <h3>剩余价值</h3>
+        <span class="term-en">Surplus-value</span>
+      </header>
+      <p class="term-def">工人创造的、被资本家无偿占有的超过劳动力价值的那部分价值。</p>
+      
+      <footer class="term-refs"><span>第一卷第五篇起</span></footer>
+    </article>
+    <article id="term-budongziben" class="term-card" data-chapters="v1c06">
+      <header class="term-head">
+        <h3>不变资本</h3>
+        <span class="term-en">Constant capital (c)</span>
+      </header>
+      <p class="term-def">转为生产资料的那部分资本，价值仅转移不增殖。</p>
+      
+      <footer class="term-refs"><span>第一卷第六章</span></footer>
+    </article>
+    <article id="term-kebianziben" class="term-card" data-chapters="v1c06">
+      <header class="term-head">
+        <h3>可变资本</h3>
+        <span class="term-en">Variable capital (v)</span>
+      </header>
+      <p class="term-def">转为劳动力的那部分资本，在生产中创造新价值并增殖。</p>
+      
+      <footer class="term-refs"><span>第一卷第六章</span></footer>
+    </article>
+    <article id="term-shengyujiazhiilv" class="term-card" data-chapters="v1c07">
+      <header class="term-head">
+        <h3>剩余价值率</h3>
+        <span class="term-en">Rate of surplus-value (m′)</span>
+      </header>
+      <p class="term-def">m′ = m/v，反映资本家对工人的剥削程度。</p>
+      
+      <footer class="term-refs"><span>第一卷第七章</span></footer>
+    </article>
+    <article id="term-jueduishengyu" class="term-card" data-chapters="v1c08,v1c14">
+      <header class="term-head">
+        <h3>绝对剩余价值</h3>
+        <span class="term-en">Absolute surplus-value</span>
+      </header>
+      <p class="term-def">在必要劳动时间不变条件下，延长工作日而产生的剩余价值。</p>
+      
+      <footer class="term-refs"><span>第一卷第三篇</span></footer>
+    </article>
+    <article id="term-xiangduishengyu" class="term-card" data-chapters="v1c10,v1c13">
+      <header class="term-head">
+        <h3>相对剩余价值</h3>
+        <span class="term-en">Relative surplus-value</span>
+      </header>
+      <p class="term-def">在工作日长度不变条件下，缩短必要劳动时间、延长剩余劳动时间而产生的剩余价值。</p>
+      
+      <footer class="term-refs"><span>第一卷第四篇</span></footer>
+    </article>
+    <article id="term-zibenjilei" class="term-card" data-chapters="v1c22,v1c23">
+      <header class="term-head">
+        <h3>资本积累</h3>
+        <span class="term-en">Accumulation of capital</span>
+      </header>
+      <p class="term-def">剩余价值资本化，扩大再生产的源泉。</p>
+      
+      <footer class="term-refs"><span>第一卷第七篇</span></footer>
+    </article>
+    <article id="term-yuanshijilei" class="term-card" data-chapters="v1c24">
+      <header class="term-head">
+        <h3>原始积累</h3>
+        <span class="term-en">Primitive accumulation</span>
+      </header>
+      <p class="term-def">资本主义生产方式的历史前提：生产者与生产资料分离的过程。</p>
+      <p class="term-history"><em>典据</em> 「羊吃人」、殖民掠夺、国债制度等历史进程。</p>
+      <footer class="term-refs"><span>第一卷第二十四章</span></footer>
+    </article>
+    <article id="term-pingjunlirun" class="term-card" data-chapters="v3c09,v3c10">
+      <header class="term-head">
+        <h3>平均利润率</h3>
+        <span class="term-en">Average rate of profit</span>
+      </header>
+      <p class="term-def">不同部门资本通过竞争使利润率趋于平均化，价值转化为生产价格。</p>
+      
+      <footer class="term-refs"><span>第三卷第二篇</span></footer>
+    </article>
+    <article id="term-shengchengjiage" class="term-card" data-chapters="v3c09">
+      <header class="term-head">
+        <h3>生产价格</h3>
+        <span class="term-en">Price of production</span>
+      </header>
+      <p class="term-def">成本价格加平均利润，是价值在竞争中的转化形式。</p>
+      
+      <footer class="term-refs"><span>第三卷第九章</span></footer>
+    </article></div>
+    <div class="sb-panel" id="sb-guides">
+    <article class="guide-card">
+      <header><span class="guide-era">1914</span><h3>《资本论》是马克思理论的最大贡献</h3><p class="guide-author">列宁</p></header>
+      <p class="guide-excerpt">马克思的《资本论》是马克思理论的最大贡献。它第一次把社会主义从空想变成了科学，给这一理论奠定了牢固的基础，指出了这一理论必须遵循的道路。</p>
+      <div class="guide-tags"><span>科学社会主义</span><span>全书定位</span></div>
+    </article>
+    <article class="guide-card">
+      <header><span class="guide-era">1886</span><h3>《资本论》第一卷序言</h3><p class="guide-author">恩格斯</p></header>
+      <p class="guide-excerpt">我们在这里谈到的，只是《资本论》第一卷中直接涉及我们今天的利益的那一部分。马克思在《资本论》中阐明的理论，对于理解现代资本主义仍然具有根本意义。</p>
+      <div class="guide-tags"><span>历史唯物主义</span><span>方法论</span></div>
+    </article>
+    <article class="guide-card">
+      <header><span class="guide-era">1923</span><h3>物化与商品拜物教</h3><p class="guide-author">卢卡奇</p></header>
+      <p class="guide-excerpt">商品拜物教概念揭示了资本主义社会中人与人的关系如何物化为物与物的关系。这一洞见对理解现代社会的「物化」现象具有持久意义。</p>
+      <div class="guide-tags"><span>拜物教</span><span>物化</span></div>
+    </article>
+    <article class="guide-card">
+      <header><span class="guide-era">当代</span><h3>如何读《资本论》</h3><p class="guide-author">大卫·哈维</p></header>
+      <p class="guide-excerpt">不要试图一口气读完。先把握第一卷第一篇到第四篇的论证链条：商品→货币→资本→剩余价值。这是全书的逻辑地基。</p>
+      <div class="guide-tags"><span>读法</span><span>第一卷</span></div>
+    </article>
+    <article class="guide-card">
+      <header><span class="guide-era">1962</span><h3>剩余价值理论的历史地位</h3><p class="guide-author">曼德尔</p></header>
+      <p class="guide-excerpt">马克思的剩余价值理论不仅解释了剥削机制，而且揭示了资本主义积累的历史趋势与内在矛盾。</p>
+      <div class="guide-tags"><span>剩余价值</span><span>积累</span></div>
+    </article>
+    <article class="guide-card">
+      <header><span class="guide-era">1942</span><h3>对马克思经济理论的评价</h3><p class="guide-author">熊彼特</p></header>
+      <p class="guide-excerpt">马克思的分析框架在方法论上具有革命性。即便不同意其结论，也不能忽视《资本论》对理解资本主义动力结构的贡献。</p>
+      <div class="guide-tags"><span>方法论</span><span>评价</span></div>
+    </article>
+    <article class="guide-card">
+      <header><span class="guide-era">1942</span><h3>资本主义竞争与平均利润</h3><p class="guide-author">斯威齐</p></header>
+      <p class="guide-excerpt">从剩余价值到平均利润的转变，是马克思价值理论中最具挑战性的环节，也是理解「价值规律」在竞争中如何运作的关键。</p>
+      <div class="guide-tags"><span>平均利润</span><span>价值转型</span></div>
+    </article><div class="reading-phases"><h3>四遍读法</h3>
+    <details class="phase-card">
+      <summary><span class="phase-num">第一遍：逻辑主线</span><em>2-4 周</em></summary>
+      <ol><li>第一卷第一篇至第四篇：商品→货币→资本→剩余价值</li><li>配合「结构总览」思维导图建立全书地图</li><li>每章对照「术语词典」标注核心概念</li><li>不求细节，抓住每篇回答的核心问题</li></ol>
+    </details>
+    <details class="phase-card">
+      <summary><span class="phase-num">第二遍：精读第一卷</span><em>1-2 月</em></summary>
+      <ol><li>第一章：劳动二重性是枢纽，反复读</li><li>第四至七章：资本公式与剩余价值率</li><li>第八至十三章：两种剩余价值生产方式</li><li>第二十二至二十四章：积累与原始积累</li></ol>
+    </details>
+    <details class="phase-card">
+      <summary><span class="phase-num">第三遍：二三卷专题</span><em>1-2 月</em></summary>
+      <ol><li>第二卷第二篇：固定资本与流动资本</li><li>第二卷第三篇：社会总资本再生产图式</li><li>第三卷第二篇：平均利润率与生产价格</li><li>第三卷第五、六篇：利息、地租与阶级</li></ol>
+    </details>
+    <details class="phase-card">
+      <summary><span class="phase-num">第四遍：图谱贯通</span><em>持续</em></summary>
+      <ol><li>用「知识图谱」串联概念关系</li><li>阅读「名家导读」对照不同阐释传统</li><li>联系当代经济现象做费曼输出</li><li>与国富论对照：斯密→马克思的理论演进</li></ol>
+    </details></div>
+    <div class="tips-box"><h3>阅读提示</h3><ul><li>中央编译局译本术语统一，建议固定一个版本通读</li><li>手机阅读：底部 Tab 切换，侧栏内容在「术语」「导读」中查看</li><li>宽屏（≥1600px）三栏对照阅读效率最高</li><li>1440px 以下自动单栏，点击章节后上滑查看关联术语</li><li>第一卷密度最高，占精读时间约 60%</li></ul></div></div>
+    <div class="sb-panel" id="sb-kg">
+    <div class="kg-legend">
+      <span data-type="concept">概念</span><span data-type="person">人物</span><span data-type="event">事件</span><span data-type="volume">分卷</span>
+    </div>
+    <div class="kg-canvas-wrap"><canvas id="kgCanvas"></canvas></div>
+    <div id="kgTooltip" class="kg-tooltip"></div>
+    <div class="kg-node-list">
+      <button type="button" class="kg-node-btn" data-kg="marx">马克思</button><button type="button" class="kg-node-btn" data-kg="engels">恩格斯</button><button type="button" class="kg-node-btn" data-kg="smith">亚当·斯密</button><button type="button" class="kg-node-btn" data-kg="ricardo">李嘉图</button><button type="button" class="kg-node-btn" data-kg="shangpin">商品</button><button type="button" class="kg-node-btn" data-kg="jiazh">价值</button><button type="button" class="kg-node-btn" data-kg="huobi">货币</button><button type="button" class="kg-node-btn" data-kg="ziben">资本</button><button type="button" class="kg-node-btn" data-kg="laodongli">劳动力</button><button type="button" class="kg-node-btn" data-kg="shengyujiazhi">剩余价值</button><button type="button" class="kg-node-btn" data-kg="juedui">绝对剩余价值</button><button type="button" class="kg-node-btn" data-kg="xiangdui">相对剩余价值</button><button type="button" class="kg-node-btn" data-kg="jilei">资本积累</button><button type="button" class="kg-node-btn" data-kg="yuanshi">原始积累</button><button type="button" class="kg-node-btn" data-kg="lirun">利润</button><button type="button" class="kg-node-btn" data-kg="pingjunlirun">平均利润</button><button type="button" class="kg-node-btn" data-kg="dizu">地租</button><button type="button" class="kg-node-btn" data-kg="lixi">利息</button><button type="button" class="kg-node-btn" data-kg="baifutejiao">拜物教</button><button type="button" class="kg-node-btn" data-kg="gongchang">工业革命</button><button type="button" class="kg-node-btn" data-kg="quanquan">圈地运动</button><button type="button" class="kg-node-btn" data-kg="v1">第一卷·生产</button><button type="button" class="kg-node-btn" data-kg="v2">第二卷·流通</button><button type="button" class="kg-node-btn" data-kg="v3">第三卷·总过程</button>
+    </div>
+    <script type="application/json" id="kgData">[{"id":"marx","type":"person","label":"马克思","size":3},{"id":"engels","type":"person","label":"恩格斯","size":2},{"id":"smith","type":"person","label":"亚当·斯密","size":2},{"id":"ricardo","type":"person","label":"李嘉图","size":2},{"id":"shangpin","type":"concept","label":"商品","size":3},{"id":"jiazh","type":"concept","label":"价值","size":3},{"id":"huobi","type":"concept","label":"货币","size":2},{"id":"ziben","type":"concept","label":"资本","size":3},{"id":"laodongli","type":"concept","label":"劳动力","size":2},{"id":"shengyujiazhi","type":"concept","label":"剩余价值","size":3},{"id":"juedui","type":"concept","label":"绝对剩余价值","size":2},{"id":"xiangdui","type":"concept","label":"相对剩余价值","size":2},{"id":"jilei","type":"concept","label":"资本积累","size":2},{"id":"yuanshi","type":"concept","label":"原始积累","size":2},{"id":"lirun","type":"concept","label":"利润","size":2},{"id":"pingjunlirun","type":"concept","label":"平均利润","size":2},{"id":"dizu","type":"concept","label":"地租","size":2},{"id":"lixi","type":"concept","label":"利息","size":2},{"id":"baifutejiao","type":"concept","label":"拜物教","size":2},{"id":"gongchang","type":"event","label":"工业革命","size":2},{"id":"quanquan","type":"event","label":"圈地运动","size":2},{"id":"v1","type":"volume","label":"第一卷·生产","size":3},{"id":"v2","type":"volume","label":"第二卷·流通","size":2},{"id":"v3","type":"volume","label":"第三卷·总过程","size":2}]</script>
+    <script type="application/json" id="kgEdges">[{"from":"marx","to":"shangpin","label":"分析起点"},{"from":"marx","to":"shengyujiazhi","label":"发现"},{"from":"engels","to":"v2","label":"编辑出版"},{"from":"engels","to":"v3","label":"编辑出版"},{"from":"shangpin","to":"jiazh","label":"二因素"},{"from":"shangpin","to":"baifutejiao","label":"秘密"},{"from":"jiazh","to":"huobi","label":"货币形式"},{"from":"huobi","to":"ziben","label":"转化为"},{"from":"ziben","to":"laodongli","label":"购买"},{"from":"laodongli","to":"shengyujiazhi","label":"创造"},{"from":"shengyujiazhi","to":"juedui","label":"形式"},{"from":"shengyujiazhi","to":"xiangdui","label":"形式"},{"from":"shengyujiazhi","to":"jilei","label":"资本化"},{"from":"jilei","to":"yuanshi","label":"历史前提"},{"from":"quanquan","to":"yuanshi","label":"构成"},{"from":"gongchang","to":"xiangdui","label":"推动"},{"from":"shengyujiazhi","to":"lirun","label":"转化"},{"from":"lirun","to":"pingjunlirun","label":"平均化"},{"from":"lirun","to":"lixi","label":"分割"},{"from":"lirun","to":"dizu","label":"超额→"},{"from":"smith","to":"jiazh","label":"劳动价值论"},{"from":"ricardo","to":"jiazh","label":"继承发展"},{"from":"marx","to":"smith","label":"批判继承"},{"from":"v1","to":"shangpin","label":"开篇"},{"from":"v1","to":"shengyujiazhi","label":"核心"},{"from":"v2","to":"ziben","label":"流通形态"},{"from":"v3","to":"lirun","label":"表面形态"}]</script></div>
+  </aside>
+</div>
+
+<!-- 单栏（≤1599px，含手机） -->
+<div class="single-col">
+  <section id="tab-read" class="tab-panel active">
+      <section id="v1c01" class="chapter-panel" data-ch="v1c01">
+        <div class="ch-breadcrumb">第一卷 · 第一篇 商品和货币</div>
+        <h2 class="chapter-title">第一章 商品</h2>
+        <p class="chapter-summary">全书起点。分析商品的使用价值与价值二重性，揭示劳动二重性，论述价值形式从简单到货币的发展，批判商品拜物教。</p>
+        <div class="chapter-body"><p>资本主义生产方式占统治地位的社会的财富，表现为「庞大的商品堆积」，单个的商品表现为这种财富的元素形式。因此，我们的研究就从分析商品开始。</p>
+<div class="term-inline"><strong>商品</strong><span>商品首先是一个外界的对象，一个靠自己的属性来满足人的某种需要的物。每一种有用物，如铁、纸等等，都可以从质和量两个角度来考察。</span></div>
+<div class="term-inline"><strong>使用价值</strong><span>物的有用性使物成为使用价值。但这种有用性不是悬在空中的。它决定于商品体的属性，离开了商品体就不存在。</span></div>
+<p>交换价值首先表现为一种使用价值同另一种使用价值相交换的量的关系或比例。如果把商品体的使用价值撇开，商品体就只剩下一个属性，即劳动产品这个属性。</p>
+<div class="term-inline"><strong>价值</strong><span>这些物，作为它们共有的这个社会实体的结晶，就是价值——商品价值。价值量由社会必要劳动时间决定。</span></div>
+<blockquote class="golden-quote">劳动二重性：具体劳动创造使用价值，抽象劳动形成价值。这是理解政治经济学的枢纽。</blockquote>
+<p>商品形式的奥秘仅仅在于：它把人们本身劳动的社会性质反映成劳动产品本身的物的性质，反映成这些物的天然的社会属性，从而把生产者同总劳动的社会关系反映成存在于生产者之外的物与物的关系。</p></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="shangpin">商品</span><span class="term-chip" data-term="shiyongjiazhi">使用价值</span><span class="term-chip" data-term="jiazh">价值</span><span class="term-chip" data-term="jiaohuanjiazhi">交换价值</span><span class="term-chip" data-term="laodongerchongxing">劳动二重性</span><span class="term-chip" data-term="shehuibiyaolaodong">社会必要劳动时间</span></div>
+        <div class="ch-inline-guides"><h4>相关导读</h4><div class="guide-mini"><strong>列宁</strong>：《资本论》是马克思理论的最大贡献</div><div class="guide-mini"><strong>恩格斯</strong>：《资本论》第一卷序言</div><div class="guide-mini"><strong>卢卡奇</strong>：物化与商品拜物教</div><div class="guide-mini"><strong>大卫·哈维</strong>：如何读《资本论》</div><div class="guide-mini"><strong>熊彼特</strong>：对马克思经济理论的评价</div></div>
+      </section>
+      <section id="v1c02" class="chapter-panel" data-ch="v1c02">
+        <div class="ch-breadcrumb">第一卷 · 第一篇 商品和货币</div>
+        <h2 class="chapter-title">第二章 交换过程</h2>
+        <p class="chapter-summary">商品不能自己到市场上去交换，商品所有者须以彼此承认对方商品所有权为前提。交换过程使商品转化为货币。</p>
+        <div class="chapter-body"><p>商品不能自己到市场上去，不能自己去交换。因此，我们必须找寻它们的监护人，商品所有者。商品爱货币，但是「真爱情的道路决不是平坦的」。</p>
+<p>交换过程使商品从商品中分离出货币，从而使商品变成货币。货币是商品世界分离出固定在金这种商品上的商品价值。</p></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="jiazh">价值</span></div>
+        
+      </section>
+      <section id="v1c03" class="chapter-panel" data-ch="v1c03">
+        <div class="ch-breadcrumb">第一卷 · 第一篇 商品和货币</div>
+        <h2 class="chapter-title">第三章 货币或商品流通</h2>
+        <p class="chapter-summary">论述货币的五种职能：价值尺度、流通手段、贮藏手段、支付手段、世界货币。</p>
+        <div class="chapter-body"><p>金的第一种职能是作为价值尺度，或作为表现价值的手段。货币作为价值尺度，是商品价值的表现形式。</p>
+<div class="term-inline"><strong>价格</strong><span>价格的秘密在于量的规定性。价格是商品价值在流通过程中所取得的转化形式。</span></div>
+<p>货币的第二种职能是流通手段。商品流通的公式是：商品—货币—商品（W—G—W）。</p></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="huobi">货币</span></div>
+        <div class="ch-inline-guides"><h4>相关导读</h4><div class="guide-mini"><strong>大卫·哈维</strong>：如何读《资本论》</div></div>
+      </section>
+      <section id="v1c04" class="chapter-panel" data-ch="v1c04">
+        <div class="ch-breadcrumb">第一卷 · 第二篇 货币转化为资本</div>
+        <h2 class="chapter-title">第四章 货币转化为资本</h2>
+        <p class="chapter-summary">资本总公式 G—W—G′ 与商品流通公式的根本区别；揭示劳动力成为商品是货币转化为资本的前提。</p>
+        <div class="chapter-body"><blockquote class="golden-quote">资本总公式：G—W—G′，其中 G′=G+ΔG。资本不是物，而是一定的、社会的、属于一定历史社会形态的生产关系，它体现在一个物上，并赋予这个物以特有的社会性质。</blockquote>
+<p>货币所有者要把货币转化为资本，就必须在商品市场上找到一种特殊商品，这种商品具有特殊的使用价值，是价值的源泉——这种商品就是劳动力。</p>
+<div class="term-inline"><strong>劳动力</strong><span>劳动力是存在于活的人体中的，每当他生产某种使用价值时就运用的体力和智力的总和。</span></div></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="ziben">资本</span><span class="term-chip" data-term="laodongli">劳动力</span></div>
+        <div class="ch-inline-guides"><h4>相关导读</h4><div class="guide-mini"><strong>恩格斯</strong>：《资本论》第一卷序言</div><div class="guide-mini"><strong>大卫·哈维</strong>：如何读《资本论》</div></div>
+      </section>
+      <section id="v1c05" class="chapter-panel" data-ch="v1c05">
+        <div class="ch-breadcrumb">第一卷 · 第三篇 绝对剩余价值的生产</div>
+        <h2 class="chapter-title">第五章 劳动过程和价值增殖过程</h2>
+        <p class="chapter-summary">劳动过程是人与自然之间的物质变换；资本主义劳动过程是价值增殖过程，劳动力的使用创造的价值大于自身价值。</p>
+        <div class="chapter-body"><p>劳动过程是劳动者通过有目的的活动，使自然物质发生适合人类需要的变化的过程。作为劳动过程和价值增殖过程的统一，资本主义生产过程是商品生产过程。</p>
+<blockquote class="golden-quote">劳动力的价值和劳动力的使用所创造的价值，是两个不同的量。这个差额就是剩余价值。</blockquote></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="laodongli">劳动力</span><span class="term-chip" data-term="shengyujiazhi">剩余价值</span></div>
+        <div class="ch-inline-guides"><h4>相关导读</h4><div class="guide-mini"><strong>大卫·哈维</strong>：如何读《资本论》</div></div>
+      </section>
+      <section id="v1c06" class="chapter-panel" data-ch="v1c06">
+        <div class="ch-breadcrumb">第一卷 · 第三篇 绝对剩余价值的生产</div>
+        <h2 class="chapter-title">第六章 不变资本和可变资本</h2>
+        <p class="chapter-summary">划分不变资本（c）与可变资本（v），为剩余价值率的科学表述奠定基础。</p>
+        <div class="chapter-body"><div class="term-inline"><strong>不变资本</strong><span>生产资料的价值仅通过工人的具体劳动转移到新产品中，其量不增殖。</span></div>
+<div class="term-inline"><strong>可变资本</strong><span>用于购买劳动力的资本，在生产中不仅再生产自身价值，而且创造剩余价值。</span></div></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="budongziben">不变资本</span><span class="term-chip" data-term="kebianziben">可变资本</span></div>
+        
+      </section>
+      <section id="v1c07" class="chapter-panel" data-ch="v1c07">
+        <div class="ch-breadcrumb">第一卷 · 第三篇 绝对剩余价值的生产</div>
+        <h2 class="chapter-title">第七章 剩余价值率</h2>
+        <p class="chapter-summary">剩余价值率 m′=m/v，反映剥削程度。区分利润率与剩余价值率。</p>
+        <div class="chapter-body"><blockquote class="golden-quote">剩余价值率 m′ = 剩余劳动/必要劳动 = m/v。这是资本主义剥削程度的准确表现。</blockquote></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="shengyujiazhi">剩余价值</span><span class="term-chip" data-term="shengyujiazhiilv">剩余价值率</span></div>
+        <div class="ch-inline-guides"><h4>相关导读</h4><div class="guide-mini"><strong>曼德尔</strong>：剩余价值理论的历史地位</div></div>
+      </section>
+      <section id="v1c08" class="chapter-panel" data-ch="v1c08">
+        <div class="ch-breadcrumb">第一卷 · 第三篇 绝对剩余价值的生产</div>
+        <h2 class="chapter-title">第八章 工作日</h2>
+        <p class="chapter-summary">工作日长度的斗争史。资本与劳动在延长工作日上的对抗。</p>
+        <div class="chapter-body"><p>工作日由必要劳动时间和剩余劳动时间构成。资本在它的本能推动下，拼命追逐剩余劳动，仿佛只准过一天节似的。</p></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="jueduishengyu">绝对剩余价值</span></div>
+        
+      </section>
+      <section id="v1c09" class="chapter-panel" data-ch="v1c09">
+        <div class="ch-breadcrumb">第一卷 · 第三篇 绝对剩余价值的生产</div>
+        <h2 class="chapter-title">第九章 剩余价值率和剩余价值量</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v1c10" class="chapter-panel" data-ch="v1c10">
+        <div class="ch-breadcrumb">第一卷 · 第四篇 相对剩余价值的生产</div>
+        <h2 class="chapter-title">第十章 相对剩余价值的概念</h2>
+        <p class="chapter-summary">相对剩余价值：通过提高劳动生产力缩短必要劳动时间。</p>
+        <div class="chapter-body"><p>劳动力的价值决定工人必要劳动时间。为缩短必要劳动时间，必须提高生产劳动力所需消费品的部门的劳动生产力。</p></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="shengyujiazhi">剩余价值</span><span class="term-chip" data-term="xiangduishengyu">相对剩余价值</span></div>
+        
+      </section>
+      <section id="v1c11" class="chapter-panel" data-ch="v1c11">
+        <div class="ch-breadcrumb">第一卷 · 第四篇 相对剩余价值的生产</div>
+        <h2 class="chapter-title">第十一章 协作</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v1c12" class="chapter-panel" data-ch="v1c12">
+        <div class="ch-breadcrumb">第一卷 · 第四篇 相对剩余价值的生产</div>
+        <h2 class="chapter-title">第十二章 分工和工场手工业</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v1c13" class="chapter-panel" data-ch="v1c13">
+        <div class="ch-breadcrumb">第一卷 · 第四篇 相对剩余价值的生产</div>
+        <h2 class="chapter-title">第十三章 机器和大工业</h2>
+        <p class="chapter-summary">机器大工业摧毁工场手工业，创造工人阶级，形成资本主义生产的物质基础。</p>
+        <div class="chapter-body"><p>机器大工业的本质是生产方式的革命，它把劳动过程转化为科学在生产中的应用。</p></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="xiangduishengyu">相对剩余价值</span></div>
+        
+      </section>
+      <section id="v1c14" class="chapter-panel" data-ch="v1c14">
+        <div class="ch-breadcrumb">第一卷 · 第五篇 绝对剩余价值和相对剩余价值的生产</div>
+        <h2 class="chapter-title">第十四章 绝对剩余价值和相对剩余价值</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="jueduishengyu">绝对剩余价值</span></div>
+        
+      </section>
+      <section id="v1c15" class="chapter-panel" data-ch="v1c15">
+        <div class="ch-breadcrumb">第一卷 · 第五篇 绝对剩余价值和相对剩余价值的生产</div>
+        <h2 class="chapter-title">第十五章 劳动力价格和剩余价值的量的变化</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v1c16" class="chapter-panel" data-ch="v1c16">
+        <div class="ch-breadcrumb">第一卷 · 第五篇 绝对剩余价值和相对剩余价值的生产</div>
+        <h2 class="chapter-title">第十六章 剩余价值率的各种公式</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v1c17" class="chapter-panel" data-ch="v1c17">
+        <div class="ch-breadcrumb">第一卷 · 第六篇 工资</div>
+        <h2 class="chapter-title">第十七章 劳动力的价值或价格转化为工资</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v1c18" class="chapter-panel" data-ch="v1c18">
+        <div class="ch-breadcrumb">第一卷 · 第六篇 工资</div>
+        <h2 class="chapter-title">第十八章 计时工资</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v1c19" class="chapter-panel" data-ch="v1c19">
+        <div class="ch-breadcrumb">第一卷 · 第六篇 工资</div>
+        <h2 class="chapter-title">第十九章 计件工资</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v1c20" class="chapter-panel" data-ch="v1c20">
+        <div class="ch-breadcrumb">第一卷 · 第六篇 工资</div>
+        <h2 class="chapter-title">第二十章 工资的国民差异</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v1c21" class="chapter-panel" data-ch="v1c21">
+        <div class="ch-breadcrumb">第一卷 · 第七篇 资本的积累过程</div>
+        <h2 class="chapter-title">第二十一章 简单再生产</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v1c22" class="chapter-panel" data-ch="v1c22">
+        <div class="ch-breadcrumb">第一卷 · 第七篇 资本的积累过程</div>
+        <h2 class="chapter-title">第二十二章 剩余价值转化为资本</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="zibenjilei">资本积累</span></div>
+        
+      </section>
+      <section id="v1c23" class="chapter-panel" data-ch="v1c23">
+        <div class="ch-breadcrumb">第一卷 · 第七篇 资本的积累过程</div>
+        <h2 class="chapter-title">第二十三章 资本主义积累的一般规律</h2>
+        <p class="chapter-summary">资本主义积累的一般规律：财富在一极积累，贫困在另一极积累。</p>
+        <div class="chapter-body"><blockquote class="golden-quote">这一规律的内在机制：资本有机构成提高→相对过剩人口→工资被压至劳动力价值以下→积累加速。</blockquote></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="zibenjilei">资本积累</span></div>
+        <div class="ch-inline-guides"><h4>相关导读</h4><div class="guide-mini"><strong>曼德尔</strong>：剩余价值理论的历史地位</div></div>
+      </section>
+      <section id="v1c24" class="chapter-panel" data-ch="v1c24">
+        <div class="ch-breadcrumb">第一卷 · 第七篇 资本的积累过程</div>
+        <h2 class="chapter-title">第二十四章 所谓原始积累</h2>
+        <p class="chapter-summary">原始积累：生产者与生产资料分离的历史过程。圈地运动、殖民制度、国债。</p>
+        <div class="chapter-body"><blockquote class="golden-quote">所谓原始积累只不过是生产者和生产资料分离的历史过程。这个过程所以表现为「原始的」，因为它形成资本及与之相适应的生产方式的前史。</blockquote></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="yuanshijilei">原始积累</span></div>
+        
+      </section>
+      <section id="v1c25" class="chapter-panel" data-ch="v1c25">
+        <div class="ch-breadcrumb">第一卷 · 第七篇 资本的积累过程</div>
+        <h2 class="chapter-title">第二十五章 现代殖民理论</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c01" class="chapter-panel" data-ch="v2c01">
+        <div class="ch-breadcrumb">第二卷 · 第一篇 资本形态变化及其循环</div>
+        <h2 class="chapter-title">第一章 货币资本的循环</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c02" class="chapter-panel" data-ch="v2c02">
+        <div class="ch-breadcrumb">第二卷 · 第一篇 资本形态变化及其循环</div>
+        <h2 class="chapter-title">第二章 生产资本的循环</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c03" class="chapter-panel" data-ch="v2c03">
+        <div class="ch-breadcrumb">第二卷 · 第一篇 资本形态变化及其循环</div>
+        <h2 class="chapter-title">第三章 商品资本的循环</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c04" class="chapter-panel" data-ch="v2c04">
+        <div class="ch-breadcrumb">第二卷 · 第一篇 资本形态变化及其循环</div>
+        <h2 class="chapter-title">第四章 循环过程的三个公式</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c05" class="chapter-panel" data-ch="v2c05">
+        <div class="ch-breadcrumb">第二卷 · 第一篇 资本形态变化及其循环</div>
+        <h2 class="chapter-title">第五章 流通时间</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c06" class="chapter-panel" data-ch="v2c06">
+        <div class="ch-breadcrumb">第二卷 · 第一篇 资本形态变化及其循环</div>
+        <h2 class="chapter-title">第六章 流通费用</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c07" class="chapter-panel" data-ch="v2c07">
+        <div class="ch-breadcrumb">第二卷 · 第二篇 资本周转</div>
+        <h2 class="chapter-title">第七章 周转时间和周转次数</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c08" class="chapter-panel" data-ch="v2c08">
+        <div class="ch-breadcrumb">第二卷 · 第二篇 资本周转</div>
+        <h2 class="chapter-title">第八章 固定资本和流动资本</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c09" class="chapter-panel" data-ch="v2c09">
+        <div class="ch-breadcrumb">第二卷 · 第二篇 资本周转</div>
+        <h2 class="chapter-title">第九章 预付资本的总周转</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c10" class="chapter-panel" data-ch="v2c10">
+        <div class="ch-breadcrumb">第二卷 · 第二篇 资本周转</div>
+        <h2 class="chapter-title">第十章 固定资本和流动资本的理论</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c11" class="chapter-panel" data-ch="v2c11">
+        <div class="ch-breadcrumb">第二卷 · 第二篇 资本周转</div>
+        <h2 class="chapter-title">第十一章 李嘉图</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c12" class="chapter-panel" data-ch="v2c12">
+        <div class="ch-breadcrumb">第二卷 · 第二篇 资本周转</div>
+        <h2 class="chapter-title">第十二章 劳动期间</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c13" class="chapter-panel" data-ch="v2c13">
+        <div class="ch-breadcrumb">第二卷 · 第二篇 资本周转</div>
+        <h2 class="chapter-title">第十三章 生产时间</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c14" class="chapter-panel" data-ch="v2c14">
+        <div class="ch-breadcrumb">第二卷 · 第二篇 资本周转</div>
+        <h2 class="chapter-title">第十四章 流通时间</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c15" class="chapter-panel" data-ch="v2c15">
+        <div class="ch-breadcrumb">第二卷 · 第二篇 资本周转</div>
+        <h2 class="chapter-title">第十五章 周转时间对预付资本量的影响</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c16" class="chapter-panel" data-ch="v2c16">
+        <div class="ch-breadcrumb">第二卷 · 第二篇 资本周转</div>
+        <h2 class="chapter-title">第十六章 可变资本的周转</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c17" class="chapter-panel" data-ch="v2c17">
+        <div class="ch-breadcrumb">第二卷 · 第二篇 资本周转</div>
+        <h2 class="chapter-title">第十七章 剩余价值的流通</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c18" class="chapter-panel" data-ch="v2c18">
+        <div class="ch-breadcrumb">第二卷 · 第三篇 社会总资本的再生产和流通</div>
+        <h2 class="chapter-title">第十八章 导言</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c19" class="chapter-panel" data-ch="v2c19">
+        <div class="ch-breadcrumb">第二卷 · 第三篇 社会总资本的再生产和流通</div>
+        <h2 class="chapter-title">第十九章 前人对这个问题的阐述</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c20" class="chapter-panel" data-ch="v2c20">
+        <div class="ch-breadcrumb">第二卷 · 第三篇 社会总资本的再生产和流通</div>
+        <h2 class="chapter-title">第二十章 简单再生产</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v2c21" class="chapter-panel" data-ch="v2c21">
+        <div class="ch-breadcrumb">第二卷 · 第三篇 社会总资本的再生产和流通</div>
+        <h2 class="chapter-title">第二十一章 积累和扩大再生产</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v3c01" class="chapter-panel" data-ch="v3c01">
+        <div class="ch-breadcrumb">第三卷 · 第一篇 剩余价值转化为利润和利润率</div>
+        <h2 class="chapter-title">第一章 成本价格和利润</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v3c02" class="chapter-panel" data-ch="v3c02">
+        <div class="ch-breadcrumb">第三卷 · 第一篇 剩余价值转化为利润和利润率</div>
+        <h2 class="chapter-title">第二章 利润率</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v3c03" class="chapter-panel" data-ch="v3c03">
+        <div class="ch-breadcrumb">第三卷 · 第一篇 剩余价值转化为利润和利润率</div>
+        <h2 class="chapter-title">第三章 利润率和剩余价值率的关系</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v3c08" class="chapter-panel" data-ch="v3c08">
+        <div class="ch-breadcrumb">第三卷 · 第二篇 利润转化为平均利润</div>
+        <h2 class="chapter-title">第八章 不同生产部门的资本构成</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v3c09" class="chapter-panel" data-ch="v3c09">
+        <div class="ch-breadcrumb">第三卷 · 第二篇 利润转化为平均利润</div>
+        <h2 class="chapter-title">第九章 一般利润率的形成</h2>
+        <p class="chapter-summary">一般利润率的形成与价值向生产价格的转化。</p>
+        <div class="chapter-body"><p>不同生产部门的资本，由于构成不同，会有不同的利润率。通过竞争，利润率趋于平均化，价值转化为生产价格。</p></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="pingjunlirun">平均利润率</span><span class="term-chip" data-term="shengchengjiage">生产价格</span></div>
+        <div class="ch-inline-guides"><h4>相关导读</h4><div class="guide-mini"><strong>斯威齐</strong>：资本主义竞争与平均利润</div></div>
+      </section>
+      <section id="v3c10" class="chapter-panel" data-ch="v3c10">
+        <div class="ch-breadcrumb">第三卷 · 第二篇 利润转化为平均利润</div>
+        <h2 class="chapter-title">第十章 一般利润率通过竞争而平均化</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        <div class="ch-inline-terms"><h4>本章术语</h4><span class="term-chip" data-term="pingjunlirun">平均利润率</span></div>
+        <div class="ch-inline-guides"><h4>相关导读</h4><div class="guide-mini"><strong>斯威齐</strong>：资本主义竞争与平均利润</div></div>
+      </section>
+      <section id="v3c13" class="chapter-panel" data-ch="v3c13">
+        <div class="ch-breadcrumb">第三卷 · 第三篇 利润率趋向下降的规律</div>
+        <h2 class="chapter-title">第十三章 规律本身</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v3c14" class="chapter-panel" data-ch="v3c14">
+        <div class="ch-breadcrumb">第三卷 · 第三篇 利润率趋向下降的规律</div>
+        <h2 class="chapter-title">第十四章 起反作用的各种原因</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v3c15" class="chapter-panel" data-ch="v3c15">
+        <div class="ch-breadcrumb">第三卷 · 第三篇 利润率趋向下降的规律</div>
+        <h2 class="chapter-title">第十五章 规律的内部矛盾的展开</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v3c21" class="chapter-panel" data-ch="v3c21">
+        <div class="ch-breadcrumb">第三卷 · 第五篇 利润分为利息和企业主收入</div>
+        <h2 class="chapter-title">第二十一章 生息资本</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v3c25" class="chapter-panel" data-ch="v3c25">
+        <div class="ch-breadcrumb">第三卷 · 第五篇 利润分为利息和企业主收入</div>
+        <h2 class="chapter-title">第二十五章 信用和虚拟资本</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v3c37" class="chapter-panel" data-ch="v3c37">
+        <div class="ch-breadcrumb">第三卷 · 第六篇 超额利润转化为地租</div>
+        <h2 class="chapter-title">第三十七章 导论</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v3c45" class="chapter-panel" data-ch="v3c45">
+        <div class="ch-breadcrumb">第三卷 · 第六篇 超额利润转化为地租</div>
+        <h2 class="chapter-title">第四十五章 绝对地租</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section>
+      <section id="v3c52" class="chapter-panel" data-ch="v3c52">
+        <div class="ch-breadcrumb">第三卷 · 第六篇 超额利润转化为地租</div>
+        <h2 class="chapter-title">第五十二章 阶级</h2>
+        <p class="chapter-summary">本章内容请参阅中央编译局译本全文。完整原文可后续导入 _source 目录后由构建脚本自动解析。</p>
+        <div class="chapter-body"><p>本章属于《资本论》体系的重要环节。建议结合左侧结构总览定位其在全书逻辑中的位置，并查阅关联术语与名家导读。</p></div>
+        
+        
+      </section></section>
+  <section id="tab-structure" class="tab-panel">
+    <h2 class="section-title" style="font-size:18px;color:var(--accent);margin-bottom:16px">思维导图与结构总览</h2>
+    
+    <div class="mind-branch">
+      <div class="mind-root">第一卷 · 生产</div>
+      <div class="mind-children">
+        
+          <div class="mind-leaf">
+            <span class="mind-label">商品→货币</span>
+            <span class="mind-desc">价值理论奠基</span>
+          </div>
+          <div class="mind-leaf">
+            <span class="mind-label">货币→资本</span>
+            <span class="mind-desc">劳动力商品</span>
+          </div>
+          <div class="mind-leaf">
+            <span class="mind-label">剩余价值</span>
+            <span class="mind-desc">绝对与相对</span>
+          </div>
+          <div class="mind-leaf">
+            <span class="mind-label">工资形式</span>
+            <span class="mind-desc">劳动力价格掩盖</span>
+          </div>
+          <div class="mind-leaf">
+            <span class="mind-label">资本积累</span>
+            <span class="mind-desc">原始积累</span>
+          </div>
+      </div>
+    </div>
+    <div class="mind-branch">
+      <div class="mind-root">第二卷 · 流通</div>
+      <div class="mind-children">
+        
+          <div class="mind-leaf">
+            <span class="mind-label">资本循环</span>
+            <span class="mind-desc">货币·生产·商品</span>
+          </div>
+          <div class="mind-leaf">
+            <span class="mind-label">资本周转</span>
+            <span class="mind-desc">固定与流动</span>
+          </div>
+          <div class="mind-leaf">
+            <span class="mind-label">社会再生产</span>
+            <span class="mind-desc">两大部类</span>
+          </div>
+      </div>
+    </div>
+    <div class="mind-branch">
+      <div class="mind-root">第三卷 · 总过程</div>
+      <div class="mind-children">
+        
+          <div class="mind-leaf">
+            <span class="mind-label">利润与平均利润</span>
+            <span class="mind-desc">价值转型</span>
+          </div>
+          <div class="mind-leaf">
+            <span class="mind-label">利润率下降</span>
+            <span class="mind-desc">内在矛盾</span>
+          </div>
+          <div class="mind-leaf">
+            <span class="mind-label">利息·地租</span>
+            <span class="mind-desc">分配形式</span>
+          </div>
+          <div class="mind-leaf">
+            <span class="mind-label">阶级</span>
+            <span class="mind-desc">资本主义生产关系</span>
+          </div>
+      </div>
+    </div>
+    <h3 style="font-size:15px;margin:20px 0 12px;color:var(--accent)">章节目录</h3>
+    <nav class="structure-tree">
+    <details class="tree-vol" open>
+      <summary class="tree-vol-title">第一卷 <span>资本的生产过程</span></summary>
+      
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第一篇 商品和货币</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c01" title="第一章 商品">
+                <span class="tree-ch-num">第一章</span>
+                <span class="tree-ch-name">商品</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c02" title="第二章 交换过程">
+                <span class="tree-ch-num">第二章</span>
+                <span class="tree-ch-name">交换过程</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c03" title="第三章 货币或商品流通">
+                <span class="tree-ch-num">第三章</span>
+                <span class="tree-ch-name">货币或商品流通</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第二篇 货币转化为资本</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c04" title="第四章 货币转化为资本">
+                <span class="tree-ch-num">第四章</span>
+                <span class="tree-ch-name">货币转化为资本</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第三篇 绝对剩余价值的生产</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c05" title="第五章 劳动过程和价值增殖过程">
+                <span class="tree-ch-num">第五章</span>
+                <span class="tree-ch-name">劳动过程和价值增殖过程</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c06" title="第六章 不变资本和可变资本">
+                <span class="tree-ch-num">第六章</span>
+                <span class="tree-ch-name">不变资本和可变资本</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c07" title="第七章 剩余价值率">
+                <span class="tree-ch-num">第七章</span>
+                <span class="tree-ch-name">剩余价值率</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c08" title="第八章 工作日">
+                <span class="tree-ch-num">第八章</span>
+                <span class="tree-ch-name">工作日</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c09" title="第九章 剩余价值率和剩余价值量">
+                <span class="tree-ch-num">第九章</span>
+                <span class="tree-ch-name">剩余价值率和剩余价值量</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第四篇 相对剩余价值的生产</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c10" title="第十章 相对剩余价值的概念">
+                <span class="tree-ch-num">第十章</span>
+                <span class="tree-ch-name">相对剩余价值的概念</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c11" title="第十一章 协作">
+                <span class="tree-ch-num">第十一章</span>
+                <span class="tree-ch-name">协作</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c12" title="第十二章 分工和工场手工业">
+                <span class="tree-ch-num">第十二章</span>
+                <span class="tree-ch-name">分工和工场手工业</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c13" title="第十三章 机器和大工业">
+                <span class="tree-ch-num">第十三章</span>
+                <span class="tree-ch-name">机器和大工业</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第五篇 绝对剩余价值和相对剩余价值的生产</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c14" title="第十四章 绝对剩余价值和相对剩余价值">
+                <span class="tree-ch-num">第十四章</span>
+                <span class="tree-ch-name">绝对剩余价值和相对剩余价值</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c15" title="第十五章 劳动力价格和剩余价值的量的变化">
+                <span class="tree-ch-num">第十五章</span>
+                <span class="tree-ch-name">劳动力价格和剩余价值的量的变化</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c16" title="第十六章 剩余价值率的各种公式">
+                <span class="tree-ch-num">第十六章</span>
+                <span class="tree-ch-name">剩余价值率的各种公式</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第六篇 工资</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c17" title="第十七章 劳动力的价值或价格转化为工资">
+                <span class="tree-ch-num">第十七章</span>
+                <span class="tree-ch-name">劳动力的价值或价格转化为工资</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c18" title="第十八章 计时工资">
+                <span class="tree-ch-num">第十八章</span>
+                <span class="tree-ch-name">计时工资</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c19" title="第十九章 计件工资">
+                <span class="tree-ch-num">第十九章</span>
+                <span class="tree-ch-name">计件工资</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c20" title="第二十章 工资的国民差异">
+                <span class="tree-ch-num">第二十章</span>
+                <span class="tree-ch-name">工资的国民差异</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第七篇 资本的积累过程</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c21" title="第二十一章 简单再生产">
+                <span class="tree-ch-num">第二十一章</span>
+                <span class="tree-ch-name">简单再生产</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c22" title="第二十二章 剩余价值转化为资本">
+                <span class="tree-ch-num">第二十二章</span>
+                <span class="tree-ch-name">剩余价值转化为资本</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c23" title="第二十三章 资本主义积累的一般规律">
+                <span class="tree-ch-num">第二十三章</span>
+                <span class="tree-ch-name">资本主义积累的一般规律</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c24" title="第二十四章 所谓原始积累">
+                <span class="tree-ch-num">第二十四章</span>
+                <span class="tree-ch-name">所谓原始积累</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c25" title="第二十五章 现代殖民理论">
+                <span class="tree-ch-num">第二十五章</span>
+                <span class="tree-ch-name">现代殖民理论</span>
+              </button></li>
+          </ul>
+        </details>
+    </details>
+    <details class="tree-vol" open>
+      <summary class="tree-vol-title">第二卷 <span>资本的流通过程</span></summary>
+      
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第一篇 资本形态变化及其循环</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c01" title="第一章 货币资本的循环">
+                <span class="tree-ch-num">第一章</span>
+                <span class="tree-ch-name">货币资本的循环</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c02" title="第二章 生产资本的循环">
+                <span class="tree-ch-num">第二章</span>
+                <span class="tree-ch-name">生产资本的循环</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c03" title="第三章 商品资本的循环">
+                <span class="tree-ch-num">第三章</span>
+                <span class="tree-ch-name">商品资本的循环</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c04" title="第四章 循环过程的三个公式">
+                <span class="tree-ch-num">第四章</span>
+                <span class="tree-ch-name">循环过程的三个公式</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c05" title="第五章 流通时间">
+                <span class="tree-ch-num">第五章</span>
+                <span class="tree-ch-name">流通时间</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c06" title="第六章 流通费用">
+                <span class="tree-ch-num">第六章</span>
+                <span class="tree-ch-name">流通费用</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第二篇 资本周转</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c07" title="第七章 周转时间和周转次数">
+                <span class="tree-ch-num">第七章</span>
+                <span class="tree-ch-name">周转时间和周转次数</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c08" title="第八章 固定资本和流动资本">
+                <span class="tree-ch-num">第八章</span>
+                <span class="tree-ch-name">固定资本和流动资本</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c09" title="第九章 预付资本的总周转">
+                <span class="tree-ch-num">第九章</span>
+                <span class="tree-ch-name">预付资本的总周转</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c10" title="第十章 固定资本和流动资本的理论">
+                <span class="tree-ch-num">第十章</span>
+                <span class="tree-ch-name">固定资本和流动资本的理论</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c11" title="第十一章 李嘉图">
+                <span class="tree-ch-num">第十一章</span>
+                <span class="tree-ch-name">李嘉图</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c12" title="第十二章 劳动期间">
+                <span class="tree-ch-num">第十二章</span>
+                <span class="tree-ch-name">劳动期间</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c13" title="第十三章 生产时间">
+                <span class="tree-ch-num">第十三章</span>
+                <span class="tree-ch-name">生产时间</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c14" title="第十四章 流通时间">
+                <span class="tree-ch-num">第十四章</span>
+                <span class="tree-ch-name">流通时间</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c15" title="第十五章 周转时间对预付资本量的影响">
+                <span class="tree-ch-num">第十五章</span>
+                <span class="tree-ch-name">周转时间对预付资本量的影响</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c16" title="第十六章 可变资本的周转">
+                <span class="tree-ch-num">第十六章</span>
+                <span class="tree-ch-name">可变资本的周转</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c17" title="第十七章 剩余价值的流通">
+                <span class="tree-ch-num">第十七章</span>
+                <span class="tree-ch-name">剩余价值的流通</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第三篇 社会总资本的再生产和流通</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c18" title="第十八章 导言">
+                <span class="tree-ch-num">第十八章</span>
+                <span class="tree-ch-name">导言</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c19" title="第十九章 前人对这个问题的阐述">
+                <span class="tree-ch-num">第十九章</span>
+                <span class="tree-ch-name">前人对这个问题的阐述</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c20" title="第二十章 简单再生产">
+                <span class="tree-ch-num">第二十章</span>
+                <span class="tree-ch-name">简单再生产</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c21" title="第二十一章 积累和扩大再生产">
+                <span class="tree-ch-num">第二十一章</span>
+                <span class="tree-ch-name">积累和扩大再生产</span>
+              </button></li>
+          </ul>
+        </details>
+    </details>
+    <details class="tree-vol" open>
+      <summary class="tree-vol-title">第三卷 <span>资本主义生产的总过程</span></summary>
+      
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第一篇 剩余价值转化为利润和利润率</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c01" title="第一章 成本价格和利润">
+                <span class="tree-ch-num">第一章</span>
+                <span class="tree-ch-name">成本价格和利润</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c02" title="第二章 利润率">
+                <span class="tree-ch-num">第二章</span>
+                <span class="tree-ch-name">利润率</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c03" title="第三章 利润率和剩余价值率的关系">
+                <span class="tree-ch-num">第三章</span>
+                <span class="tree-ch-name">利润率和剩余价值率的关系</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第二篇 利润转化为平均利润</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c08" title="第八章 不同生产部门的资本构成">
+                <span class="tree-ch-num">第八章</span>
+                <span class="tree-ch-name">不同生产部门的资本构成</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c09" title="第九章 一般利润率的形成">
+                <span class="tree-ch-num">第九章</span>
+                <span class="tree-ch-name">一般利润率的形成</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c10" title="第十章 一般利润率通过竞争而平均化">
+                <span class="tree-ch-num">第十章</span>
+                <span class="tree-ch-name">一般利润率通过竞争而平均化</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第三篇 利润率趋向下降的规律</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c13" title="第十三章 规律本身">
+                <span class="tree-ch-num">第十三章</span>
+                <span class="tree-ch-name">规律本身</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c14" title="第十四章 起反作用的各种原因">
+                <span class="tree-ch-num">第十四章</span>
+                <span class="tree-ch-name">起反作用的各种原因</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c15" title="第十五章 规律的内部矛盾的展开">
+                <span class="tree-ch-num">第十五章</span>
+                <span class="tree-ch-name">规律的内部矛盾的展开</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第五篇 利润分为利息和企业主收入</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c21" title="第二十一章 生息资本">
+                <span class="tree-ch-num">第二十一章</span>
+                <span class="tree-ch-name">生息资本</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c25" title="第二十五章 信用和虚拟资本">
+                <span class="tree-ch-num">第二十五章</span>
+                <span class="tree-ch-name">信用和虚拟资本</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第六篇 超额利润转化为地租</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c37" title="第三十七章 导论">
+                <span class="tree-ch-num">第三十七章</span>
+                <span class="tree-ch-name">导论</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c45" title="第四十五章 绝对地租">
+                <span class="tree-ch-num">第四十五章</span>
+                <span class="tree-ch-name">绝对地租</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c52" title="第五十二章 阶级">
+                <span class="tree-ch-num">第五十二章</span>
+                <span class="tree-ch-name">阶级</span>
+              </button></li>
+          </ul>
+        </details>
+    </details></nav>
+  </section>
+  <section id="tab-terms" class="tab-panel">
+    <article id="term-shangpin" class="term-card" data-chapters="v1c01">
+      <header class="term-head">
+        <h3>商品</h3>
+        <span class="term-en">Commodity</span>
+      </header>
+      <p class="term-def">具有使用价值和价值二重性的劳动产品，是资本主义财富的基本元素形式。</p>
+      <p class="term-history"><em>典据</em> 马克思从「庞大的商品堆积」切入，将商品分析为资本主义社会的「细胞」。</p>
+      <footer class="term-refs"><span>第一卷第一章</span></footer>
+    </article>
+    <article id="term-shiyongjiazhi" class="term-card" data-chapters="v1c01">
+      <header class="term-head">
+        <h3>使用价值</h3>
+        <span class="term-en">Use-value</span>
+      </header>
+      <p class="term-def">物的有用性，构成财富的物质内容，与价值分析无关。</p>
+      <p class="term-history"><em>典据</em> 亚里士多德已区分使用价值与交换价值；马克思强调使用价值是价值的物质承担者。</p>
+      <footer class="term-refs"><span>第一卷第一章 §1</span></footer>
+    </article>
+    <article id="term-jiazh" class="term-card" data-chapters="v1c01,v1c02">
+      <header class="term-head">
+        <h3>价值</h3>
+        <span class="term-en">Value</span>
+      </header>
+      <p class="term-def">凝结在商品中的无差别的人类抽象劳动，是交换价值的本质。</p>
+      <p class="term-history"><em>典据</em> 古典政治经济学未能揭示价值实体；马克思以劳动价值论完成这一工作。</p>
+      <footer class="term-refs"><span>第一卷第一章 §1</span></footer>
+    </article>
+    <article id="term-jiaohuanjiazhi" class="term-card" data-chapters="v1c01">
+      <header class="term-head">
+        <h3>交换价值</h3>
+        <span class="term-en">Exchange-value</span>
+      </header>
+      <p class="term-def">一种使用价值同另一种使用价值相交换的量的关系，是价值的表现形式。</p>
+      
+      <footer class="term-refs"><span>第一卷第一章</span></footer>
+    </article>
+    <article id="term-laodongerchongxing" class="term-card" data-chapters="v1c01">
+      <header class="term-head">
+        <h3>劳动二重性</h3>
+        <span class="term-en">Dual character of labour</span>
+      </header>
+      <p class="term-def">具体劳动创造使用价值，抽象劳动形成价值——理解政治经济学的枢纽。</p>
+      <p class="term-history"><em>典据</em> 马克思称劳动二重性学说是「理解政治经济学的枢纽」。</p>
+      <footer class="term-refs"><span>第一卷第一章 §2</span></footer>
+    </article>
+    <article id="term-shehuibiyaolaodong" class="term-card" data-chapters="v1c01">
+      <header class="term-head">
+        <h3>社会必要劳动时间</h3>
+        <span class="term-en">Socially necessary labour-time</span>
+      </header>
+      <p class="term-def">在现有社会正常生产条件下，以社会平均劳动熟练程度和强度生产使用价值所需的劳动时间。</p>
+      
+      <footer class="term-refs"><span>第一卷第一章 §1</span></footer>
+    </article>
+    <article id="term-huobi" class="term-card" data-chapters="v1c03">
+      <header class="term-head">
+        <h3>货币</h3>
+        <span class="term-en">Money</span>
+      </header>
+      <p class="term-def">固定充当一般等价物的商品，是价值尺度和流通手段的统一。</p>
+      
+      <footer class="term-refs"><span>第一卷第三章</span></footer>
+    </article>
+    <article id="term-ziben" class="term-card" data-chapters="v1c04">
+      <header class="term-head">
+        <h3>资本</h3>
+        <span class="term-en">Capital</span>
+      </header>
+      <p class="term-def">带来剩余价值的价值，公式 G—W—G′ 中 G′&gt;G 的增殖运动。</p>
+      
+      <footer class="term-refs"><span>第一卷第四章</span></footer>
+    </article>
+    <article id="term-laodongli" class="term-card" data-chapters="v1c04,v1c05">
+      <header class="term-head">
+        <h3>劳动力</h3>
+        <span class="term-en">Labour-power</span>
+      </header>
+      <p class="term-def">人的劳动能力，成为商品须具备自由、一无所有两重条件。</p>
+      <p class="term-history"><em>典据</em> 劳动力商品是资本主义生产关系的前提，也是剩余价值的源泉。</p>
+      <footer class="term-refs"><span>第一卷第四章 §3</span></footer>
+    </article>
+    <article id="term-shengyujiazhi" class="term-card" data-chapters="v1c05,v1c07,v1c10">
+      <header class="term-head">
+        <h3>剩余价值</h3>
+        <span class="term-en">Surplus-value</span>
+      </header>
+      <p class="term-def">工人创造的、被资本家无偿占有的超过劳动力价值的那部分价值。</p>
+      
+      <footer class="term-refs"><span>第一卷第五篇起</span></footer>
+    </article>
+    <article id="term-budongziben" class="term-card" data-chapters="v1c06">
+      <header class="term-head">
+        <h3>不变资本</h3>
+        <span class="term-en">Constant capital (c)</span>
+      </header>
+      <p class="term-def">转为生产资料的那部分资本，价值仅转移不增殖。</p>
+      
+      <footer class="term-refs"><span>第一卷第六章</span></footer>
+    </article>
+    <article id="term-kebianziben" class="term-card" data-chapters="v1c06">
+      <header class="term-head">
+        <h3>可变资本</h3>
+        <span class="term-en">Variable capital (v)</span>
+      </header>
+      <p class="term-def">转为劳动力的那部分资本，在生产中创造新价值并增殖。</p>
+      
+      <footer class="term-refs"><span>第一卷第六章</span></footer>
+    </article>
+    <article id="term-shengyujiazhiilv" class="term-card" data-chapters="v1c07">
+      <header class="term-head">
+        <h3>剩余价值率</h3>
+        <span class="term-en">Rate of surplus-value (m′)</span>
+      </header>
+      <p class="term-def">m′ = m/v，反映资本家对工人的剥削程度。</p>
+      
+      <footer class="term-refs"><span>第一卷第七章</span></footer>
+    </article>
+    <article id="term-jueduishengyu" class="term-card" data-chapters="v1c08,v1c14">
+      <header class="term-head">
+        <h3>绝对剩余价值</h3>
+        <span class="term-en">Absolute surplus-value</span>
+      </header>
+      <p class="term-def">在必要劳动时间不变条件下，延长工作日而产生的剩余价值。</p>
+      
+      <footer class="term-refs"><span>第一卷第三篇</span></footer>
+    </article>
+    <article id="term-xiangduishengyu" class="term-card" data-chapters="v1c10,v1c13">
+      <header class="term-head">
+        <h3>相对剩余价值</h3>
+        <span class="term-en">Relative surplus-value</span>
+      </header>
+      <p class="term-def">在工作日长度不变条件下，缩短必要劳动时间、延长剩余劳动时间而产生的剩余价值。</p>
+      
+      <footer class="term-refs"><span>第一卷第四篇</span></footer>
+    </article>
+    <article id="term-zibenjilei" class="term-card" data-chapters="v1c22,v1c23">
+      <header class="term-head">
+        <h3>资本积累</h3>
+        <span class="term-en">Accumulation of capital</span>
+      </header>
+      <p class="term-def">剩余价值资本化，扩大再生产的源泉。</p>
+      
+      <footer class="term-refs"><span>第一卷第七篇</span></footer>
+    </article>
+    <article id="term-yuanshijilei" class="term-card" data-chapters="v1c24">
+      <header class="term-head">
+        <h3>原始积累</h3>
+        <span class="term-en">Primitive accumulation</span>
+      </header>
+      <p class="term-def">资本主义生产方式的历史前提：生产者与生产资料分离的过程。</p>
+      <p class="term-history"><em>典据</em> 「羊吃人」、殖民掠夺、国债制度等历史进程。</p>
+      <footer class="term-refs"><span>第一卷第二十四章</span></footer>
+    </article>
+    <article id="term-pingjunlirun" class="term-card" data-chapters="v3c09,v3c10">
+      <header class="term-head">
+        <h3>平均利润率</h3>
+        <span class="term-en">Average rate of profit</span>
+      </header>
+      <p class="term-def">不同部门资本通过竞争使利润率趋于平均化，价值转化为生产价格。</p>
+      
+      <footer class="term-refs"><span>第三卷第二篇</span></footer>
+    </article>
+    <article id="term-shengchengjiage" class="term-card" data-chapters="v3c09">
+      <header class="term-head">
+        <h3>生产价格</h3>
+        <span class="term-en">Price of production</span>
+      </header>
+      <p class="term-def">成本价格加平均利润，是价值在竞争中的转化形式。</p>
+      
+      <footer class="term-refs"><span>第三卷第九章</span></footer>
+    </article></section>
+  <section id="tab-kg" class="tab-panel">
+    <h2 class="section-title" style="font-size:18px;color:var(--accent);margin-bottom:12px">知识图谱</h2>
+    
+    <div class="kg-legend">
+      <span data-type="concept">概念</span><span data-type="person">人物</span><span data-type="event">事件</span><span data-type="volume">分卷</span>
+    </div>
+    <div class="kg-canvas-wrap"><canvas id="kgCanvas"></canvas></div>
+    <div id="kgTooltip" class="kg-tooltip"></div>
+    <div class="kg-node-list">
+      <button type="button" class="kg-node-btn" data-kg="marx">马克思</button><button type="button" class="kg-node-btn" data-kg="engels">恩格斯</button><button type="button" class="kg-node-btn" data-kg="smith">亚当·斯密</button><button type="button" class="kg-node-btn" data-kg="ricardo">李嘉图</button><button type="button" class="kg-node-btn" data-kg="shangpin">商品</button><button type="button" class="kg-node-btn" data-kg="jiazh">价值</button><button type="button" class="kg-node-btn" data-kg="huobi">货币</button><button type="button" class="kg-node-btn" data-kg="ziben">资本</button><button type="button" class="kg-node-btn" data-kg="laodongli">劳动力</button><button type="button" class="kg-node-btn" data-kg="shengyujiazhi">剩余价值</button><button type="button" class="kg-node-btn" data-kg="juedui">绝对剩余价值</button><button type="button" class="kg-node-btn" data-kg="xiangdui">相对剩余价值</button><button type="button" class="kg-node-btn" data-kg="jilei">资本积累</button><button type="button" class="kg-node-btn" data-kg="yuanshi">原始积累</button><button type="button" class="kg-node-btn" data-kg="lirun">利润</button><button type="button" class="kg-node-btn" data-kg="pingjunlirun">平均利润</button><button type="button" class="kg-node-btn" data-kg="dizu">地租</button><button type="button" class="kg-node-btn" data-kg="lixi">利息</button><button type="button" class="kg-node-btn" data-kg="baifutejiao">拜物教</button><button type="button" class="kg-node-btn" data-kg="gongchang">工业革命</button><button type="button" class="kg-node-btn" data-kg="quanquan">圈地运动</button><button type="button" class="kg-node-btn" data-kg="v1">第一卷·生产</button><button type="button" class="kg-node-btn" data-kg="v2">第二卷·流通</button><button type="button" class="kg-node-btn" data-kg="v3">第三卷·总过程</button>
+    </div>
+    <script type="application/json" id="kgData">[{"id":"marx","type":"person","label":"马克思","size":3},{"id":"engels","type":"person","label":"恩格斯","size":2},{"id":"smith","type":"person","label":"亚当·斯密","size":2},{"id":"ricardo","type":"person","label":"李嘉图","size":2},{"id":"shangpin","type":"concept","label":"商品","size":3},{"id":"jiazh","type":"concept","label":"价值","size":3},{"id":"huobi","type":"concept","label":"货币","size":2},{"id":"ziben","type":"concept","label":"资本","size":3},{"id":"laodongli","type":"concept","label":"劳动力","size":2},{"id":"shengyujiazhi","type":"concept","label":"剩余价值","size":3},{"id":"juedui","type":"concept","label":"绝对剩余价值","size":2},{"id":"xiangdui","type":"concept","label":"相对剩余价值","size":2},{"id":"jilei","type":"concept","label":"资本积累","size":2},{"id":"yuanshi","type":"concept","label":"原始积累","size":2},{"id":"lirun","type":"concept","label":"利润","size":2},{"id":"pingjunlirun","type":"concept","label":"平均利润","size":2},{"id":"dizu","type":"concept","label":"地租","size":2},{"id":"lixi","type":"concept","label":"利息","size":2},{"id":"baifutejiao","type":"concept","label":"拜物教","size":2},{"id":"gongchang","type":"event","label":"工业革命","size":2},{"id":"quanquan","type":"event","label":"圈地运动","size":2},{"id":"v1","type":"volume","label":"第一卷·生产","size":3},{"id":"v2","type":"volume","label":"第二卷·流通","size":2},{"id":"v3","type":"volume","label":"第三卷·总过程","size":2}]</script>
+    <script type="application/json" id="kgEdges">[{"from":"marx","to":"shangpin","label":"分析起点"},{"from":"marx","to":"shengyujiazhi","label":"发现"},{"from":"engels","to":"v2","label":"编辑出版"},{"from":"engels","to":"v3","label":"编辑出版"},{"from":"shangpin","to":"jiazh","label":"二因素"},{"from":"shangpin","to":"baifutejiao","label":"秘密"},{"from":"jiazh","to":"huobi","label":"货币形式"},{"from":"huobi","to":"ziben","label":"转化为"},{"from":"ziben","to":"laodongli","label":"购买"},{"from":"laodongli","to":"shengyujiazhi","label":"创造"},{"from":"shengyujiazhi","to":"juedui","label":"形式"},{"from":"shengyujiazhi","to":"xiangdui","label":"形式"},{"from":"shengyujiazhi","to":"jilei","label":"资本化"},{"from":"jilei","to":"yuanshi","label":"历史前提"},{"from":"quanquan","to":"yuanshi","label":"构成"},{"from":"gongchang","to":"xiangdui","label":"推动"},{"from":"shengyujiazhi","to":"lirun","label":"转化"},{"from":"lirun","to":"pingjunlirun","label":"平均化"},{"from":"lirun","to":"lixi","label":"分割"},{"from":"lirun","to":"dizu","label":"超额→"},{"from":"smith","to":"jiazh","label":"劳动价值论"},{"from":"ricardo","to":"jiazh","label":"继承发展"},{"from":"marx","to":"smith","label":"批判继承"},{"from":"v1","to":"shangpin","label":"开篇"},{"from":"v1","to":"shengyujiazhi","label":"核心"},{"from":"v2","to":"ziben","label":"流通形态"},{"from":"v3","to":"lirun","label":"表面形态"}]</script>
+  </section>
+  <section id="tab-guides" class="tab-panel">
+    <article class="guide-card">
+      <header><span class="guide-era">1914</span><h3>《资本论》是马克思理论的最大贡献</h3><p class="guide-author">列宁</p></header>
+      <p class="guide-excerpt">马克思的《资本论》是马克思理论的最大贡献。它第一次把社会主义从空想变成了科学，给这一理论奠定了牢固的基础，指出了这一理论必须遵循的道路。</p>
+      <div class="guide-tags"><span>科学社会主义</span><span>全书定位</span></div>
+    </article>
+    <article class="guide-card">
+      <header><span class="guide-era">1886</span><h3>《资本论》第一卷序言</h3><p class="guide-author">恩格斯</p></header>
+      <p class="guide-excerpt">我们在这里谈到的，只是《资本论》第一卷中直接涉及我们今天的利益的那一部分。马克思在《资本论》中阐明的理论，对于理解现代资本主义仍然具有根本意义。</p>
+      <div class="guide-tags"><span>历史唯物主义</span><span>方法论</span></div>
+    </article>
+    <article class="guide-card">
+      <header><span class="guide-era">1923</span><h3>物化与商品拜物教</h3><p class="guide-author">卢卡奇</p></header>
+      <p class="guide-excerpt">商品拜物教概念揭示了资本主义社会中人与人的关系如何物化为物与物的关系。这一洞见对理解现代社会的「物化」现象具有持久意义。</p>
+      <div class="guide-tags"><span>拜物教</span><span>物化</span></div>
+    </article>
+    <article class="guide-card">
+      <header><span class="guide-era">当代</span><h3>如何读《资本论》</h3><p class="guide-author">大卫·哈维</p></header>
+      <p class="guide-excerpt">不要试图一口气读完。先把握第一卷第一篇到第四篇的论证链条：商品→货币→资本→剩余价值。这是全书的逻辑地基。</p>
+      <div class="guide-tags"><span>读法</span><span>第一卷</span></div>
+    </article>
+    <article class="guide-card">
+      <header><span class="guide-era">1962</span><h3>剩余价值理论的历史地位</h3><p class="guide-author">曼德尔</p></header>
+      <p class="guide-excerpt">马克思的剩余价值理论不仅解释了剥削机制，而且揭示了资本主义积累的历史趋势与内在矛盾。</p>
+      <div class="guide-tags"><span>剩余价值</span><span>积累</span></div>
+    </article>
+    <article class="guide-card">
+      <header><span class="guide-era">1942</span><h3>对马克思经济理论的评价</h3><p class="guide-author">熊彼特</p></header>
+      <p class="guide-excerpt">马克思的分析框架在方法论上具有革命性。即便不同意其结论，也不能忽视《资本论》对理解资本主义动力结构的贡献。</p>
+      <div class="guide-tags"><span>方法论</span><span>评价</span></div>
+    </article>
+    <article class="guide-card">
+      <header><span class="guide-era">1942</span><h3>资本主义竞争与平均利润</h3><p class="guide-author">斯威齐</p></header>
+      <p class="guide-excerpt">从剩余价值到平均利润的转变，是马克思价值理论中最具挑战性的环节，也是理解「价值规律」在竞争中如何运作的关键。</p>
+      <div class="guide-tags"><span>平均利润</span><span>价值转型</span></div>
+    </article><div class="reading-phases"><h3>四遍读法</h3>
+    <details class="phase-card">
+      <summary><span class="phase-num">第一遍：逻辑主线</span><em>2-4 周</em></summary>
+      <ol><li>第一卷第一篇至第四篇：商品→货币→资本→剩余价值</li><li>配合「结构总览」思维导图建立全书地图</li><li>每章对照「术语词典」标注核心概念</li><li>不求细节，抓住每篇回答的核心问题</li></ol>
+    </details>
+    <details class="phase-card">
+      <summary><span class="phase-num">第二遍：精读第一卷</span><em>1-2 月</em></summary>
+      <ol><li>第一章：劳动二重性是枢纽，反复读</li><li>第四至七章：资本公式与剩余价值率</li><li>第八至十三章：两种剩余价值生产方式</li><li>第二十二至二十四章：积累与原始积累</li></ol>
+    </details>
+    <details class="phase-card">
+      <summary><span class="phase-num">第三遍：二三卷专题</span><em>1-2 月</em></summary>
+      <ol><li>第二卷第二篇：固定资本与流动资本</li><li>第二卷第三篇：社会总资本再生产图式</li><li>第三卷第二篇：平均利润率与生产价格</li><li>第三卷第五、六篇：利息、地租与阶级</li></ol>
+    </details>
+    <details class="phase-card">
+      <summary><span class="phase-num">第四遍：图谱贯通</span><em>持续</em></summary>
+      <ol><li>用「知识图谱」串联概念关系</li><li>阅读「名家导读」对照不同阐释传统</li><li>联系当代经济现象做费曼输出</li><li>与国富论对照：斯密→马克思的理论演进</li></ol>
+    </details></div>
+    <div class="tips-box"><h3>阅读提示</h3><ul><li>中央编译局译本术语统一，建议固定一个版本通读</li><li>手机阅读：底部 Tab 切换，侧栏内容在「术语」「导读」中查看</li><li>宽屏（≥1600px）三栏对照阅读效率最高</li><li>1440px 以下自动单栏，点击章节后上滑查看关联术语</li><li>第一卷密度最高，占精读时间约 60%</li></ul></div></section>
+</div>
+
+<nav class="bottom-nav" role="tablist">
+  <button type="button" class="nav-item active" data-tab="tab-read"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>原文</span></button>
+  <button type="button" class="nav-item" data-tab="tab-structure"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg><span>结构</span></button>
+  <button type="button" class="nav-item" data-tab="tab-terms"><svg viewBox="0 0 24 24"><path d="M4 19.5h16"/><path d="M4 4h16v12H4z"/></svg><span>术语</span></button>
+  <button type="button" class="nav-item" data-tab="tab-kg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="18" r="2"/><line x1="7" y1="7" x2="10" y2="10"/><line x1="17" y1="7" x2="14" y2="10"/></svg><span>图谱</span></button>
+  <button type="button" class="nav-item" data-tab="tab-guides"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg><span>导读</span></button>
+</nav>
+
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<div class="chapter-drawer" id="chapterDrawer">
+  <div class="drawer-header"><h2>章节目录</h2><button type="button" class="drawer-close" id="closeDrawer">×</button></div>
+  <div class="drawer-body structure-tree">
+    <details class="tree-vol" open>
+      <summary class="tree-vol-title">第一卷 <span>资本的生产过程</span></summary>
+      
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第一篇 商品和货币</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c01" title="第一章 商品">
+                <span class="tree-ch-num">第一章</span>
+                <span class="tree-ch-name">商品</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c02" title="第二章 交换过程">
+                <span class="tree-ch-num">第二章</span>
+                <span class="tree-ch-name">交换过程</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c03" title="第三章 货币或商品流通">
+                <span class="tree-ch-num">第三章</span>
+                <span class="tree-ch-name">货币或商品流通</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第二篇 货币转化为资本</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c04" title="第四章 货币转化为资本">
+                <span class="tree-ch-num">第四章</span>
+                <span class="tree-ch-name">货币转化为资本</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第三篇 绝对剩余价值的生产</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c05" title="第五章 劳动过程和价值增殖过程">
+                <span class="tree-ch-num">第五章</span>
+                <span class="tree-ch-name">劳动过程和价值增殖过程</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c06" title="第六章 不变资本和可变资本">
+                <span class="tree-ch-num">第六章</span>
+                <span class="tree-ch-name">不变资本和可变资本</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c07" title="第七章 剩余价值率">
+                <span class="tree-ch-num">第七章</span>
+                <span class="tree-ch-name">剩余价值率</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c08" title="第八章 工作日">
+                <span class="tree-ch-num">第八章</span>
+                <span class="tree-ch-name">工作日</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c09" title="第九章 剩余价值率和剩余价值量">
+                <span class="tree-ch-num">第九章</span>
+                <span class="tree-ch-name">剩余价值率和剩余价值量</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第四篇 相对剩余价值的生产</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c10" title="第十章 相对剩余价值的概念">
+                <span class="tree-ch-num">第十章</span>
+                <span class="tree-ch-name">相对剩余价值的概念</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c11" title="第十一章 协作">
+                <span class="tree-ch-num">第十一章</span>
+                <span class="tree-ch-name">协作</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c12" title="第十二章 分工和工场手工业">
+                <span class="tree-ch-num">第十二章</span>
+                <span class="tree-ch-name">分工和工场手工业</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c13" title="第十三章 机器和大工业">
+                <span class="tree-ch-num">第十三章</span>
+                <span class="tree-ch-name">机器和大工业</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第五篇 绝对剩余价值和相对剩余价值的生产</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c14" title="第十四章 绝对剩余价值和相对剩余价值">
+                <span class="tree-ch-num">第十四章</span>
+                <span class="tree-ch-name">绝对剩余价值和相对剩余价值</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c15" title="第十五章 劳动力价格和剩余价值的量的变化">
+                <span class="tree-ch-num">第十五章</span>
+                <span class="tree-ch-name">劳动力价格和剩余价值的量的变化</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c16" title="第十六章 剩余价值率的各种公式">
+                <span class="tree-ch-num">第十六章</span>
+                <span class="tree-ch-name">剩余价值率的各种公式</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第六篇 工资</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c17" title="第十七章 劳动力的价值或价格转化为工资">
+                <span class="tree-ch-num">第十七章</span>
+                <span class="tree-ch-name">劳动力的价值或价格转化为工资</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c18" title="第十八章 计时工资">
+                <span class="tree-ch-num">第十八章</span>
+                <span class="tree-ch-name">计时工资</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c19" title="第十九章 计件工资">
+                <span class="tree-ch-num">第十九章</span>
+                <span class="tree-ch-name">计件工资</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c20" title="第二十章 工资的国民差异">
+                <span class="tree-ch-num">第二十章</span>
+                <span class="tree-ch-name">工资的国民差异</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第七篇 资本的积累过程</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c21" title="第二十一章 简单再生产">
+                <span class="tree-ch-num">第二十一章</span>
+                <span class="tree-ch-name">简单再生产</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c22" title="第二十二章 剩余价值转化为资本">
+                <span class="tree-ch-num">第二十二章</span>
+                <span class="tree-ch-name">剩余价值转化为资本</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c23" title="第二十三章 资本主义积累的一般规律">
+                <span class="tree-ch-num">第二十三章</span>
+                <span class="tree-ch-name">资本主义积累的一般规律</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c24" title="第二十四章 所谓原始积累">
+                <span class="tree-ch-num">第二十四章</span>
+                <span class="tree-ch-name">所谓原始积累</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v1c25" title="第二十五章 现代殖民理论">
+                <span class="tree-ch-num">第二十五章</span>
+                <span class="tree-ch-name">现代殖民理论</span>
+              </button></li>
+          </ul>
+        </details>
+    </details>
+    <details class="tree-vol" open>
+      <summary class="tree-vol-title">第二卷 <span>资本的流通过程</span></summary>
+      
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第一篇 资本形态变化及其循环</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c01" title="第一章 货币资本的循环">
+                <span class="tree-ch-num">第一章</span>
+                <span class="tree-ch-name">货币资本的循环</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c02" title="第二章 生产资本的循环">
+                <span class="tree-ch-num">第二章</span>
+                <span class="tree-ch-name">生产资本的循环</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c03" title="第三章 商品资本的循环">
+                <span class="tree-ch-num">第三章</span>
+                <span class="tree-ch-name">商品资本的循环</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c04" title="第四章 循环过程的三个公式">
+                <span class="tree-ch-num">第四章</span>
+                <span class="tree-ch-name">循环过程的三个公式</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c05" title="第五章 流通时间">
+                <span class="tree-ch-num">第五章</span>
+                <span class="tree-ch-name">流通时间</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c06" title="第六章 流通费用">
+                <span class="tree-ch-num">第六章</span>
+                <span class="tree-ch-name">流通费用</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第二篇 资本周转</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c07" title="第七章 周转时间和周转次数">
+                <span class="tree-ch-num">第七章</span>
+                <span class="tree-ch-name">周转时间和周转次数</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c08" title="第八章 固定资本和流动资本">
+                <span class="tree-ch-num">第八章</span>
+                <span class="tree-ch-name">固定资本和流动资本</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c09" title="第九章 预付资本的总周转">
+                <span class="tree-ch-num">第九章</span>
+                <span class="tree-ch-name">预付资本的总周转</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c10" title="第十章 固定资本和流动资本的理论">
+                <span class="tree-ch-num">第十章</span>
+                <span class="tree-ch-name">固定资本和流动资本的理论</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c11" title="第十一章 李嘉图">
+                <span class="tree-ch-num">第十一章</span>
+                <span class="tree-ch-name">李嘉图</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c12" title="第十二章 劳动期间">
+                <span class="tree-ch-num">第十二章</span>
+                <span class="tree-ch-name">劳动期间</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c13" title="第十三章 生产时间">
+                <span class="tree-ch-num">第十三章</span>
+                <span class="tree-ch-name">生产时间</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c14" title="第十四章 流通时间">
+                <span class="tree-ch-num">第十四章</span>
+                <span class="tree-ch-name">流通时间</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c15" title="第十五章 周转时间对预付资本量的影响">
+                <span class="tree-ch-num">第十五章</span>
+                <span class="tree-ch-name">周转时间对预付资本量的影响</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c16" title="第十六章 可变资本的周转">
+                <span class="tree-ch-num">第十六章</span>
+                <span class="tree-ch-name">可变资本的周转</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c17" title="第十七章 剩余价值的流通">
+                <span class="tree-ch-num">第十七章</span>
+                <span class="tree-ch-name">剩余价值的流通</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第三篇 社会总资本的再生产和流通</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c18" title="第十八章 导言">
+                <span class="tree-ch-num">第十八章</span>
+                <span class="tree-ch-name">导言</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c19" title="第十九章 前人对这个问题的阐述">
+                <span class="tree-ch-num">第十九章</span>
+                <span class="tree-ch-name">前人对这个问题的阐述</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c20" title="第二十章 简单再生产">
+                <span class="tree-ch-num">第二十章</span>
+                <span class="tree-ch-name">简单再生产</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v2c21" title="第二十一章 积累和扩大再生产">
+                <span class="tree-ch-num">第二十一章</span>
+                <span class="tree-ch-name">积累和扩大再生产</span>
+              </button></li>
+          </ul>
+        </details>
+    </details>
+    <details class="tree-vol" open>
+      <summary class="tree-vol-title">第三卷 <span>资本主义生产的总过程</span></summary>
+      
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第一篇 剩余价值转化为利润和利润率</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c01" title="第一章 成本价格和利润">
+                <span class="tree-ch-num">第一章</span>
+                <span class="tree-ch-name">成本价格和利润</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c02" title="第二章 利润率">
+                <span class="tree-ch-num">第二章</span>
+                <span class="tree-ch-name">利润率</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c03" title="第三章 利润率和剩余价值率的关系">
+                <span class="tree-ch-num">第三章</span>
+                <span class="tree-ch-name">利润率和剩余价值率的关系</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第二篇 利润转化为平均利润</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c08" title="第八章 不同生产部门的资本构成">
+                <span class="tree-ch-num">第八章</span>
+                <span class="tree-ch-name">不同生产部门的资本构成</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c09" title="第九章 一般利润率的形成">
+                <span class="tree-ch-num">第九章</span>
+                <span class="tree-ch-name">一般利润率的形成</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c10" title="第十章 一般利润率通过竞争而平均化">
+                <span class="tree-ch-num">第十章</span>
+                <span class="tree-ch-name">一般利润率通过竞争而平均化</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第三篇 利润率趋向下降的规律</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c13" title="第十三章 规律本身">
+                <span class="tree-ch-num">第十三章</span>
+                <span class="tree-ch-name">规律本身</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c14" title="第十四章 起反作用的各种原因">
+                <span class="tree-ch-num">第十四章</span>
+                <span class="tree-ch-name">起反作用的各种原因</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c15" title="第十五章 规律的内部矛盾的展开">
+                <span class="tree-ch-num">第十五章</span>
+                <span class="tree-ch-name">规律的内部矛盾的展开</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第五篇 利润分为利息和企业主收入</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c21" title="第二十一章 生息资本">
+                <span class="tree-ch-num">第二十一章</span>
+                <span class="tree-ch-name">生息资本</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c25" title="第二十五章 信用和虚拟资本">
+                <span class="tree-ch-num">第二十五章</span>
+                <span class="tree-ch-name">信用和虚拟资本</span>
+              </button></li>
+          </ul>
+        </details>
+        <details class="tree-part" open>
+          <summary class="tree-part-title">第六篇 超额利润转化为地租</summary>
+          <ul class="tree-chapters">
+            
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c37" title="第三十七章 导论">
+                <span class="tree-ch-num">第三十七章</span>
+                <span class="tree-ch-name">导论</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c45" title="第四十五章 绝对地租">
+                <span class="tree-ch-num">第四十五章</span>
+                <span class="tree-ch-name">绝对地租</span>
+              </button></li>
+              <li><button type="button" class="tree-ch-btn" data-ch="v3c52" title="第五十二章 阶级">
+                <span class="tree-ch-num">第五十二章</span>
+                <span class="tree-ch-name">阶级</span>
+              </button></li>
+          </ul>
+        </details>
+    </details></div>
+</div>
+
+<script>
+(function(){
+  const firstCh = "v1c01";
+
+  function showChapter(id) {
+    document.querySelectorAll('.chapter-panel').forEach(p => p.classList.toggle('active', p.id === id));
+    document.querySelectorAll('.tree-ch-btn').forEach(b => b.classList.toggle('active', b.dataset.ch === id));
+    const panel = document.getElementById(id);
+    if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    filterSidebar(id);
+  }
+
+  function filterSidebar(chId) {
+    document.querySelectorAll('.term-card').forEach(card => {
+      const chs = (card.dataset.chapters || '').split(',');
+      card.style.display = !chId || chs.includes(chId) ? '' : 'none';
+    });
+  }
+
+  document.querySelectorAll('.tree-ch-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      showChapter(btn.dataset.ch);
+      closeDrawer();
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      const readTab = document.querySelector('[data-tab="tab-read"]');
+      const readPanel = document.getElementById('tab-read');
+      if (readTab) readTab.classList.add('active');
+      if (readPanel) readPanel.classList.add('active');
+    });
+  });
+
+  document.querySelectorAll('.term-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const el = document.getElementById('term-' + chip.dataset.term);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  const overlay = document.getElementById('drawerOverlay');
+  const drawer = document.getElementById('chapterDrawer');
+  function openDrawer() { overlay.classList.add('open'); drawer.classList.add('open'); }
+  function closeDrawer() { overlay.classList.remove('open'); drawer.classList.remove('open'); }
+  document.getElementById('openDrawer')?.addEventListener('click', openDrawer);
+  document.getElementById('closeDrawer')?.addEventListener('click', closeDrawer);
+  overlay?.addEventListener('click', closeDrawer);
+
+  document.querySelectorAll('.nav-item[data-tab]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.single-col .tab-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById(btn.dataset.tab)?.classList.add('active');
+      if (btn.dataset.tab === 'tab-kg') initKG();
+    });
+  });
+
+  document.querySelectorAll('.sb-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.sb-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.sb-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('sb-' + tab.dataset.sb)?.classList.add('active');
+      if (tab.dataset.sb === 'kg') initKG();
+    });
+  });
+
+  let kgInited = false;
+  function initKG() {
+    if (kgInited) return;
+    kgInited = true;
+    const canvas = document.getElementById('kgCanvas');
+    if (!canvas) return;
+    const nodes = JSON.parse(document.getElementById('kgData').textContent);
+    const edges = JSON.parse(document.getElementById('kgEdges').textContent);
+    const ctx = canvas.getContext('2d');
+    const tooltip = document.getElementById('kgTooltip');
+    const colors = { concept: '#8B1538', person: '#1565C0', event: '#E65100', volume: '#2E7D32' };
+    const W = canvas.parentElement.clientWidth, H = canvas.parentElement.clientHeight;
+    canvas.width = W * devicePixelRatio; canvas.height = H * devicePixelRatio;
+    canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+    ctx.scale(devicePixelRatio, devicePixelRatio);
+    const cx = W / 2, cy = H / 2, R = Math.min(W, H) * 0.36;
+    const pos = {};
+    nodes.forEach((n, i) => {
+      const a = (i / nodes.length) * Math.PI * 2 - Math.PI / 2;
+      pos[n.id] = { x: cx + R * Math.cos(a), y: cy + R * Math.sin(a), n };
+    });
+    function draw(highlight) {
+      ctx.clearRect(0, 0, W, H);
+      edges.forEach(e => {
+        const a = pos[e.from], b = pos[e.to];
+        if (!a || !b) return;
+        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
+        ctx.strokeStyle = '#ddd'; ctx.lineWidth = 1; ctx.stroke();
+      });
+      nodes.forEach(n => {
+        const p = pos[n.id]; if (!p) return;
+        const r = (n.size || 2) * 5 + (highlight === n.id ? 4 : 0);
+        ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+        ctx.fillStyle = colors[n.type] || '#888'; ctx.fill();
+        if (highlight === n.id) { ctx.strokeStyle = '#000'; ctx.lineWidth = 2; ctx.stroke(); }
+        ctx.fillStyle = '#333'; ctx.font = '10px sans-serif'; ctx.textAlign = 'center';
+        ctx.fillText(n.label, p.x, p.y + r + 12);
+      });
+    }
+    draw(null);
+    canvas.addEventListener('click', ev => {
+      const rect = canvas.getBoundingClientRect();
+      const x = ev.clientX - rect.left, y = ev.clientY - rect.top;
+      let hit = null;
+      nodes.forEach(n => {
+        const p = pos[n.id]; const r = (n.size || 2) * 5 + 8;
+        if (Math.hypot(p.x - x, p.y - y) < r) hit = n.id;
+      });
+      draw(hit);
+      document.querySelectorAll('.kg-node-btn').forEach(b => b.classList.toggle('active', b.dataset.kg === hit));
+    });
+    document.querySelectorAll('.kg-node-btn').forEach(btn => {
+      btn.addEventListener('click', () => { draw(btn.dataset.kg); document.querySelectorAll('.kg-node-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); });
+    });
+  }
+
+  showChapter(firstCh);
+  if (window.innerWidth >= 1600) initKG();
+  window.addEventListener('resize', () => { if (window.innerWidth < 1600 && document.getElementById('tab-kg')?.classList.contains('active')) initKG(); });
+})();
+</script>
+</body></html>
