@@ -77,6 +77,13 @@ function mergeTitleLine(line) {
   return line.replace(/\s+/g, ' ').trim();
 }
 
+function chapterSubtitle(title) {
+  if (title === '序论及全书设计') return '全书设计';
+  if (/· 序论$/.test(title)) return '本篇序论';
+  const m = title.match(/^第[^　\s]+章[　\s]*(.*)$/);
+  return m?.[1]?.trim() || '';
+}
+
 function detectMarkers(lines) {
   const markers = [];
   let currentPart = 'intro';
@@ -148,6 +155,7 @@ function splitChapters(text) {
       id: `ch${String(i).padStart(2, '0')}`,
       title: m.title,
       short: m.short,
+      subtitle: chapterSubtitle(m.title),
       partKey: m.partKey,
       partTitle: m.partTitle || PART_THEMES[m.partKey]?.name || '',
       html: linesToHtml(slice, m.title),
@@ -223,6 +231,7 @@ function buildAnalysis(ch) {
     id: ch.id,
     title: ch.title,
     short: ch.short,
+    subtitle: ch.subtitle,
     keyPoints: [
       `所属${theme.name}：${theme.theme}`,
       `本章主题：${topic}`,
@@ -269,7 +278,7 @@ function buildFrameworkHtml(chapters) {
   }
   return groups.map(g => {
     const chItems = g.chapters.map(c => `
-      <div class="fw-chapter"><div class="fw-chapter-title">${esc(c.short)} ${esc(c.title.replace(/^第.+章[　\s]*/, '').replace(/^.+篇 · 序论$/, '序论'))}</div></div>`).join('');
+      <div class="fw-chapter"><div class="fw-chapter-title">${esc(c.short)}${c.subtitle ? ` · ${esc(c.subtitle)}` : ''}</div></div>`).join('');
     return `
     <div class="fw-section">
       <div class="fw-section-title">${esc(g.theme?.name || '序论')} · ${esc(g.theme?.theme || '')}</div>
@@ -278,9 +287,24 @@ function buildFrameworkHtml(chapters) {
   }).join('<div class="fw-arrow-down">↓</div>');
 }
 
+function navLinkLabel(ch) {
+  return ch.subtitle ? `${ch.short} · ${ch.subtitle}` : ch.title;
+}
+
 function generateHtml(chapters, analysis, summaries, meta) {
-  const chapterNavDesktop = chapters.map(ch => `<a href="#${ch.id}" class="chapter-link" title="${esc(ch.title)}">${esc(ch.short)}</a>`).join('\n');
-  const chapterNavMobile = chapters.map(ch => `<button type="button" class="drawer-link" data-target="${ch.id}">${esc(ch.short)} ${esc(ch.title.replace(/^第.+章[　\s]*/, '').slice(0, 16))}</button>`).join('\n');
+  const chapterNavDesktop = chapters.map(ch => {
+    const label = navLinkLabel(ch);
+    const inner = ch.subtitle
+      ? `<span class="nav-ch-num">${esc(ch.short)}</span><span class="nav-ch-name">${esc(ch.subtitle)}</span>`
+      : `<span class="nav-ch-num">${esc(ch.short)}</span>`;
+    return `<a href="#${ch.id}" class="chapter-link" title="${esc(ch.title)}">${inner}</a>`;
+  }).join('\n');
+  const chapterNavMobile = chapters.map(ch => {
+    const inner = ch.subtitle
+      ? `<span class="drawer-ch-num">${esc(ch.short)}</span><span class="drawer-ch-name">${esc(ch.subtitle)}</span>`
+      : `<span class="drawer-ch-num">${esc(ch.short)}</span>`;
+    return `<button type="button" class="drawer-link" data-target="${ch.id}">${inner}</button>`;
+  }).join('\n');
   const chapterSections = chapters.map(ch => `
         <section id="${ch.id}" class="chapter">
           <div class="part-label">${esc(ch.partTitle || PART_THEMES[ch.partKey]?.name || '')}</div>
@@ -289,7 +313,10 @@ function generateHtml(chapters, analysis, summaries, meta) {
           ${renderChapterSummary(ch.id, summaries)}
         </section>`).join('');
 
-  const noteNav = analysis.map(item => `<button type="button" class="note-nav-btn" data-note="${item.id}">${esc(item.short)}</button>`).join('');
+  const noteNav = analysis.map(item => {
+    const label = item.subtitle ? `${item.short} · ${item.subtitle}` : item.short;
+    return `<button type="button" class="note-nav-btn" data-note="${item.id}" title="${esc(item.title)}">${esc(label)}</button>`;
+  }).join('');
 
   const flowHtml = analysis.map((item, idx) => {
     const flowSteps = item.flow.map((step, i) => `
@@ -382,7 +409,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 .drawer-close{background:none;border:none;font-size:24px;color:var(--text-secondary);cursor:pointer;padding:0 4px;line-height:1}
 .drawer-links{overflow-y:auto;padding:8px 0;flex:1;-webkit-overflow-scrolling:touch}
 .drawer-link{display:block;width:100%;text-align:left;padding:10px 20px;border:none;background:none;font-size:14px;color:var(--text);border-left:3px solid transparent;cursor:pointer;line-height:1.4}
+.drawer-ch-num{display:block;font-weight:600;font-size:13px}
+.drawer-ch-name{display:block;font-size:12px;color:var(--text-secondary);margin-top:2px;line-height:1.35}
 .drawer-link:active,.drawer-link.active{background:var(--accent-light);color:var(--accent);border-left-color:var(--accent)}
+.drawer-link.active .drawer-ch-name{color:var(--accent);opacity:.85}
 .notes-wrap{padding:12px 0 16px}
 .note-nav-scroll{display:flex;gap:8px;padding:0 16px 12px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .note-nav-scroll::-webkit-scrollbar{display:none}
@@ -429,10 +459,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
   .app-header{padding:16px 32px}.app-header h1{font-size:20px}.header-btn{display:none}
   .bottom-nav{position:sticky;top:var(--header-h);bottom:auto;border-top:none;border-bottom:1px solid var(--border);padding-bottom:0;height:var(--nav-h)}
   .nav-item{flex-direction:row;gap:6px;font-size:14px;padding:0}
-  .read-layout{display:grid;grid-template-columns:120px 1fr}
+  .read-layout{display:grid;grid-template-columns:168px 1fr}
   .chapter-nav-desktop{display:block;background:var(--surface);border-right:1px solid var(--border);padding:12px 0;position:sticky;top:calc(var(--header-h) + var(--nav-h));height:calc(100vh - var(--header-h) - var(--nav-h));overflow-y:auto}
-  .chapter-link{display:block;padding:6px 10px;font-size:11px;color:var(--text-secondary);text-decoration:none;border-left:3px solid transparent}
+  .chapter-link{display:flex;flex-direction:column;gap:2px;padding:8px 10px;font-size:11px;color:var(--text-secondary);text-decoration:none;border-left:3px solid transparent;line-height:1.3}
+  .nav-ch-num{font-weight:600;font-size:11px;white-space:nowrap}
+  .nav-ch-name{font-size:10px;opacity:.85;line-height:1.35}
   .chapter-link:hover,.chapter-link.active{background:var(--accent-light);color:var(--accent);border-left-color:var(--accent)}
+  .chapter-link:hover .nav-ch-name,.chapter-link.active .nav-ch-name{opacity:1}
   .chapter-content{padding:32px 48px}
   .notes-content{max-width:800px;margin:0 auto}
   .analysis-card{display:block!important;margin-bottom:24px}

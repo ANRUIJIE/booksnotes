@@ -56,7 +56,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 .drawer-close{background:none;border:none;font-size:24px;color:var(--text-secondary);cursor:pointer;padding:0 4px;line-height:1}
 .drawer-links{overflow-y:auto;padding:8px 0;flex:1;-webkit-overflow-scrolling:touch}
 .drawer-link{display:block;width:100%;text-align:left;padding:10px 20px;border:none;background:none;font-size:14px;color:var(--text);border-left:3px solid transparent;cursor:pointer;line-height:1.4}
+.drawer-ch-num{display:block;font-weight:600;font-size:13px}
+.drawer-ch-name{display:block;font-size:12px;color:var(--text-secondary);margin-top:2px;line-height:1.35}
 .drawer-link:active,.drawer-link.active{background:var(--accent-light);color:var(--accent);border-left-color:var(--accent)}
+.drawer-link.active .drawer-ch-name{color:var(--accent);opacity:.85}
 .notes-wrap{padding:12px 0 16px}
 .note-nav-scroll{display:flex;gap:8px;padding:0 16px 12px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .note-nav-scroll::-webkit-scrollbar{display:none}
@@ -103,10 +106,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
   .app-header{padding:16px 32px}.app-header h1{font-size:20px}.header-btn{display:none}
   .bottom-nav{position:sticky;top:var(--header-h);bottom:auto;border-top:none;border-bottom:1px solid var(--border);padding-bottom:0;height:var(--nav-h)}
   .nav-item{flex-direction:row;gap:6px;font-size:14px;padding:0}
-  .read-layout{display:grid;grid-template-columns:120px 1fr}
+  .read-layout{display:grid;grid-template-columns:168px 1fr}
   .chapter-nav-desktop{display:block;background:var(--surface);border-right:1px solid var(--border);padding:12px 0;position:sticky;top:calc(var(--header-h) + var(--nav-h));height:calc(100vh - var(--header-h) - var(--nav-h));overflow-y:auto}
-  .chapter-link{display:block;padding:6px 10px;font-size:11px;color:var(--text-secondary);text-decoration:none;border-left:3px solid transparent}
+  .chapter-link{display:flex;flex-direction:column;gap:2px;padding:8px 10px;font-size:11px;color:var(--text-secondary);text-decoration:none;border-left:3px solid transparent;line-height:1.3}
+  .nav-ch-num{font-weight:600;font-size:11px;white-space:nowrap}
+  .nav-ch-name{font-size:10px;opacity:.85;line-height:1.35}
   .chapter-link:hover,.chapter-link.active{background:var(--accent-light);color:var(--accent);border-left-color:var(--accent)}
+  .chapter-link:hover .nav-ch-name,.chapter-link.active .nav-ch-name{opacity:1}
   .chapter-content{padding:32px 48px}
   .notes-content{max-width:800px;margin:0 auto}
   .analysis-card{display:block!important;margin-bottom:24px}
@@ -141,41 +147,41 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 </nav>
 <section id="tab-read" class="tab-panel active" role="tabpanel">
   <div class="read-layout">
-    <nav class="chapter-nav-desktop"><a href="#ch00" class="chapter-link" title="序论及全书设计">序论</a>
-<a href="#ch01" class="chapter-link" title="第一章 论分工">第一章</a>
-<a href="#ch02" class="chapter-link" title="第二章 论分工的原由">第二章</a>
-<a href="#ch03" class="chapter-link" title="第三章 论分工受市场范围的限制">第三章</a>
-<a href="#ch04" class="chapter-link" title="第四章 论货币的起源及其效用">第四章</a>
-<a href="#ch05" class="chapter-link" title="第五章 论商品的真实价格与名义价格或其劳动价格与货币价格">第五章</a>
-<a href="#ch06" class="chapter-link" title="第六章 论商品价格的组成部分">第六章</a>
-<a href="#ch07" class="chapter-link" title="第七章 论商品的自然价格与市场价格">第七章</a>
-<a href="#ch08" class="chapter-link" title="第八章 论劳动工资">第八章</a>
-<a href="#ch09" class="chapter-link" title="第九章 论资本利润">第九章</a>
-<a href="#ch10" class="chapter-link" title="第十章 论工资与利润随劳动与资本用途的不同而不同">第十章</a>
-<a href="#ch11" class="chapter-link" title="第十一章 论地租">第十一章</a>
-<a href="#ch12" class="chapter-link" title="第二篇 · 序论">序论</a>
-<a href="#ch13" class="chapter-link" title="第一章 论资财的划分">第一章</a>
-<a href="#ch14" class="chapter-link" title="第二章 论作为社会总资财的一部门或作为维持国民资本的费用的货币">第二章</a>
-<a href="#ch15" class="chapter-link" title="第三章 论资本积累并论生产性和非生产性劳动">第三章</a>
-<a href="#ch16" class="chapter-link" title="第四章 论贷出取息的资财">第四章</a>
-<a href="#ch17" class="chapter-link" title="第五章 论资本的各种用途">第五章</a>
-<a href="#ch18" class="chapter-link" title="第一章 论财富的自然的发展">第一章</a>
-<a href="#ch19" class="chapter-link" title="第二章 论罗马帝国崩溃后农业在欧洲旧状态下所受到的阻抑">第二章</a>
-<a href="#ch20" class="chapter-link" title="第三章 论罗马帝国崩溃后都市的勃兴与进步">第三章</a>
-<a href="#ch21" class="chapter-link" title="第四章 都市商业对农村改良的贡献">第四章</a>
-<a href="#ch22" class="chapter-link" title="第四篇 · 序论">序论</a>
-<a href="#ch23" class="chapter-link" title="第一章 商业主义或重商主义的原理">第一章</a>
-<a href="#ch24" class="chapter-link" title="第二章 论限制从外国输入国内能生产的货物">第二章</a>
-<a href="#ch25" class="chapter-link" title="第三章 论对其贸易的差额被认为不利于我国的那些国家的各种货物的输入所加的异常限制">第三章</a>
-<a href="#ch26" class="chapter-link" title="第四章 论退税">第四章</a>
-<a href="#ch27" class="chapter-link" title="第五章 论奖励金">第五章</a>
-<a href="#ch28" class="chapter-link" title="第六章 论通商条约">第六章</a>
-<a href="#ch29" class="chapter-link" title="第七章 论殖民地">第七章</a>
-<a href="#ch30" class="chapter-link" title="第八章 关于重商主义的结论">第八章</a>
-<a href="#ch31" class="chapter-link" title="第九章 论重农主义即政治经济学中把土地生产物看作各国收入及财富的唯一来源或主要来源的学说">第九章</a>
-<a href="#ch32" class="chapter-link" title="第一章 论君主或国家的费用">第一章</a>
-<a href="#ch33" class="chapter-link" title="第二章 论一般收入或公共收入的源泉">第二章</a>
-<a href="#ch34" class="chapter-link" title="第三章 论公债">第三章</a></nav>
+    <nav class="chapter-nav-desktop"><a href="#ch00" class="chapter-link" title="序论及全书设计"><span class="nav-ch-num">序论</span><span class="nav-ch-name">全书设计</span></a>
+<a href="#ch01" class="chapter-link" title="第一章 论分工"><span class="nav-ch-num">第一章</span><span class="nav-ch-name">论分工</span></a>
+<a href="#ch02" class="chapter-link" title="第二章 论分工的原由"><span class="nav-ch-num">第二章</span><span class="nav-ch-name">论分工的原由</span></a>
+<a href="#ch03" class="chapter-link" title="第三章 论分工受市场范围的限制"><span class="nav-ch-num">第三章</span><span class="nav-ch-name">论分工受市场范围的限制</span></a>
+<a href="#ch04" class="chapter-link" title="第四章 论货币的起源及其效用"><span class="nav-ch-num">第四章</span><span class="nav-ch-name">论货币的起源及其效用</span></a>
+<a href="#ch05" class="chapter-link" title="第五章 论商品的真实价格与名义价格或其劳动价格与货币价格"><span class="nav-ch-num">第五章</span><span class="nav-ch-name">论商品的真实价格与名义价格或其劳动价格与货币价格</span></a>
+<a href="#ch06" class="chapter-link" title="第六章 论商品价格的组成部分"><span class="nav-ch-num">第六章</span><span class="nav-ch-name">论商品价格的组成部分</span></a>
+<a href="#ch07" class="chapter-link" title="第七章 论商品的自然价格与市场价格"><span class="nav-ch-num">第七章</span><span class="nav-ch-name">论商品的自然价格与市场价格</span></a>
+<a href="#ch08" class="chapter-link" title="第八章 论劳动工资"><span class="nav-ch-num">第八章</span><span class="nav-ch-name">论劳动工资</span></a>
+<a href="#ch09" class="chapter-link" title="第九章 论资本利润"><span class="nav-ch-num">第九章</span><span class="nav-ch-name">论资本利润</span></a>
+<a href="#ch10" class="chapter-link" title="第十章 论工资与利润随劳动与资本用途的不同而不同"><span class="nav-ch-num">第十章</span><span class="nav-ch-name">论工资与利润随劳动与资本用途的不同而不同</span></a>
+<a href="#ch11" class="chapter-link" title="第十一章 论地租"><span class="nav-ch-num">第十一章</span><span class="nav-ch-name">论地租</span></a>
+<a href="#ch12" class="chapter-link" title="第二篇 · 序论"><span class="nav-ch-num">序论</span><span class="nav-ch-name">本篇序论</span></a>
+<a href="#ch13" class="chapter-link" title="第一章 论资财的划分"><span class="nav-ch-num">第一章</span><span class="nav-ch-name">论资财的划分</span></a>
+<a href="#ch14" class="chapter-link" title="第二章 论作为社会总资财的一部门或作为维持国民资本的费用的货币"><span class="nav-ch-num">第二章</span><span class="nav-ch-name">论作为社会总资财的一部门或作为维持国民资本的费用的货币</span></a>
+<a href="#ch15" class="chapter-link" title="第三章 论资本积累并论生产性和非生产性劳动"><span class="nav-ch-num">第三章</span><span class="nav-ch-name">论资本积累并论生产性和非生产性劳动</span></a>
+<a href="#ch16" class="chapter-link" title="第四章 论贷出取息的资财"><span class="nav-ch-num">第四章</span><span class="nav-ch-name">论贷出取息的资财</span></a>
+<a href="#ch17" class="chapter-link" title="第五章 论资本的各种用途"><span class="nav-ch-num">第五章</span><span class="nav-ch-name">论资本的各种用途</span></a>
+<a href="#ch18" class="chapter-link" title="第一章 论财富的自然的发展"><span class="nav-ch-num">第一章</span><span class="nav-ch-name">论财富的自然的发展</span></a>
+<a href="#ch19" class="chapter-link" title="第二章 论罗马帝国崩溃后农业在欧洲旧状态下所受到的阻抑"><span class="nav-ch-num">第二章</span><span class="nav-ch-name">论罗马帝国崩溃后农业在欧洲旧状态下所受到的阻抑</span></a>
+<a href="#ch20" class="chapter-link" title="第三章 论罗马帝国崩溃后都市的勃兴与进步"><span class="nav-ch-num">第三章</span><span class="nav-ch-name">论罗马帝国崩溃后都市的勃兴与进步</span></a>
+<a href="#ch21" class="chapter-link" title="第四章 都市商业对农村改良的贡献"><span class="nav-ch-num">第四章</span><span class="nav-ch-name">都市商业对农村改良的贡献</span></a>
+<a href="#ch22" class="chapter-link" title="第四篇 · 序论"><span class="nav-ch-num">序论</span><span class="nav-ch-name">本篇序论</span></a>
+<a href="#ch23" class="chapter-link" title="第一章 商业主义或重商主义的原理"><span class="nav-ch-num">第一章</span><span class="nav-ch-name">商业主义或重商主义的原理</span></a>
+<a href="#ch24" class="chapter-link" title="第二章 论限制从外国输入国内能生产的货物"><span class="nav-ch-num">第二章</span><span class="nav-ch-name">论限制从外国输入国内能生产的货物</span></a>
+<a href="#ch25" class="chapter-link" title="第三章 论对其贸易的差额被认为不利于我国的那些国家的各种货物的输入所加的异常限制"><span class="nav-ch-num">第三章</span><span class="nav-ch-name">论对其贸易的差额被认为不利于我国的那些国家的各种货物的输入所加的异常限制</span></a>
+<a href="#ch26" class="chapter-link" title="第四章 论退税"><span class="nav-ch-num">第四章</span><span class="nav-ch-name">论退税</span></a>
+<a href="#ch27" class="chapter-link" title="第五章 论奖励金"><span class="nav-ch-num">第五章</span><span class="nav-ch-name">论奖励金</span></a>
+<a href="#ch28" class="chapter-link" title="第六章 论通商条约"><span class="nav-ch-num">第六章</span><span class="nav-ch-name">论通商条约</span></a>
+<a href="#ch29" class="chapter-link" title="第七章 论殖民地"><span class="nav-ch-num">第七章</span><span class="nav-ch-name">论殖民地</span></a>
+<a href="#ch30" class="chapter-link" title="第八章 关于重商主义的结论"><span class="nav-ch-num">第八章</span><span class="nav-ch-name">关于重商主义的结论</span></a>
+<a href="#ch31" class="chapter-link" title="第九章 论重农主义即政治经济学中把土地生产物看作各国收入及财富的唯一来源或主要来源的学说"><span class="nav-ch-num">第九章</span><span class="nav-ch-name">论重农主义即政治经济学中把土地生产物看作各国收入及财富的唯一来源或主要来源的学说</span></a>
+<a href="#ch32" class="chapter-link" title="第一章 论君主或国家的费用"><span class="nav-ch-num">第一章</span><span class="nav-ch-name">论君主或国家的费用</span></a>
+<a href="#ch33" class="chapter-link" title="第二章 论一般收入或公共收入的源泉"><span class="nav-ch-num">第二章</span><span class="nav-ch-name">论一般收入或公共收入的源泉</span></a>
+<a href="#ch34" class="chapter-link" title="第三章 论公债"><span class="nav-ch-num">第三章</span><span class="nav-ch-name">论公债</span></a></nav>
     <main class="chapter-content">
         <section id="ch00" class="chapter">
           <div class="part-label">序论</div>
@@ -3007,7 +3013,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 </section>
 <section id="tab-notes" class="tab-panel" role="tabpanel">
   <div class="notes-wrap">
-    <div class="note-nav-scroll"><button type="button" class="note-nav-btn" data-note="ch00">序论</button><button type="button" class="note-nav-btn" data-note="ch01">第一章</button><button type="button" class="note-nav-btn" data-note="ch02">第二章</button><button type="button" class="note-nav-btn" data-note="ch03">第三章</button><button type="button" class="note-nav-btn" data-note="ch04">第四章</button><button type="button" class="note-nav-btn" data-note="ch05">第五章</button><button type="button" class="note-nav-btn" data-note="ch06">第六章</button><button type="button" class="note-nav-btn" data-note="ch07">第七章</button><button type="button" class="note-nav-btn" data-note="ch08">第八章</button><button type="button" class="note-nav-btn" data-note="ch09">第九章</button><button type="button" class="note-nav-btn" data-note="ch10">第十章</button><button type="button" class="note-nav-btn" data-note="ch11">第十一章</button><button type="button" class="note-nav-btn" data-note="ch12">序论</button><button type="button" class="note-nav-btn" data-note="ch13">第一章</button><button type="button" class="note-nav-btn" data-note="ch14">第二章</button><button type="button" class="note-nav-btn" data-note="ch15">第三章</button><button type="button" class="note-nav-btn" data-note="ch16">第四章</button><button type="button" class="note-nav-btn" data-note="ch17">第五章</button><button type="button" class="note-nav-btn" data-note="ch18">第一章</button><button type="button" class="note-nav-btn" data-note="ch19">第二章</button><button type="button" class="note-nav-btn" data-note="ch20">第三章</button><button type="button" class="note-nav-btn" data-note="ch21">第四章</button><button type="button" class="note-nav-btn" data-note="ch22">序论</button><button type="button" class="note-nav-btn" data-note="ch23">第一章</button><button type="button" class="note-nav-btn" data-note="ch24">第二章</button><button type="button" class="note-nav-btn" data-note="ch25">第三章</button><button type="button" class="note-nav-btn" data-note="ch26">第四章</button><button type="button" class="note-nav-btn" data-note="ch27">第五章</button><button type="button" class="note-nav-btn" data-note="ch28">第六章</button><button type="button" class="note-nav-btn" data-note="ch29">第七章</button><button type="button" class="note-nav-btn" data-note="ch30">第八章</button><button type="button" class="note-nav-btn" data-note="ch31">第九章</button><button type="button" class="note-nav-btn" data-note="ch32">第一章</button><button type="button" class="note-nav-btn" data-note="ch33">第二章</button><button type="button" class="note-nav-btn" data-note="ch34">第三章</button></div>
+    <div class="note-nav-scroll"><button type="button" class="note-nav-btn" data-note="ch00" title="序论及全书设计">序论 · 全书设计</button><button type="button" class="note-nav-btn" data-note="ch01" title="第一章 论分工">第一章 · 论分工</button><button type="button" class="note-nav-btn" data-note="ch02" title="第二章 论分工的原由">第二章 · 论分工的原由</button><button type="button" class="note-nav-btn" data-note="ch03" title="第三章 论分工受市场范围的限制">第三章 · 论分工受市场范围的限制</button><button type="button" class="note-nav-btn" data-note="ch04" title="第四章 论货币的起源及其效用">第四章 · 论货币的起源及其效用</button><button type="button" class="note-nav-btn" data-note="ch05" title="第五章 论商品的真实价格与名义价格或其劳动价格与货币价格">第五章 · 论商品的真实价格与名义价格或其劳动价格与货币价格</button><button type="button" class="note-nav-btn" data-note="ch06" title="第六章 论商品价格的组成部分">第六章 · 论商品价格的组成部分</button><button type="button" class="note-nav-btn" data-note="ch07" title="第七章 论商品的自然价格与市场价格">第七章 · 论商品的自然价格与市场价格</button><button type="button" class="note-nav-btn" data-note="ch08" title="第八章 论劳动工资">第八章 · 论劳动工资</button><button type="button" class="note-nav-btn" data-note="ch09" title="第九章 论资本利润">第九章 · 论资本利润</button><button type="button" class="note-nav-btn" data-note="ch10" title="第十章 论工资与利润随劳动与资本用途的不同而不同">第十章 · 论工资与利润随劳动与资本用途的不同而不同</button><button type="button" class="note-nav-btn" data-note="ch11" title="第十一章 论地租">第十一章 · 论地租</button><button type="button" class="note-nav-btn" data-note="ch12" title="第二篇 · 序论">序论 · 本篇序论</button><button type="button" class="note-nav-btn" data-note="ch13" title="第一章 论资财的划分">第一章 · 论资财的划分</button><button type="button" class="note-nav-btn" data-note="ch14" title="第二章 论作为社会总资财的一部门或作为维持国民资本的费用的货币">第二章 · 论作为社会总资财的一部门或作为维持国民资本的费用的货币</button><button type="button" class="note-nav-btn" data-note="ch15" title="第三章 论资本积累并论生产性和非生产性劳动">第三章 · 论资本积累并论生产性和非生产性劳动</button><button type="button" class="note-nav-btn" data-note="ch16" title="第四章 论贷出取息的资财">第四章 · 论贷出取息的资财</button><button type="button" class="note-nav-btn" data-note="ch17" title="第五章 论资本的各种用途">第五章 · 论资本的各种用途</button><button type="button" class="note-nav-btn" data-note="ch18" title="第一章 论财富的自然的发展">第一章 · 论财富的自然的发展</button><button type="button" class="note-nav-btn" data-note="ch19" title="第二章 论罗马帝国崩溃后农业在欧洲旧状态下所受到的阻抑">第二章 · 论罗马帝国崩溃后农业在欧洲旧状态下所受到的阻抑</button><button type="button" class="note-nav-btn" data-note="ch20" title="第三章 论罗马帝国崩溃后都市的勃兴与进步">第三章 · 论罗马帝国崩溃后都市的勃兴与进步</button><button type="button" class="note-nav-btn" data-note="ch21" title="第四章 都市商业对农村改良的贡献">第四章 · 都市商业对农村改良的贡献</button><button type="button" class="note-nav-btn" data-note="ch22" title="第四篇 · 序论">序论 · 本篇序论</button><button type="button" class="note-nav-btn" data-note="ch23" title="第一章 商业主义或重商主义的原理">第一章 · 商业主义或重商主义的原理</button><button type="button" class="note-nav-btn" data-note="ch24" title="第二章 论限制从外国输入国内能生产的货物">第二章 · 论限制从外国输入国内能生产的货物</button><button type="button" class="note-nav-btn" data-note="ch25" title="第三章 论对其贸易的差额被认为不利于我国的那些国家的各种货物的输入所加的异常限制">第三章 · 论对其贸易的差额被认为不利于我国的那些国家的各种货物的输入所加的异常限制</button><button type="button" class="note-nav-btn" data-note="ch26" title="第四章 论退税">第四章 · 论退税</button><button type="button" class="note-nav-btn" data-note="ch27" title="第五章 论奖励金">第五章 · 论奖励金</button><button type="button" class="note-nav-btn" data-note="ch28" title="第六章 论通商条约">第六章 · 论通商条约</button><button type="button" class="note-nav-btn" data-note="ch29" title="第七章 论殖民地">第七章 · 论殖民地</button><button type="button" class="note-nav-btn" data-note="ch30" title="第八章 关于重商主义的结论">第八章 · 关于重商主义的结论</button><button type="button" class="note-nav-btn" data-note="ch31" title="第九章 论重农主义即政治经济学中把土地生产物看作各国收入及财富的唯一来源或主要来源的学说">第九章 · 论重农主义即政治经济学中把土地生产物看作各国收入及财富的唯一来源或主要来源的学说</button><button type="button" class="note-nav-btn" data-note="ch32" title="第一章 论君主或国家的费用">第一章 · 论君主或国家的费用</button><button type="button" class="note-nav-btn" data-note="ch33" title="第二章 论一般收入或公共收入的源泉">第二章 · 论一般收入或公共收入的源泉</button><button type="button" class="note-nav-btn" data-note="ch34" title="第三章 论公债">第三章 · 论公债</button></div>
     <div class="notes-content">
         <article id="note-ch00" class="analysis-card active">
           <h3>序论及全书设计</h3>
@@ -4055,61 +4061,61 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
     <div class="fw-section">
       <div class="fw-section-title">序论 · 全书五篇总设计：国民财富来自劳动、资本与政策</div>
       
-      <div class="fw-chapter"><div class="fw-chapter-title">序论 序论及全书设计</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">序论 · 全书设计</div></div>
     </div><div class="fw-arrow-down">↓</div>
     <div class="fw-section">
       <div class="fw-section-title">第一篇 · 分工、价格与收入在工资·利润·地租间的分配</div>
       
-      <div class="fw-chapter"><div class="fw-chapter-title">第一章 论分工</div></div>
-      <div class="fw-chapter"><div class="fw-chapter-title">第二章 论分工的原由</div></div>
-      <div class="fw-chapter"><div class="fw-chapter-title">第三章 论分工受市场范围的限制</div></div>
-      <div class="fw-chapter"><div class="fw-chapter-title">第四章 论货币的起源及其效用</div></div>
-      <div class="fw-chapter"><div class="fw-chapter-title">第五章 论商品的真实价格与名义价格或其劳动价格与货币价格</div></div>
-      <div class="fw-chapter"><div class="fw-chapter-title">第六章 论商品价格的组成部分</div></div>
-      <div class="fw-chapter"><div class="fw-chapter-title">第七章 论商品的自然价格与市场价格</div></div>
-      <div class="fw-chapter"><div class="fw-chapter-title">第八章 论劳动工资</div></div>
-      <div class="fw-chapter"><div class="fw-chapter-title">第九章 论资本利润</div></div>
-      <div class="fw-chapter"><div class="fw-chapter-title">第十章 论工资与利润随劳动与资本用途的不同而不同</div></div>
-      <div class="fw-chapter"><div class="fw-chapter-title">第十一章 论地租</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第一章 · 论分工</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第二章 · 论分工的原由</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第三章 · 论分工受市场范围的限制</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第四章 · 论货币的起源及其效用</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第五章 · 论商品的真实价格与名义价格或其劳动价格与货币价格</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第六章 · 论商品价格的组成部分</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第七章 · 论商品的自然价格与市场价格</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第八章 · 论劳动工资</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第九章 · 论资本利润</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第十章 · 论工资与利润随劳动与资本用途的不同而不同</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第十一章 · 论地租</div></div>
     </div><div class="fw-arrow-down">↓</div>
     <div class="fw-section">
       <div class="fw-section-title">第二篇 · 资本：流动/固定、积累与生产性劳动</div>
       
-      <div class="fw-chapter"><div class="fw-chapter-title">序论 序论</div></div>
-      <div class="fw-chapter"><div class="fw-chapter-title">第一章 论资财的划分</div></div>
-      <div class="fw-chapter"><div class="fw-chapter-title">第二章 论作为社会总资财的一部门或作为维持国民资本的费用的货币</div></div>
-      <div class="fw-chapter"><div class="fw-chapter-title">第三章 论资本积累并论生产性和非生产性劳动</div></div>
-      <div class="fw-chapter"><div class="fw-chapter-title">第四章 论贷出取息的资财</div></div>
-      <div class="fw-chapter"><div class="fw-chapter-title">第五章 论资本的各种用途</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">序论 · 本篇序论</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第一章 · 论资财的划分</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第二章 · 论作为社会总资财的一部门或作为维持国民资本的费用的货币</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第三章 · 论资本积累并论生产性和非生产性劳动</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第四章 · 论贷出取息的资财</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第五章 · 论资本的各种用途</div></div>
     </div><div class="fw-arrow-down">↓</div>
     <div class="fw-section">
       <div class="fw-section-title">第三篇 · 不同国家财富发展：农业、城市与商业的历史</div>
       
-      <div class="fw-chapter"><div class="fw-chapter-title">第一章 论财富的自然的发展</div></div>
-      <div class="fw-chapter"><div class="fw-chapter-title">第二章 论罗马帝国崩溃后农业在欧洲旧状态下所受到的阻抑</div></div>
-      <div class="fw-chapter"><div class="fw-chapter-title">第三章 论罗马帝国崩溃后都市的勃兴与进步</div></div>
-      <div class="fw-chapter"><div class="fw-chapter-title">第四章 都市商业对农村改良的贡献</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第一章 · 论财富的自然的发展</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第二章 · 论罗马帝国崩溃后农业在欧洲旧状态下所受到的阻抑</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第三章 · 论罗马帝国崩溃后都市的勃兴与进步</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第四章 · 都市商业对农村改良的贡献</div></div>
     </div><div class="fw-arrow-down">↓</div>
     <div class="fw-section">
       <div class="fw-section-title">第四篇 · 批判重商主义与重农主义：政治经济学体系</div>
       
-      <div class="fw-chapter"><div class="fw-chapter-title">序论 序论</div></div>
-      <div class="fw-chapter"><div class="fw-chapter-title">第一章 商业主义或重商主义的原理</div></div>
-      <div class="fw-chapter"><div class="fw-chapter-title">第二章 论限制从外国输入国内能生产的货物</div></div>
-      <div class="fw-chapter"><div class="fw-chapter-title">第三章 论对其贸易的差额被认为不利于我国的那些国家的各种货物的输入所加的异常限制</div></div>
-      <div class="fw-chapter"><div class="fw-chapter-title">第四章 论退税</div></div>
-      <div class="fw-chapter"><div class="fw-chapter-title">第五章 论奖励金</div></div>
-      <div class="fw-chapter"><div class="fw-chapter-title">第六章 论通商条约</div></div>
-      <div class="fw-chapter"><div class="fw-chapter-title">第七章 论殖民地</div></div>
-      <div class="fw-chapter"><div class="fw-chapter-title">第八章 关于重商主义的结论</div></div>
-      <div class="fw-chapter"><div class="fw-chapter-title">第九章 论重农主义即政治经济学中把土地生产物看作各国收入及财富的唯一来源或主要来源的学说</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">序论 · 本篇序论</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第一章 · 商业主义或重商主义的原理</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第二章 · 论限制从外国输入国内能生产的货物</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第三章 · 论对其贸易的差额被认为不利于我国的那些国家的各种货物的输入所加的异常限制</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第四章 · 论退税</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第五章 · 论奖励金</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第六章 · 论通商条约</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第七章 · 论殖民地</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第八章 · 关于重商主义的结论</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第九章 · 论重农主义即政治经济学中把土地生产物看作各国收入及财富的唯一来源或主要来源的学说</div></div>
     </div><div class="fw-arrow-down">↓</div>
     <div class="fw-section">
       <div class="fw-section-title">第五篇 · 君主/国家费用、税收、公债与帝国财政</div>
       
-      <div class="fw-chapter"><div class="fw-chapter-title">第一章 论君主或国家的费用</div></div>
-      <div class="fw-chapter"><div class="fw-chapter-title">第二章 论一般收入或公共收入的源泉</div></div>
-      <div class="fw-chapter"><div class="fw-chapter-title">第三章 论公债</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第一章 · 论君主或国家的费用</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第二章 · 论一般收入或公共收入的源泉</div></div>
+      <div class="fw-chapter"><div class="fw-chapter-title">第三章 · 论公债</div></div>
     </div>
     <div class="fw-core">核心命题：国民财富 = 劳动生产力 × 资本配置 × 制度政策</div>
   </div>
@@ -4140,41 +4146,41 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 <div class="drawer-overlay" id="drawerOverlay"></div>
 <div class="chapter-drawer" id="chapterDrawer">
   <div class="drawer-header"><h2>章节目录 · 35 章</h2><button type="button" class="drawer-close" id="closeDrawer">&times;</button></div>
-  <div class="drawer-links"><button type="button" class="drawer-link" data-target="ch00">序论 序论及全书设计</button>
-<button type="button" class="drawer-link" data-target="ch01">第一章 论分工</button>
-<button type="button" class="drawer-link" data-target="ch02">第二章 论分工的原由</button>
-<button type="button" class="drawer-link" data-target="ch03">第三章 论分工受市场范围的限制</button>
-<button type="button" class="drawer-link" data-target="ch04">第四章 论货币的起源及其效用</button>
-<button type="button" class="drawer-link" data-target="ch05">第五章 论商品的真实价格与名义价格或其劳</button>
-<button type="button" class="drawer-link" data-target="ch06">第六章 论商品价格的组成部分</button>
-<button type="button" class="drawer-link" data-target="ch07">第七章 论商品的自然价格与市场价格</button>
-<button type="button" class="drawer-link" data-target="ch08">第八章 论劳动工资</button>
-<button type="button" class="drawer-link" data-target="ch09">第九章 论资本利润</button>
-<button type="button" class="drawer-link" data-target="ch10">第十章 论工资与利润随劳动与资本用途的不</button>
-<button type="button" class="drawer-link" data-target="ch11">第十一章 论地租</button>
-<button type="button" class="drawer-link" data-target="ch12">序论 第二篇 · 序论</button>
-<button type="button" class="drawer-link" data-target="ch13">第一章 论资财的划分</button>
-<button type="button" class="drawer-link" data-target="ch14">第二章 论作为社会总资财的一部门或作为维</button>
-<button type="button" class="drawer-link" data-target="ch15">第三章 论资本积累并论生产性和非生产性劳</button>
-<button type="button" class="drawer-link" data-target="ch16">第四章 论贷出取息的资财</button>
-<button type="button" class="drawer-link" data-target="ch17">第五章 论资本的各种用途</button>
-<button type="button" class="drawer-link" data-target="ch18">第一章 论财富的自然的发展</button>
-<button type="button" class="drawer-link" data-target="ch19">第二章 论罗马帝国崩溃后农业在欧洲旧状态</button>
-<button type="button" class="drawer-link" data-target="ch20">第三章 论罗马帝国崩溃后都市的勃兴与进步</button>
-<button type="button" class="drawer-link" data-target="ch21">第四章 都市商业对农村改良的贡献</button>
-<button type="button" class="drawer-link" data-target="ch22">序论 第四篇 · 序论</button>
-<button type="button" class="drawer-link" data-target="ch23">第一章 商业主义或重商主义的原理</button>
-<button type="button" class="drawer-link" data-target="ch24">第二章 论限制从外国输入国内能生产的货物</button>
-<button type="button" class="drawer-link" data-target="ch25">第三章 论对其贸易的差额被认为不利于我国</button>
-<button type="button" class="drawer-link" data-target="ch26">第四章 论退税</button>
-<button type="button" class="drawer-link" data-target="ch27">第五章 论奖励金</button>
-<button type="button" class="drawer-link" data-target="ch28">第六章 论通商条约</button>
-<button type="button" class="drawer-link" data-target="ch29">第七章 论殖民地</button>
-<button type="button" class="drawer-link" data-target="ch30">第八章 关于重商主义的结论</button>
-<button type="button" class="drawer-link" data-target="ch31">第九章 论重农主义即政治经济学中把土地生</button>
-<button type="button" class="drawer-link" data-target="ch32">第一章 论君主或国家的费用</button>
-<button type="button" class="drawer-link" data-target="ch33">第二章 论一般收入或公共收入的源泉</button>
-<button type="button" class="drawer-link" data-target="ch34">第三章 论公债</button></div>
+  <div class="drawer-links"><button type="button" class="drawer-link" data-target="ch00"><span class="drawer-ch-num">序论</span><span class="drawer-ch-name">全书设计</span></button>
+<button type="button" class="drawer-link" data-target="ch01"><span class="drawer-ch-num">第一章</span><span class="drawer-ch-name">论分工</span></button>
+<button type="button" class="drawer-link" data-target="ch02"><span class="drawer-ch-num">第二章</span><span class="drawer-ch-name">论分工的原由</span></button>
+<button type="button" class="drawer-link" data-target="ch03"><span class="drawer-ch-num">第三章</span><span class="drawer-ch-name">论分工受市场范围的限制</span></button>
+<button type="button" class="drawer-link" data-target="ch04"><span class="drawer-ch-num">第四章</span><span class="drawer-ch-name">论货币的起源及其效用</span></button>
+<button type="button" class="drawer-link" data-target="ch05"><span class="drawer-ch-num">第五章</span><span class="drawer-ch-name">论商品的真实价格与名义价格或其劳动价格与货币价格</span></button>
+<button type="button" class="drawer-link" data-target="ch06"><span class="drawer-ch-num">第六章</span><span class="drawer-ch-name">论商品价格的组成部分</span></button>
+<button type="button" class="drawer-link" data-target="ch07"><span class="drawer-ch-num">第七章</span><span class="drawer-ch-name">论商品的自然价格与市场价格</span></button>
+<button type="button" class="drawer-link" data-target="ch08"><span class="drawer-ch-num">第八章</span><span class="drawer-ch-name">论劳动工资</span></button>
+<button type="button" class="drawer-link" data-target="ch09"><span class="drawer-ch-num">第九章</span><span class="drawer-ch-name">论资本利润</span></button>
+<button type="button" class="drawer-link" data-target="ch10"><span class="drawer-ch-num">第十章</span><span class="drawer-ch-name">论工资与利润随劳动与资本用途的不同而不同</span></button>
+<button type="button" class="drawer-link" data-target="ch11"><span class="drawer-ch-num">第十一章</span><span class="drawer-ch-name">论地租</span></button>
+<button type="button" class="drawer-link" data-target="ch12"><span class="drawer-ch-num">序论</span><span class="drawer-ch-name">本篇序论</span></button>
+<button type="button" class="drawer-link" data-target="ch13"><span class="drawer-ch-num">第一章</span><span class="drawer-ch-name">论资财的划分</span></button>
+<button type="button" class="drawer-link" data-target="ch14"><span class="drawer-ch-num">第二章</span><span class="drawer-ch-name">论作为社会总资财的一部门或作为维持国民资本的费用的货币</span></button>
+<button type="button" class="drawer-link" data-target="ch15"><span class="drawer-ch-num">第三章</span><span class="drawer-ch-name">论资本积累并论生产性和非生产性劳动</span></button>
+<button type="button" class="drawer-link" data-target="ch16"><span class="drawer-ch-num">第四章</span><span class="drawer-ch-name">论贷出取息的资财</span></button>
+<button type="button" class="drawer-link" data-target="ch17"><span class="drawer-ch-num">第五章</span><span class="drawer-ch-name">论资本的各种用途</span></button>
+<button type="button" class="drawer-link" data-target="ch18"><span class="drawer-ch-num">第一章</span><span class="drawer-ch-name">论财富的自然的发展</span></button>
+<button type="button" class="drawer-link" data-target="ch19"><span class="drawer-ch-num">第二章</span><span class="drawer-ch-name">论罗马帝国崩溃后农业在欧洲旧状态下所受到的阻抑</span></button>
+<button type="button" class="drawer-link" data-target="ch20"><span class="drawer-ch-num">第三章</span><span class="drawer-ch-name">论罗马帝国崩溃后都市的勃兴与进步</span></button>
+<button type="button" class="drawer-link" data-target="ch21"><span class="drawer-ch-num">第四章</span><span class="drawer-ch-name">都市商业对农村改良的贡献</span></button>
+<button type="button" class="drawer-link" data-target="ch22"><span class="drawer-ch-num">序论</span><span class="drawer-ch-name">本篇序论</span></button>
+<button type="button" class="drawer-link" data-target="ch23"><span class="drawer-ch-num">第一章</span><span class="drawer-ch-name">商业主义或重商主义的原理</span></button>
+<button type="button" class="drawer-link" data-target="ch24"><span class="drawer-ch-num">第二章</span><span class="drawer-ch-name">论限制从外国输入国内能生产的货物</span></button>
+<button type="button" class="drawer-link" data-target="ch25"><span class="drawer-ch-num">第三章</span><span class="drawer-ch-name">论对其贸易的差额被认为不利于我国的那些国家的各种货物的输入所加的异常限制</span></button>
+<button type="button" class="drawer-link" data-target="ch26"><span class="drawer-ch-num">第四章</span><span class="drawer-ch-name">论退税</span></button>
+<button type="button" class="drawer-link" data-target="ch27"><span class="drawer-ch-num">第五章</span><span class="drawer-ch-name">论奖励金</span></button>
+<button type="button" class="drawer-link" data-target="ch28"><span class="drawer-ch-num">第六章</span><span class="drawer-ch-name">论通商条约</span></button>
+<button type="button" class="drawer-link" data-target="ch29"><span class="drawer-ch-num">第七章</span><span class="drawer-ch-name">论殖民地</span></button>
+<button type="button" class="drawer-link" data-target="ch30"><span class="drawer-ch-num">第八章</span><span class="drawer-ch-name">关于重商主义的结论</span></button>
+<button type="button" class="drawer-link" data-target="ch31"><span class="drawer-ch-num">第九章</span><span class="drawer-ch-name">论重农主义即政治经济学中把土地生产物看作各国收入及财富的唯一来源或主要来源的学说</span></button>
+<button type="button" class="drawer-link" data-target="ch32"><span class="drawer-ch-num">第一章</span><span class="drawer-ch-name">论君主或国家的费用</span></button>
+<button type="button" class="drawer-link" data-target="ch33"><span class="drawer-ch-num">第二章</span><span class="drawer-ch-name">论一般收入或公共收入的源泉</span></button>
+<button type="button" class="drawer-link" data-target="ch34"><span class="drawer-ch-num">第三章</span><span class="drawer-ch-name">论公债</span></button></div>
 </div>
 <script>
 (function(){
