@@ -496,6 +496,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 
 const html = generateHtml();
 fs.writeFileSync(OUTPUT, html, 'utf8');
+const totalMapped = Object.keys(SOURCE_MAP).length;
 const withSource = Object.keys(SOURCE_MAP).filter(id => fs.existsSync(path.join(SOURCE_DIR, SOURCE_MAP[id]))).length;
 console.log(`Generated ${OUTPUT}`);
-console.log(`Chapters: ${CHAPTERS.length}, Full text: ${withSource}/${Object.keys(SOURCE_MAP).length} (vol.1), Terms: ${TERMS.length}`);
+console.log(`Chapters: ${CHAPTERS.length}, Full text: ${withSource}/${totalMapped}, Terms: ${TERMS.length}`);

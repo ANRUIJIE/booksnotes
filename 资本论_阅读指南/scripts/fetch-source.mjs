@@ -6,11 +6,18 @@ import { SOURCE_MAP, SOURCE_BASE } from '../data/source-map.mjs';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SOURCE_DIR = path.join(ROOT, '_source');
 
-async function fetchFile(relPath) {
+async function fetchFile(relPath, retries = 3) {
   const url = SOURCE_BASE + encodeURI(relPath).replace(/%2F/g, '/');
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`${relPath}: ${res.status}`);
-  return res.text();
+  for (let i = 0; i < retries; i++) {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`${relPath}: ${res.status}`);
+      return res.text();
+    } catch (err) {
+      if (i === retries - 1) throw err;
+      await new Promise(r => setTimeout(r, 2000 * (i + 1)));
+    }
+  }
 }
 
 async function main() {

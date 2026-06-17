@@ -1,4 +1,6 @@
 /** 中央编译局译本 · 三卷结构（参照 bitzhuwei/Capital） */
+import { VOL2_PARTS } from './vol2.mjs';
+import { VOL3_PARTS } from './vol3.mjs';
 export const BOOK_META = {
   title: '资本论',
   subtitle: '马克思 著 · 中共中央编译局 译 · 纪念版',
@@ -80,66 +82,19 @@ export const VOLUMES = [
     id: 'v2',
     title: '第二卷',
     subtitle: '资本的流通过程',
-    parts: [
-      { id: 'v2p1', title: '第一篇', name: '资本形态变化及其循环', chapters: [
-        { id: 'v2c01', num: '第一章', title: '货币资本的循环', sections: [] },
-        { id: 'v2c02', num: '第二章', title: '生产资本的循环', sections: [] },
-        { id: 'v2c03', num: '第三章', title: '商品资本的循环', sections: [] },
-        { id: 'v2c04', num: '第四章', title: '循环过程的三个公式', sections: [] },
-        { id: 'v2c05', num: '第五章', title: '流通时间', sections: [] },
-        { id: 'v2c06', num: '第六章', title: '流通费用', sections: [] },
-      ]},
-      { id: 'v2p2', title: '第二篇', name: '资本周转', chapters: [
-        { id: 'v2c07', num: '第七章', title: '周转时间和周转次数', sections: [] },
-        { id: 'v2c08', num: '第八章', title: '固定资本和流动资本', sections: [] },
-        { id: 'v2c09', num: '第九章', title: '预付资本的总周转', sections: [] },
-        { id: 'v2c10', num: '第十章', title: '固定资本和流动资本的理论', sections: [] },
-        { id: 'v2c11', num: '第十一章', title: '李嘉图', sections: [] },
-        { id: 'v2c12', num: '第十二章', title: '劳动期间', sections: [] },
-        { id: 'v2c13', num: '第十三章', title: '生产时间', sections: [] },
-        { id: 'v2c14', num: '第十四章', title: '流通时间', sections: [] },
-        { id: 'v2c15', num: '第十五章', title: '周转时间对预付资本量的影响', sections: [] },
-        { id: 'v2c16', num: '第十六章', title: '可变资本的周转', sections: [] },
-        { id: 'v2c17', num: '第十七章', title: '剩余价值的流通', sections: [] },
-      ]},
-      { id: 'v2p3', title: '第三篇', name: '社会总资本的再生产和流通', chapters: [
-        { id: 'v2c18', num: '第十八章', title: '导言', sections: [] },
-        { id: 'v2c19', num: '第十九章', title: '前人对这个问题的阐述', sections: [] },
-        { id: 'v2c20', num: '第二十章', title: '简单再生产', sections: [] },
-        { id: 'v2c21', num: '第二十一章', title: '积累和扩大再生产', sections: [] },
-      ]},
-    ],
+    parts: VOL2_PARTS.map(p => ({
+      id: p.id, title: p.title, name: p.name,
+      chapters: p.chapters.map(({ id, num, title }) => ({ id, num, title, sections: [] })),
+    })),
   },
   {
     id: 'v3',
     title: '第三卷',
     subtitle: '资本主义生产的总过程',
-    parts: [
-      { id: 'v3p1', title: '第一篇', name: '剩余价值转化为利润和利润率', chapters: [
-        { id: 'v3c01', num: '第一章', title: '成本价格和利润', sections: [] },
-        { id: 'v3c02', num: '第二章', title: '利润率', sections: [] },
-        { id: 'v3c03', num: '第三章', title: '利润率和剩余价值率的关系', sections: [] },
-      ]},
-      { id: 'v3p2', title: '第二篇', name: '利润转化为平均利润', chapters: [
-        { id: 'v3c08', num: '第八章', title: '不同生产部门的资本构成', sections: [] },
-        { id: 'v3c09', num: '第九章', title: '一般利润率的形成', sections: [] },
-        { id: 'v3c10', num: '第十章', title: '一般利润率通过竞争而平均化', sections: [] },
-      ]},
-      { id: 'v3p3', title: '第三篇', name: '利润率趋向下降的规律', chapters: [
-        { id: 'v3c13', num: '第十三章', title: '规律本身', sections: [] },
-        { id: 'v3c14', num: '第十四章', title: '起反作用的各种原因', sections: [] },
-        { id: 'v3c15', num: '第十五章', title: '规律的内部矛盾的展开', sections: [] },
-      ]},
-      { id: 'v3p5', title: '第五篇', name: '利润分为利息和企业主收入', chapters: [
-        { id: 'v3c21', num: '第二十一章', title: '生息资本', sections: [] },
-        { id: 'v3c25', num: '第二十五章', title: '信用和虚拟资本', sections: [] },
-      ]},
-      { id: 'v3p6', title: '第六篇', name: '超额利润转化为地租', chapters: [
-        { id: 'v3c37', num: '第三十七章', title: '导论', sections: [] },
-        { id: 'v3c45', num: '第四十五章', title: '绝对地租', sections: [] },
-        { id: 'v3c52', num: '第五十二章', title: '阶级', sections: [] },
-      ]},
-    ],
+    parts: VOL3_PARTS.map(p => ({
+      id: p.id, title: p.title, name: p.name,
+      chapters: p.chapters.map(({ id, num, title }) => ({ id, num, title, sections: [] })),
+    })),
   },
 ];
 

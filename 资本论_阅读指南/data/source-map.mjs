@@ -1,5 +1,9 @@
-/** 章节 ID → 原文 Markdown 文件映射 */
+/** 章节 ID → 原文 Markdown 文件映射（自动生成自 vol2/vol3 数据） */
+import { VOL2_PARTS } from './vol2.mjs';
+import { VOL3_PARTS } from './vol3.mjs';
+
 export const SOURCE_MAP = {
+  // 第一卷
   v1c01: '卷1/01.商品.md',
   v1c02: '卷1/02.交换过程.md',
   v1c03: '卷1/03.货币或商品流通.md',
@@ -26,5 +30,16 @@ export const SOURCE_MAP = {
   v1c24: '卷1/24.所谓原始积累.md',
   v1c25: '卷1/25.现代殖民理论.md',
 };
+
+for (const part of VOL2_PARTS) {
+  for (const ch of part.chapters) {
+    SOURCE_MAP[ch.id] = `卷2/${ch.file}`;
+  }
+}
+for (const part of VOL3_PARTS) {
+  for (const ch of part.chapters) {
+    SOURCE_MAP[ch.id] = `卷3/${ch.file}`;
+  }
+}
 
 export const SOURCE_BASE = 'https://raw.githubusercontent.com/bitzhuwei/Capital/main/';
