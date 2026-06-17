@@ -1,0 +1,19 @@
+# 归档目录（非阅读页，体积大）
+国富论_归档/
+
+# 临时文件
+_temp_*/
+*.zip
+
+# 构建中间产物
+**/_source/extracted/
+**/*.epub
+**/*.epub.zip
+
+# 系统
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Node
+node_modules/

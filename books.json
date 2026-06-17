@@ -1,0 +1,42 @@
+[
+  {
+    "id": "renzhijue",
+    "title": "认知觉醒",
+    "author": "周岭",
+    "path": "认知觉醒_阅读指南/index.html",
+    "chapters": "11 章",
+    "tags": ["认知", "成长", "方法论"],
+    "color": "#2d6a4f",
+    "desc": "内观自己、外观世界，四 Tab 阅读笔记。"
+  },
+  {
+    "id": "fqbb",
+    "title": "穷爸爸富爸爸",
+    "author": "罗伯特·T·清崎",
+    "path": "穷爸爸富爸爸_阅读指南/index.html",
+    "chapters": "12 章",
+    "tags": ["财商", "资产", "现金流"],
+    "color": "#8b4513",
+    "desc": "六课财商框架，每章含大师总结。"
+  },
+  {
+    "id": "muaidejiban",
+    "title": "母爱的羁绊",
+    "author": "卡瑞尔·麦克布莱德",
+    "path": "母爱的羁绊_阅读指南/index.html",
+    "chapters": "15 章 · 69 重点",
+    "tags": ["心理学", "母女关系", "自恋"],
+    "color": "#6b4c7a",
+    "desc": "结构对照 EPUB，子标题高亮框。"
+  },
+  {
+    "id": "guofulun",
+    "title": "国富论",
+    "author": "亚当·斯密",
+    "path": "国富论_阅读指南/index.html",
+    "chapters": "35 章 · 五篇",
+    "tags": ["经济学", "经典", "政治经济学"],
+    "color": "#1a5276",
+    "desc": "郭大力/王亚南译本，分工至公债全书结构。"
+  }
+]
