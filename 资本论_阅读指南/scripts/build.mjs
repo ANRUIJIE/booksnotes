@@ -6,10 +6,44 @@ import { TERMS, termsForChapter } from '../data/terms.mjs';
 import { GUIDES, READING_GUIDE, guidesForChapter } from '../data/guides.mjs';
 import { KG_NODES, KG_EDGES } from '../data/knowledge-graph.mjs';
 import { getChapterContent } from '../data/chapters.mjs';
+import { SOURCE_MAP } from '../data/source-map.mjs';
+import { parseMarkdown, blocksToHtml, firstParagraph } from './parse-markdown.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const SOURCE_DIR = path.join(ROOT, '_source');
 const OUTPUT = path.join(ROOT, 'index.html');
 const CHAPTERS = flattenChapters();
+
+const chapterCache = new Map();
+
+function loadChapterContent(chapterId) {
+  if (chapterCache.has(chapterId)) return chapterCache.get(chapterId);
+
+  const rel = SOURCE_MAP[chapterId];
+  if (rel) {
+    const filePath = path.join(SOURCE_DIR, rel);
+    if (fs.existsSync(filePath)) {
+      const md = fs.readFileSync(filePath, 'utf8');
+      const blocks = parseMarkdown(md);
+      const content = {
+        summary: firstParagraph(blocks) + '……',
+        bodyHtml: blocksToHtml(blocks, esc),
+        hasFullText: true,
+      };
+      chapterCache.set(chapterId, content);
+      return content;
+    }
+  }
+
+  const fallback = getChapterContent(chapterId);
+  const content = {
+    summary: fallback.summary,
+    bodyHtml: renderBody(fallback.body),
+    hasFullText: false,
+  };
+  chapterCache.set(chapterId, content);
+  return content;
+}
 
 function esc(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -58,15 +92,15 @@ function renderMindmap() {
 
 function renderChapterSections() {
   return CHAPTERS.map(ch => {
-    const content = getChapterContent(ch.id);
+    const content = loadChapterContent(ch.id);
     const chTerms = termsForChapter(ch.id);
     const chGuides = guidesForChapter(ch.id);
     return `
       <section id="${ch.id}" class="chapter-panel" data-ch="${ch.id}">
         <div class="ch-breadcrumb">${esc(ch.volTitle)} · ${esc(ch.partTitle)} ${esc(ch.partName)}</div>
         <h2 class="chapter-title">${esc(ch.fullTitle)}</h2>
-        <p class="chapter-summary">${esc(content.summary)}</p>
-        <div class="chapter-body">${renderBody(content.body)}</div>
+        ${content.hasFullText ? '' : `<p class="chapter-summary">${esc(content.summary)}</p>`}
+        <div class="chapter-body">${content.bodyHtml}</div>
         ${chTerms.length ? `<div class="ch-inline-terms"><h4>本章术语</h4>${chTerms.map(t => `<span class="term-chip" data-term="${t.id}">${esc(t.term)}</span>`).join('')}</div>` : ''}
         ${chGuides.length ? `<div class="ch-inline-guides"><h4>相关导读</h4>${chGuides.map(g => `<div class="guide-mini"><strong>${esc(g.author)}</strong>：${esc(g.title)}</div>`).join('')}</div>` : ''}
       </section>`;
@@ -197,6 +231,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 .chapter-title{font-size:20px;color:var(--accent);margin-bottom:10px;line-height:1.4}
 .chapter-summary{font-size:14px;color:var(--text-muted);margin-bottom:16px;padding:12px;background:var(--accent-light);border-radius:8px;line-height:1.6}
 .chapter-body p{margin-bottom:12px;text-indent:2em;font-size:15px;line-height:1.85}
+.chapter-body .section-head{font-size:16px;color:var(--accent);margin:20px 0 10px;text-indent:0;font-weight:600;line-height:1.4}
+.chapter-body .kw{font-style:normal;font-weight:600;color:var(--accent)}
+.chapter-body .footnote{font-size:12px;color:var(--text-muted);text-indent:0;margin:8px 0;padding-left:1em;border-left:2px solid var(--border);line-height:1.5}
 .term-inline{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px;margin:12px 0}
 .term-inline strong{display:block;color:var(--accent);margin-bottom:4px;font-size:14px}
 .golden-quote{border-left:4px solid var(--accent);padding:12px 16px;margin:16px 0;background:var(--accent-light);font-size:14px;color:var(--accent);font-weight:500;text-indent:0;line-height:1.7}
@@ -459,5 +496,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 
 const html = generateHtml();
 fs.writeFileSync(OUTPUT, html, 'utf8');
+const withSource = Object.keys(SOURCE_MAP).filter(id => fs.existsSync(path.join(SOURCE_DIR, SOURCE_MAP[id]))).length;
 console.log(`Generated ${OUTPUT}`);
-console.log(`Chapters: ${CHAPTERS.length}, Terms: ${TERMS.length}, Guides: ${GUIDES.length}`);
+console.log(`Chapters: ${CHAPTERS.length}, Full text: ${withSource}/${Object.keys(SOURCE_MAP).length} (vol.1), Terms: ${TERMS.length}`);
